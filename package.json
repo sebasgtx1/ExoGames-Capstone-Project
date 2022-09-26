@@ -1,0 +1,20 @@
+{
+  "name": "exogames",
+  "version": "1.0.0",
+  "description": "exogames capstone project",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app/src/index.js",
+    "start": "node app/src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^7.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}

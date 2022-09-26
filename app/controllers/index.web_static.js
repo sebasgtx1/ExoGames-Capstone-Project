@@ -4,7 +4,14 @@ const mainPage = async (req, res) => {
     })
 };
 
+const loginPage = async (req, res) => {
+    res.sendFile('/public/templates/login_form.html', {
+        root: __dirname
+    })
+};
+
 module.exports = {
-    mainPage
+    mainPage,
+    loginPage
 };
     

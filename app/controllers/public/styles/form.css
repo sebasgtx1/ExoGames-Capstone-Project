@@ -7,11 +7,22 @@
 }
 
 body{
-    background-image: url(../images/brackgorund-blue-galaxy.jpg);
+    background: linear-gradient(90deg, #000000 0%, #424242 100%), #FFFFFF;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
+}
+.exogames img{
+    position: absolute;
+    left: 2%;
+    right: 2%;
+    top: 5%;
+    bottom: 2%;
+    width: -50%;
+
+    
+
 }
 
 main{
@@ -20,6 +31,7 @@ main{
     margin: auto;
     margin-top: 100px;
 }
+
 
 .principal_container{
     width: 100%;
@@ -35,13 +47,14 @@ main{
     justify-content: center;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
-    background-color: rgba(0, 128, 255, 0.5);
+    background-color: rgb(252, 252, 252);
+    border-radius: 30px;
 
 }
 
 .back_box div{
     margin: 100px 40px;
-    color: white;
+    color: #5C5CFF;
     transition: all 500ms;
 }
 
@@ -64,8 +77,11 @@ main{
 .back_box button{
     padding: 10px 40px;
     border: 2px solid #fff;
+    border-radius: 30px;
     font-size: 14px;
     background: transparent;
+    background-color: #5C5CFF;
+
     font-weight: 600;
     cursor: pointer;
     color: white;
@@ -74,8 +90,8 @@ main{
 }
 
 .back_box button:hover{
-    background: #fff;
-    color: #46A2FD;
+    background:#E6E5FF;
+    color:#5C5CFF;
 }
 
 /*Forms*/
@@ -96,7 +112,7 @@ main{
 .login-register_container form{
     width: 100%;
     padding: 80px 20px;
-    background: white;
+    background: whitesmoke;
     position: absolute;
     border-radius: 20px;
 }
@@ -105,7 +121,7 @@ main{
     font-size: 30px;
     text-align: center;
     margin-bottom: 20px;
-    color: #46A2FD;
+    color: #5C5CFF;
 }
 
 .login-register_container form input{
@@ -113,7 +129,7 @@ main{
     margin-top: 20px;
     padding: 10px;
     border: none;
-    background: #F2F2F2;
+    background: #ebebfd;
     font-size: 16px;
     outline: none;
 }
@@ -122,8 +138,9 @@ main{
     padding: 10px 40px;
     margin-top: 40px;
     border: none;
+    border-radius: 20px;
     font-size: 14px;
-    background: #46A2FD;
+    background: #5C5CFF;
     font-weight: 600;
     cursor: pointer;
     color: white;

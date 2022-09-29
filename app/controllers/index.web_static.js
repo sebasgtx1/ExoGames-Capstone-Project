@@ -10,8 +10,15 @@ const loginPage = async (req, res) => {
     })
 };
 
+const venuesPage = async (req, res) => {
+    res.sendFile('/public/templates/venues.html', {
+        root: __dirname
+    })
+};
+
 module.exports = {
     mainPage,
-    loginPage
+    loginPage,
+    venuesPage
 };
     

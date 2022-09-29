@@ -19,6 +19,12 @@ body{
     font-family: 'Raleway', sans-serif;
 }
 
+footer {
+    position:fixed;
+    left:0px;
+    bottom:0px;
+}
+
 ul {
     list-style-type: none;
     margin: 0;
@@ -44,6 +50,95 @@ li a:hover {
     background-color: #111;
 }
 
+.buttons {
+    /* Button */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    gap: 8px;
+
+    width: 210.33px;
+    height: 44px;
+
+    /* Light_and_Dark/02 */
+    background: #BEBEBE;
+    border-radius: 30px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+
+.div-button {
+    align-self: center;
+}
+
+div.opcion {
+    text-align: center;
+}
+
+ul.opcion {
+    display:inline-block;
+    background:#00000000; 
+}
+
+li.opcion
+{    
+    float:left;
+    margin:0px 1px;
+    border:1px solid rgba(0, 0, 0, 0);
+    border-bottom:4px rgba(0, 0, 0, 0) solid;
+    border-right:4px rgba(0, 0, 0, 0) solid;
+    background:#00000000; 
+}
+a.opcion
+{
+    /* Button */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+    gap: 8px;
+
+    width: 210.33px;
+    height: 44px;
+
+    /* Light_and_Dark/02 */
+    background: #BEBEBE;
+    border-radius: 30px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    flex-grow: 1;
+}
+a.opcion:hover
+{
+    background:blue;
+}
+
+/* ellipse white position */
+.ellipse-1 {
+    float: right;
+    display: block;
+}
+
+/* ellipse blue position css */
+.ellipse-2 {
+    position: absolute;
+    left: 0;
+    align-self: center;
+    display: block;
+}
+
 .active {
     background-color: #04AA6D;
 }
@@ -51,14 +146,29 @@ li a:hover {
 .text-exo{
     /* Exogames Sports */
 
-    position: absolute;
+    position: relative;
     left: 5.16%;
     right: 13.19%;
     top: 25.84%;
     bottom: 27.76%;
+    color: #fff;
 
     /* Light_and_Dark/01 */
-    background: #FFFFFF;
+    background: #ffffff00;
+}
+
+.ellipse-exo {
+    /* Ellipse 4 */
+
+    position: absolute;
+    left: 94.96%;
+    right: -7.7%;
+    top: 81.2%;
+    bottom: -43.66%;
+
+    /* Secondary/little_details */
+    background: #EAF900;
+    transform: rotate(-180deg);
 }
 
 /* Estilos generales */

@@ -1,5 +1,5 @@
 const { Pool } = require('pg');
-const uuidv4 = require("uuid/v4");
+const { v4: uuidv4 } = require('uuid');
 
 const pool = new Pool({
     user: 'postgres',

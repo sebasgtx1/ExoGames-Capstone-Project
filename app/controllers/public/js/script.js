@@ -10,7 +10,7 @@ var login_register_container = document.querySelector(".login-register_container
 var back_box_login = document.querySelector(".back_box_login");
 var back_box_register = document.querySelector(".back_box_register");
 
-    //Funtions
+//Funtions
 
 function page_width(){
 

@@ -155,6 +155,22 @@ a.option:hover
     background:blue;
 }
 
+aside.option {
+    position: absolute;
+    width: 514px;
+    height: 1624px;
+    left: 926px;
+    top: 0px;
+
+    background: #bebebe;
+}
+
+.name-user {
+    font-size: 50px;
+    font-weight: bold;
+    color: #000000;
+}
+
 /* ellipse white position */
 .ellipse-1 {
     background: url(../images/ellipse-1.svg);
@@ -215,7 +231,31 @@ a.option:hover
     width: 316px;
     height: 234px;
 
-    background: url(../images/photo-default.png);
+    background: url(../images/events-default.png);
+
+    /* Light_and_Dark/09 */
+    border-radius: 14px 40px;
+}
+
+.venues-default {
+    /* Photo */
+
+    width: 316px;
+    height: 234px;
+
+    background: url(../images/venues.png);
+
+    /* Light_and_Dark/09 */
+    border-radius: 14px 40px;
+}
+
+.users-default {
+    /* Photo */
+
+    width: 316px;
+    height: 234px;
+
+    background: url(../images/user.png);
 
     /* Light_and_Dark/09 */
     border-radius: 14px 40px;

@@ -1,13 +1,4 @@
-const { Pool } = require('pg');
-const { v4: uuidv4 } = require('uuid');
-
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    password: '0227',
-    database: 'exogames_test', // testing_database
-    port: '5432'
-});
+const { pool } = require('./db_conexion');
 
 const getEvents = async (req, res) => {
     const response = await pool.query('SELECT * FROM events ORDER BY id ASC');
@@ -21,12 +12,14 @@ const getEventId = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-    const { name, sport, description} = req.body;
-    const response = await pool.query('INSERT INTO events (id, name, sport, description) VALUES ($1, $2, $3, $4)', [
-        uuidv4(),
-        name,
-        sport,
-        description
+    const params = JSON.parse(JSON.stringify(req.body));
+    console.log(params);
+    const response = await pool.query('INSERT INTO events (id, user_id, event_name, sport, description) VALUES ($1, $2, $3, $4, $5)', [
+        267, // DEBE GENERARSE SOLO Y SER UNICO
+        123, // ID DEL USUARIO; SE RECIBE POR POST REQUEST
+        params.event_name,
+        params.sport,
+        params.description
     ]);
     res.json({
         message: 'Event Added successfully',
@@ -40,10 +33,11 @@ const updateEvent = async (req, res) => {
     const id = parseInt(req.params.id);
     const { name, sport, description } = req.body;
 
-    const response = await pool.query('UPDATE users SET name = $1, sport = $2, description = $3 WHERE id = $3', [
+    const response = await pool.query('UPDATE events SET event_name = $1, sport = $2, description = $3 WHERE id = $4', [
         name,
         sport,
-        description
+        description,
+        id
     ]);
     res.json('Event Updated Successfully');
 };

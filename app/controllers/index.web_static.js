@@ -16,9 +16,16 @@ const venuesPage = async (req, res) => {
     })
 };
 
+const createEventPage = async (req, res) => {
+    res.sendFile('/public/templates/form_creatEvent.html', {
+        root: __dirname
+    })
+};
+
 module.exports = {
     mainPage,
     loginPage,
-    venuesPage
+    venuesPage,
+    createEventPage
 };
     

@@ -2,13 +2,15 @@ const { Router } = require('express');
 const router = Router();
 
 const { getEvents, getEventId, createEvent, updateEvent, deleteEvent } = require('../controllers/events.controller');
-const { mainPage, loginPage, venuesPage, createEventPage } = require('../controllers/index.web_static');
+const { mainPage, loginPage, venuesPage, competitorsPage, usersPage, createEventPage } = require('../controllers/index.web_static');
 
 // get
 router.get('/', mainPage);
 router.get('/index.html', mainPage);
 router.get('/login', loginPage);
 router.get('/venues', venuesPage);
+router.get('/competitors', competitorsPage);
+router.get('/users', usersPage);
 router.get('/events', getEvents);
 router.get('/event/:id', getEventId);
 router.get('/create_event', createEventPage);

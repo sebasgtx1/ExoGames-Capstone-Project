@@ -5,7 +5,7 @@ const mainPage = async (req, res) => {
 };
 
 const loginPage = async (req, res) => {
-    res.redirect("https://clients-log.auth.us-east-1.amazoncognito.com/login?client_id=3jkidons84e799v67eckpugqtv&response_type=code&scope=email+openid&redirect_uri=http://localhost:3000/index.html")
+    res.redirect("https://clients-log.auth.us-east-1.amazoncognito.com/login?client_id=3jkidons84e799v67eckpugqtv&response_type=code&scope=aws.cognito.signin.user.admin+email+openid+profile&redirect_uri=http://localhost:3000/users")
 };
 
 const venuesPage = async (req, res) => {

@@ -5,9 +5,7 @@ const mainPage = async (req, res) => {
 };
 
 const loginPage = async (req, res) => {
-    res.sendFile('/public/templates/login_form.html', {
-        root: __dirname
-    })
+    res.redirect("https://clients-log.auth.us-east-1.amazoncognito.com/login?client_id=3jkidons84e799v67eckpugqtv&response_type=code&scope=email+openid&redirect_uri=http://localhost:3000/index.html")
 };
 
 const venuesPage = async (req, res) => {

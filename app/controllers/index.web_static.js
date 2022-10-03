@@ -16,9 +16,23 @@ const venuesPage = async (req, res) => {
     })
 };
 
+const competitorsPage = async (req, res) => {
+    res.sendFile('/public/templates/competitors.html', {
+        root: __dirname
+    })
+};
+
+const usersPage = async (req, res) => {
+    res.sendFile('/public/templates/users.html', {
+        root: __dirname
+    })
+};
+
 module.exports = {
     mainPage,
     loginPage,
-    venuesPage
+    venuesPage,
+    competitorsPage,
+    usersPage
 };
     

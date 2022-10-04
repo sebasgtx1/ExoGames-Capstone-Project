@@ -1,12 +1,21 @@
-const { Pool } = require('pg');
+const mysql = require('mysql');
 
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    password: '0227',
-    database: 'exogames_test_local', // testing_database
-    port: '5432'
+const pool = mysql.createConnection({
+    user: 'admin',
+    host: 'exogames-database.c0sknxrn5p3x.us-east-1.rds.amazonaws.com',
+    password: 'Exogames1*',
+    database: 'public',
+    port: '3306'
 });
+
+pool.connect(function(err) {
+    if (err) {
+      console.error('Database connection failed: ' + err.stack);
+      return;
+    }
+  
+    console.log('Connected to database.');
+  });
 
 module.exports = {
     pool

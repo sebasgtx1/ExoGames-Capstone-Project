@@ -1,37 +1,36 @@
 const { pool } = require('./db_conexion');
 
-let event_id;
+let event_id = 0;
 
 const getEvents = async (req, res) => {
-    const response = await pool.query('SELECT * FROM events CROSS JOIN rules WHERE events.id = rules.event_id ORDER BY id ASC');
-    res.status(200).json(response.rows);
+    const response = await pool.query('SELECT * FROM events ORDER BY event_id ASC', (err,result, fields) =>{
+
+        res.status(200).json(result);
+    });
+    
 };
 
 const getEventId = async (req, res) => {
     const id = parseInt(req.params.id);
     console.log(req.params);
-    const response = await pool.query('SELECT * FROM events INNER JOIN rules ON events.id = rules.event_id WHERE id = $1', [id]);
+    const response = await pool.query('SELECT * FROM events WHERE event_id = (?)', [id], (err,result, fields) =>{
 
-    res.json(response.rows);
+        res.json(result);
+    });
+
 };
 
 const createEvent = async (req, res) => {
     const params = JSON.parse(JSON.stringify(req.body));
-    event_id = Math.round(Math.random() * 100000000);
-    console.log(event_id);
-    const response = await pool.query('INSERT INTO events (id, user_id, event_name, sport, description) VALUES ($1, $2, $3, $4, $5)', [
-        event_id, // DEBE GENERARSE SOLO Y SER UNICO
-        123, // ID DEL USUARIO; SE RECIBE POR POST REQUEST
+    const response = await pool.query('INSERT INTO events (user_id, event_name, sport, description, wins, losses) VALUES (?, ?, ?, ?, ? ,?)', [
+        1, //user_id
         params.event_name,
         params.sport,
-        params.description
-    ]);
-
-    const response_2 = await pool.query('INSERT INTO rules (event_id, wins, losses) VALUES ($1, $2, $3)', [
-        event_id,
+        params.description,
         params.wins,
         params.losses
     ]);
+
     res.json({
         message: 'Event Added successfully'
     })
@@ -40,7 +39,6 @@ const createEvent = async (req, res) => {
 const updateEvent = async (req, res) => {
     if (req.method === 'GET') {
         event_id = req.params.id;
-        console.log(event_id);
         res.sendFile('/public/templates/form_updateEvent.html', {
             root: __dirname
         })
@@ -50,18 +48,13 @@ const updateEvent = async (req, res) => {
     console.log(event_id);
     const params = JSON.parse(JSON.stringify(req.body));
 
-    const response = await pool.query('UPDATE events SET event_name = $1, sport = $2, description = $3 WHERE id = $4', [
+    const response = await pool.query('UPDATE events SET event_name = (?), sport = (?), description = (?) WHERE event_id = (?)', [
         params.event_name,
         params.sport,
         params.description,
         event_id
     ]);
 
-    const response_2 = await pool.query('UPDATE rules SET wins = $2, losses = $3 WHERE event_id = $1', [
-        event_id,
-        params.wins,
-        params.losses
-    ]);
     res.json({
         message: 'Event Updated successfully'
     })
@@ -77,7 +70,7 @@ const deleteEvent = async (req, res) => {
         return;
         }
         
-    await pool.query('DELETE FROM events where id = $1', [
+    await pool.query('DELETE FROM events where event_id = (?)', [
         event_id
     ]);
     res.json(`Event ${event_id} deleted Successfully`);

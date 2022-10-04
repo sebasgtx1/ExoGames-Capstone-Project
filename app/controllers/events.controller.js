@@ -1,60 +1,80 @@
-const { Pool } = require('pg');
-const { v4: uuidv4 } = require('uuid');
+const { pool } = require('./db_conexion');
 
-const pool = new Pool({
-    user: 'postgres',
-    host: 'localhost',
-    password: '0227',
-    database: 'exogames_test', // testing_database
-    port: '5432'
-});
+let event_id = 0;
 
 const getEvents = async (req, res) => {
-    const response = await pool.query('SELECT * FROM events ORDER BY id ASC');
-    res.status(200).json(response.rows);
+    const response = await pool.query('SELECT * FROM events ORDER BY event_id ASC', (err,result, fields) =>{
+
+        res.status(200).json(result);
+    });
+    
 };
 
 const getEventId = async (req, res) => {
     const id = parseInt(req.params.id);
-    const response = await pool.query('SELECT * FROM events WHERE id = $1', [id]);
-    res.json(response.rows);
+    console.log(req.params);
+    const response = await pool.query('SELECT * FROM events WHERE event_id = (?)', [id], (err,result, fields) =>{
+
+        res.json(result);
+    });
+
 };
 
 const createEvent = async (req, res) => {
-    const { name, sport, description} = req.body;
-    const response = await pool.query('INSERT INTO events (id, name, sport, description) VALUES ($1, $2, $3, $4)', [
-        uuidv4(),
-        name,
-        sport,
-        description
+    const params = JSON.parse(JSON.stringify(req.body));
+    const response = await pool.query('INSERT INTO events (user_id, event_name, sport, description, wins, losses) VALUES (?, ?, ?, ?, ? ,?)', [
+        1, //user_id
+        params.event_name,
+        params.sport,
+        params.description,
+        params.wins,
+        params.losses
     ]);
+
     res.json({
-        message: 'Event Added successfully',
-        body: {
-            event: {}
-        }
+        message: 'Event Added successfully'
     })
 };
 
 const updateEvent = async (req, res) => {
-    const id = parseInt(req.params.id);
-    const { name, sport, description } = req.body;
+    if (req.method === 'GET') {
+        event_id = req.params.id;
+        res.sendFile('/public/templates/form_updateEvent.html', {
+            root: __dirname
+        })
+        return;
 
-    const response = await pool.query('UPDATE users SET name = $1, sport = $2, description = $3 WHERE id = $3', [
-        name,
-        sport,
-        description
+    }
+    console.log(event_id);
+    const params = JSON.parse(JSON.stringify(req.body));
+
+    const response = await pool.query('UPDATE events SET event_name = (?), sport = (?), description = (?) WHERE event_id = (?)', [
+        params.event_name,
+        params.sport,
+        params.description,
+        event_id
     ]);
-    res.json('Event Updated Successfully');
+
+    res.json({
+        message: 'Event Updated successfully'
+    })
 };
 
 const deleteEvent = async (req, res) => {
-    const id = parseInt(req.params.id);
-    await pool.query('DELETE FROM events where id = $1', [
-        id
+    if (req.method === 'GET') {
+        event_id = req.params.id;
+        console.log(event_id);
+        res.sendFile('/public/templates/form_deleteEvent.html', {
+            root: __dirname
+        })
+        return;
+        }
+        
+    await pool.query('DELETE FROM events where event_id = (?)', [
+        event_id
     ]);
-    res.json(`Event ${id} deleted Successfully`);
-};
+    res.json(`Event ${event_id} deleted Successfully`);
+}
 
 module.exports = {
     getEvents,

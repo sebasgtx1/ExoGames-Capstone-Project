@@ -87,6 +87,10 @@ li a:hover {
     justify-content: center;
 }
 
+.section {
+    display: inline-block;
+}
+
 ul.option {
     display:inline-block;
     background:#00000000;
@@ -157,9 +161,9 @@ a.option:hover
 
 aside.option {
     position: absolute;
-    width: 514px;
+    width: 25%;
     height: 1624px;
-    left: 926px;
+    left: 75%;
     top: 0px;
 
     background: #bebebe;

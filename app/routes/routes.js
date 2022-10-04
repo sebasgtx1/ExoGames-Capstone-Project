@@ -2,7 +2,8 @@ const { Router } = require('express');
 const router = Router();
 
 const { getEvents, getEventId, createEvent, updateEvent, deleteEvent } = require('../controllers/events.controller');
-const { mainPage, loginPage, venuesPage, competitorsPage, usersPage, createEventPage } = require('../controllers/index.web_static');
+
+const { mainPage, loginPage, venuesPage, competitorsPage, usersPage } = require('../controllers/index.web_static');
 
 // get
 router.get('/', mainPage);

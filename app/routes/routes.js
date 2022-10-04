@@ -14,7 +14,7 @@ router.get('/competitors', competitorsPage);
 router.get('/users', usersPage);
 router.get('/events', getEvents);
 router.get('/event/:id', getEventId);
-router.get('/create_event', createEventPage);
+router.get('/create_event', createEvent);
 router.get('/update_event/:id', updateEvent)
 router.get('/delete_event/:id', deleteEvent)
 //post

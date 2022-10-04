@@ -21,6 +21,13 @@ const getEventId = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
+    if (req.method === 'GET') {
+        res.sendFile('/public/templates/form_createEvent.html', {
+            root: __dirname
+        })
+        return;
+
+    }
     const params = JSON.parse(JSON.stringify(req.body));
     const response = await pool.query('INSERT INTO events (user_id, event_name, sport, description, wins, losses) VALUES (?, ?, ?, ?, ? ,?)', [
         1, //user_id

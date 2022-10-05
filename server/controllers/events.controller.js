@@ -21,13 +21,6 @@ const getEventId = async (req, res) => {
 };
 
 const createEvent = async (req, res) => {
-    if (req.method === 'GET') {
-        res.sendFile('/public/templates/form_createEvent.html', {
-            root: __dirname
-        })
-        return;
-
-    }
     const params = JSON.parse(JSON.stringify(req.body));
     const response = await pool.query('INSERT INTO events (user_id, event_name, sport, description, wins, losses) VALUES (?, ?, ?, ?, ? ,?)', [
         1, //user_id
@@ -44,14 +37,6 @@ const createEvent = async (req, res) => {
 };
 
 const updateEvent = async (req, res) => {
-    if (req.method === 'GET') {
-        event_id = req.params.id;
-        res.sendFile('/public/templates/form_updateEvent.html', {
-            root: __dirname
-        })
-        return;
-
-    }
     console.log(event_id);
     const params = JSON.parse(JSON.stringify(req.body));
 
@@ -67,16 +52,7 @@ const updateEvent = async (req, res) => {
     })
 };
 
-const deleteEvent = async (req, res) => {
-    if (req.method === 'GET') {
-        event_id = req.params.id;
-        console.log(event_id);
-        res.sendFile('/public/templates/form_deleteEvent.html', {
-            root: __dirname
-        })
-        return;
-        }
-        
+const deleteEvent = async (req, res) => {    
     await pool.query('DELETE FROM events where event_id = (?)', [
         event_id
     ]);

@@ -7,13 +7,15 @@ const { getEvents, getEventId, createEvent, updateEvent, deleteEvent } = require
 router.get('/', getEvents);
 router.get('/events', getEvents);
 router.get('/event/:id', getEventId);
-router.get('/create_event', createEvent);
-router.get('/update_event/:id', updateEvent)
-router.get('/delete_event/:id', deleteEvent)
+
 //post
 router.post('/create_event', createEvent);
-router.post('/update_event', updateEvent);
-router.post('/delete_event', deleteEvent);
+
+//put
+router.put('/update_event/:id', updateEvent);
+
+//delete
+router.delete('/delete_event/:id', deleteEvent);
 
 
 module.exports = router;

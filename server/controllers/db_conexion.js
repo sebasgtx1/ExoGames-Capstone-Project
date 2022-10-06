@@ -1,22 +1,14 @@
-const mysql = require('mysql');
+const { createPool } = require('mysql2/promise');
 
-const pool = mysql.createConnection({
-    user: 'admin',
-    host: 'exogames-database.c0sknxrn5p3x.us-east-1.rds.amazonaws.com',
-    password: 'Exogames1*',
+const pool = createPool({
+    user: 'root',
+    host: 'localhost',
+    password: '0227',
     database: 'public',
-    port: '3306'
+    port: '3306',
+    multipleStatements:true
 });
 
-pool.connect(function(err) {
-    if (err) {
-      console.error('Database connection failed: ' + err.stack);
-      return;
-    }
-  
-    console.log('Connected to database.');
-  });
-
 module.exports = {
-    pool
-}
+  pool
+};

@@ -25,6 +25,7 @@ function App() {
           <Route exact path='/venues' element={<> <ButtonContainer /> <LandingPage /></>} />
           <Route exact path='/competitors' element={<> <ButtonContainer /> <LandingPage /></>} />
           <Route exact path='/users' element={<> <ButtonUserContainer /> </>} />
+          <Route path="/my-events" element={<> <ButtonUserContainer /> </>} />
           <Route path="/create_event" element={<> <ButtonUserContainer /> <CreateEvent /></>} />
           <Route path="/create_competitor" element={<> <ButtonUserContainer /> </>} />
           <Route exact path='/event/:id' element={<> <ButtonContainer /> < EventDetails /></>} />

@@ -14,6 +14,7 @@ export function ButtonUserContainer() {
           </div>
           <div className={stylesButton.center_div}>
             <ul className={stylesButton.dataButtons}>
+                <li className={stylesButton.dataButton}><Link className={stylesButton.dataUserInsideButton} to="/my-events">My Events</Link></li>
                 <li className={stylesButton.dataButton}><Link className={stylesButton.dataUserInsideButton} to="/create_event">Create Event</Link></li>
                 <li className={stylesButton.dataButton}><Link className={stylesButton.dataUserInsideButton} to="/create_competitor">Create Coompetitor</Link></li>
             </ul>

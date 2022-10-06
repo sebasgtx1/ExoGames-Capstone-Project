@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import { get } from "../utils/httpClient";
 import styles from './CardDetails.module.css'
 
-export function CardDetails() {
+export function CardEventDetails() {
     const { eventId } = useParams();
     const [event, setEvent] = useState(null);
 

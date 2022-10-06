@@ -5,7 +5,6 @@ import { ButtonUserContainer } from "./components/ButtonUserContainer";
 import { GridEvents } from "./components/GridEvents";
 import { GridVenues } from "./components/GridVenues";
 import { GridCompetitors } from "./components/GridCompetitors";
-import { GridUsers } from "./components/GridUsers";
 import { PageNotFound } from "./components/PageNotFound";
 import { CardEventDetails } from "./pages/CardEventDetails";
 import { CardVenueDetails } from "./pages/CardVenueDetails";
@@ -15,7 +14,7 @@ import { Routes, Route, BrowserRouter as Router } from 'react-router-dom';
 export function App() {
     return (
         <Router>
-            <div>
+            <body>
                 <header>
                     <LogoExogames />
                 </header>
@@ -35,7 +34,7 @@ export function App() {
                 <footer>
                     <LogoGlobant />
                 </footer>
-            </div>
+            </body>
         </Router>
     );
 }

@@ -1,0 +1,30 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 3em;
+  min-height: 100vh;
+  background: url('./components/EllipseLogo_1.svg'), url('./components/EllipseLogo_2.svg'), linear-gradient(90deg, #000000 0%, #424242 100%), #FFFFFF;
+  background-repeat: no-repeat, no-repeat;
+  background-position: right top, left;
+}
+
+footer {
+  background-color: black;
+  padding: 0.1em 0;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
+}
+

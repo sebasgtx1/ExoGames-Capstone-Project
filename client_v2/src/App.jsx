@@ -1,4 +1,3 @@
-import './App.css'
 import { Route, Routes } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
 import CreateEvent from './pages/CreateEvent'
@@ -9,7 +8,6 @@ import { LogoGlobant } from './components/LogoGlobant'
 import {ButtonContainer} from './components/ButtonContainer'
 import {ButtonUserContainer} from './components/ButtonUserContainer'
 import { SearchBar } from './components/SearchBar'
-
 function App() {
 
 

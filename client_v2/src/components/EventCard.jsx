@@ -12,11 +12,13 @@ export function EventCard({ event }) {
                     className={styles.EventImage} />
                 <div>
                     <p>
-                    Id event : {event.event_id} <br />
-                    Event name : {event.event_name} <br />
-                    Sport : {event.sport}
+                        Id event : {event.event_id} <br />
+                        Event name : {event.event_name} <br />
+                        Sport : {event.sport}
                     </p>
                 </div>
             </Link>
         </li>);
+
+
 }

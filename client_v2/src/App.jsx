@@ -8,6 +8,7 @@ import { LogoExogames } from './components/LogoExogames'
 import { LogoGlobant } from './components/LogoGlobant'
 import {ButtonContainer} from './components/ButtonContainer'
 import {ButtonUserContainer} from './components/ButtonUserContainer'
+import { SearchBar } from './components/SearchBar'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     <>
       <header>
         <LogoExogames />
+        <SearchBar/>
       </header>
       <main>
         <Routes>
@@ -31,6 +33,7 @@ function App() {
           <Route exact path='/event/:id' element={<> <ButtonContainer /> < EventDetails /></>} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+
       </main>
       <footer>
         <LogoGlobant />

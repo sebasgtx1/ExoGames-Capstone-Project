@@ -1,6 +1,5 @@
 const { pool } = require('./db_conexion');
 
-let event_id = 0;
 
 const getEvents = async (req, res) => {
     try {

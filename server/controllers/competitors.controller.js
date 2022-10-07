@@ -1,7 +1,5 @@
 const { pool } = require('./db_conexion');
 
-let competitor_id = 0;
-
 const getCompetitors = async (req, res) => {
     try {
         const [result] = await pool.query(
@@ -32,14 +30,13 @@ const getCompetitorId = async (req, res) => {
 
 const createCompetitor = async (req, res) => {
     try {
-        const { description, sport, wins, losses } = req.body;
+        const { name, sport, description, team_players } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO competitors (competitor_id, description, sport, wins, losses) VALUES (?, ?, ?, ?, ?)', [
-            4, //competitor_id
+            'INSERT INTO competitors (name, team_players, description, sport) VALUES (?, ?, ?, ?)', [
+            name,
+            team_players,
             description,
-            sport,
-            wins,
-            losses
+            sport
         ]);
         res.status(200).json({ message: "Competitor created succecsfully" })
     } catch (error) {

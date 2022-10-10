@@ -8,10 +8,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(express.static(path.join(__dirname, '/controllers/public')));
 
 // Routes
-app.use(require('./routes/routes'));
+app.use(require('./routes/events.routes'));
+app.use(require('./routes/competitors.routes'));
+app.use(require('./routes/matches.routes'));
+app.use(require('./routes/venues.routes'));
 
 app.listen(4000);
 console.log('Server on port', 4000);

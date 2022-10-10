@@ -9,9 +9,9 @@ body {
   position: relative;
   padding-bottom: 3em;
   min-height: 100vh;
-  background: url('./components/EllipseLogo_1.svg'), url('./components/EllipseLogo_2.svg'), linear-gradient(90deg, #000000 0%, #424242 100%), #FFFFFF;
+  background: url('../logos/EllipseLogo_1.svg'), url('../logos/EllipseLogo_2.svg'), linear-gradient(90deg, #000000 0%, #424242 100%), #FFFFFF;
   background-repeat: no-repeat, no-repeat;
-  background-position: right top, left;
+  background-position: right top, left top;
 }
 
 footer {

@@ -1,10 +1,7 @@
 import React from 'react';
-import { EventGrid } from '../components/EventsGrid';
+import { EventGrid } from '../components/grids/EventsGrid';
 
-function LandingPage() {
+export function LandingPage() {
 
     return <EventGrid/>
 }
-
-
-export default LandingPage;

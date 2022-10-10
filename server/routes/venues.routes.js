@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getVenues, getVenueId, createVenue, updateVenue, deleteVenue } = require('../controllers/venues.controller');
+const { getVenues, getVenueId, getMyVenues, getMyVenuesId, createVenue, updateVenue, deleteVenue } = require('../controllers/venues.controller');
 
 // get
 router.get('/venues', getVenues);
 router.get('/venue/:id', getVenueId);
+router.get('/venue/:user_id/:id', getMyVenuesId);
+router.get('/venues/:user_id', getMyVenues);
 
 //post
 router.post('/create_venue', createVenue);

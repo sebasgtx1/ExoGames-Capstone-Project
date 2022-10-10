@@ -1,11 +1,13 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getCompetitors, getCompetitorId, createCompetitor, updateCompetitor, deleteCompetitor } = require('../controllers/competitors.controller');
+const { getCompetitors, getCompetitorId, getMyCompetitorId, getMyCompetitors, createCompetitor, updateCompetitor, deleteCompetitor } = require('../controllers/competitors.controller');
 
 // get
 router.get('/competitors', getCompetitors);
 router.get('/competitor/:id', getCompetitorId);
+router.get('/competitor/:user_id/:id', getMyCompetitorId);
+router.get('/competitors/:user_id', getMyCompetitors);
 
 //post
 router.post('/create_competitor', createCompetitor);

@@ -5,7 +5,7 @@ import {
   dropdown_item_list,
   active,
   item_list,
-} from "./styles/DropdownButton.module.css";
+} from "../styles/DropdownButton.module.css";
 
 export function DropdownButton({ items = [], dropdownTitle }) {
   const activatorRef = useRef(null);

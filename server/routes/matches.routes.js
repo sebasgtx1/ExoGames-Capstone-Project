@@ -1,10 +1,11 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getMatchesId, createMatch, updateMatch, deleteMatch } = require('../controllers/matches.controller');
+const { getMatchesId, getMatch, createMatch, updateMatch, deleteMatch } = require('../controllers/matches.controller');
 
 // get
-router.get('/match/:event_id', getMatchesId);
+router.get('/matches/:event_id', getMatchesId);
+router.get('/match/:id', getMatch);
 
 //post
 router.post('/create_match/:event_id', createMatch);

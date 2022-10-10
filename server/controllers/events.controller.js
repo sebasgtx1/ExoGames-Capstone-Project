@@ -4,9 +4,42 @@ const { pool } = require('./db_conexion');
 const getEvents = async (req, res) => {
     try {
         const [result] = await pool.query(
-            'SELECT * FROM events ORDER BY event_id ASC'
+            'SELECT * FROM events ORDER BY event_id DESC'
         );
         res.json(result);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+
+};
+
+const getMyEvents = async (req, res) => {
+    try {
+        const user_id = parseInt(req.params.user_id);
+        const [result] = await pool.query(
+            'SELECT * FROM events WHERE user_id = (?) ORDER BY event_id DESC', [user_id]
+        );
+        if (result.length === 0)
+            return res.status(404).json({ message: "Event not found" });
+
+        res.json(result);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+
+};
+
+const getMyEventId = async (req, res) => {
+    try {
+        const user_id = parseInt(req.params.user_id);
+        const id = parseInt(req.params.id);
+        const [result] = await pool.query(
+            'SELECT * FROM events WHERE (user_id = (?) AND event_id = (?))', [user_id, id]
+        );
+        if (result.length === 0)
+            return res.status(404).json({ message: "Event not found" });
+
+        res.json(result[0]);
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -31,17 +64,21 @@ const getEventId = async (req, res) => {
 
 const createEvent = async (req, res) => {
     try {
-        const { event_name, sport, description, wins, losses } = req.body;
+        const { event_name, sport, image, description, wins, losses } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO events (user_id, event_name, sport, description, wins, losses) VALUES (?, ?, ?, ?, ? ,?)', [
+            'INSERT INTO events (user_id, event_name, sport, image, description, wins, losses) VALUES (?, ?, ?, ?, ?, ? ,?)', [
             4, //user_id
             event_name,
             sport,
+            image,
             description,
             wins,
             losses
         ]);
-        res.status(200).json({ message: "Event created succecsfully" })
+        res.json({
+            event_id: result.insertId,
+            event_name: event_name
+        });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -78,6 +115,8 @@ const deleteEvent = async (req, res) => {
 
 module.exports = {
     getEvents,
+    getMyEventId,
+    getMyEvents,
     getEventId,
     createEvent,
     updateEvent,

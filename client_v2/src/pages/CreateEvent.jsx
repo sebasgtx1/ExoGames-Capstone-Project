@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
-import stylesSelect from './SelectComponent.module.css';
-import IncDecCounter from '../components/IncDecCounter'
+import stylesSelect from '../components/styles/SelectComponent.module.css';
+import IncDecCounter from '../components/button_containers/IncDecCounter'
+import Swal from 'sweetalert2'
 /* import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
  */
 
@@ -16,24 +18,32 @@ const options = [
     { value: 'Paintball', label: 'Paintball' }
 ]
 
-function CreateEvent() {
+export function CreateEvent() {
+
+    const navigate = useNavigate();
     return (
         <div className={styles.center}>
-            <h1>Create an event</h1>
+            <h1>Create Event</h1>
             <Formik
                 initialValues={{
                     event_name: "",
                     description: "",
-                    sport: "Sport",
+                    sport: "football",
+                    image: "",
                     wins: "",
                     losses: ""
 
                 }}
                 onSubmit={async (values, actions) => {
-                    console.log(values);
                     try {
-                        await createEventRequest(values);
+                        const resp = await createEventRequest(values);
                         actions.resetForm();
+                        Swal.fire('Event Created succesfully')
+                        navigate('/create_match/' + resp.data.event_id,{
+                            state: {
+                              event_id: resp.data.event_id,
+                              event_name: resp.data.event_name
+                            }});
                     } catch (error) {
                         console.log(error)
 
@@ -47,8 +57,8 @@ function CreateEvent() {
                         <input type="text" name="event_name"
                             placeholder="Event Name"
                             onChange={props.handleChange}
-                            value={props.values.event_name} 
-                            required/>
+                            value={props.values.event_name}
+                            required />
                         <h3></h3>
                         <textarea
                             name="description"
@@ -57,7 +67,7 @@ function CreateEvent() {
                             onChange={props.handleChange}
                             value={props.values.description} />
                         <h3></h3>
-                        {/* <select name="sport" type="text"
+                        <select name="sport" type="text"
                             onChange={props.handleChange}
                             value={props.values.sport}
                             required>
@@ -66,26 +76,31 @@ function CreateEvent() {
                             <option value="baseball">Baseball</option>
                             <option value="Archery">Archery</option>
                             <option value="Paintball">Paintball</option>
-                        </select> */}
-                        <Select className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} />
+                        </select>
                         <h3></h3>
+                        <h1>Upload an image</h1>
+                        <h3></h3>
+                        <input type="file" name="image"
+                        onChange={props.handleChange}/>
+                        {/*<Select className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} />*/}
+                        <h1>Rules</h1>
                         <label>Wins</label>
-                        {/* <input type="int" name="wins"
+                        <input type="int" name="wins"
                             onChange={props.handleChange}
-                            value={props.values.wins} 
-                            required/> */}
-                        < IncDecCounter />
+                            value={props.values.wins}
+                            required />
+                        {/*< IncDecCounter />*/}
                         <h3></h3>
                         <label>Losses</label>
-                        {/* <input type="int" name="losses"
+                        <input type="int" name="losses"
                             onChange={props.handleChange}
-                            value={props.values.losses} 
-                            required/> */}
-                        < IncDecCounter />
+                            value={props.values.losses}
+                            required />
+                        {/*< IncDecCounter />*/}
                         <h3></h3>
 
                         <button type="reset" >Reset</button>
-                        <button type="submit">Submit</button>
+                        <button type="submit">Next</button>
 
                     </form>
                 )}
@@ -93,5 +108,3 @@ function CreateEvent() {
         </div>
     );
 }
-
-export default CreateEvent;

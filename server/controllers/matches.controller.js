@@ -9,6 +9,22 @@ const getMatchesId = async (req, res) => {
         if (result.length === 0)
             return res.status(404).json({ message: "Matches not found" });
 
+        res.json(result);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+
+};
+
+const getMatch = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const [result] = await pool.query(
+            'SELECT * FROM matches WHERE match_id = (?)', [id]
+        );
+        if (result.length === 0)
+            return res.status(404).json({ message: "Matches not found" });
+
         res.json(result[0]);
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -19,17 +35,21 @@ const getMatchesId = async (req, res) => {
 const createMatch = async (req, res) => {
     try {
         const event_id = parseInt(req.params.event_id);
-        const { competitor1_id, competitor2_id, venue_id, competitor1_group, competitor2_group } = req.body;
+        const { competitor1_id, competitor2_id, venue_id, competitor1_group, competitor2_group, date, time } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO matches (event_id, competitor1_id, competitor2_id, venue_id, competitor1_group, competitor2_group) VALUES (?, ?, ?, ?, ?, ?)', [
+            'INSERT INTO matches (event_id, competitor1_id, competitor2_id, venue_id, competitor1_group, competitor2_group, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
             event_id,
             competitor1_id,
             competitor2_id,
             venue_id,
             competitor1_group,
-            competitor2_group
+            competitor2_group,
+            date,
+            time
         ]);
-        res.status(200).json({ message: "Match created succecsfully" })
+        res.json({
+            event_id: event_id,
+        });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -66,6 +86,7 @@ const deleteMatch = async (req, res) => {
 
 module.exports = {
     getMatchesId,
+    getMatch,
     createMatch,
     updateMatch,
     deleteMatch

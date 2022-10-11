@@ -16,7 +16,7 @@ export function CreateMatch(props) {
     const location = useLocation();
     const navigate = useNavigate();
     const event_id = location.state.event_id;
-    const event_name = location.state.event_name
+
     function handleClick() {
 
         navigate('/my_events')

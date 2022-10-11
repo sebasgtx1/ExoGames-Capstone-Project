@@ -1,6 +1,6 @@
-import stylesButton from "../styles/ButtonContainer.module.css"
 import { BiAddToQueue } from "react-icons/bi";
 import { useNavigate } from 'react-router-dom'
+import stylesButton from "../styles/ButtonContainer.module.css"
 
 export function AddMatchButton(props) {
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ export function AddMatchButton(props) {
     }
     return (
 
-        <button onClick={confirm}><BiAddToQueue />Add match</button>
+        <button className={stylesButton.dataInsideButton} onClick={confirm}><BiAddToQueue />Add match</button>
 
 
     )

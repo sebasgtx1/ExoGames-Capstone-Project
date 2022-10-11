@@ -1,12 +1,14 @@
 const { pool } = require('./db_conexion');
 
-let match_id = 0;
-
-const getMatches = async (req, res) => {
+const getMatchesId = async (req, res) => {
     try {
+        const event_id = parseInt(req.params.event_id);
         const [result] = await pool.query(
-            'SELECT * FROM matches ORDER BY match_id ASC'
+            'SELECT * FROM matches WHERE event_id = (?)', [event_id]
         );
+        if (result.length === 0)
+            return res.status(404).json({ message: "Matches not found" });
+
         res.json(result);
     } catch (error) {
         return res.status(500).json({ message: error.message });
@@ -14,14 +16,14 @@ const getMatches = async (req, res) => {
 
 };
 
-const getMatchId = async (req, res) => {
+const getMatch = async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         const [result] = await pool.query(
             'SELECT * FROM matches WHERE match_id = (?)', [id]
         );
         if (result.length === 0)
-            return res.status(404).json({ message: "Match not found" });
+            return res.status(404).json({ message: "Matches not found" });
 
         res.json(result[0]);
     } catch (error) {
@@ -32,15 +34,22 @@ const getMatchId = async (req, res) => {
 
 const createMatch = async (req, res) => {
     try {
-        const { competitor1_id, competitor2_id, event_id } = req.body;
+        const event_id = parseInt(req.params.event_id);
+        const { competitor1_id, competitor2_id, venue_id, competitor1_group, competitor2_group, date, time } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO matches (match_id, competitor1_id, competitor2_id, event_id) VALUES (?, ?, ?, ?)', [
-            4, //competitor_id
+            'INSERT INTO matches (event_id, competitor1_id, competitor2_id, venue_id, competitor1_group, competitor2_group, date, time) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [
+            event_id,
             competitor1_id,
             competitor2_id,
-            event_id
+            venue_id,
+            competitor1_group,
+            competitor2_group,
+            date,
+            time
         ]);
-        res.status(200).json({ message: "Competitor created succecsfully" })
+        res.json({
+            event_id: event_id,
+        });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -52,7 +61,7 @@ const updateMatch = async (req, res) => {
         const [result] = await pool.query(
             'UPDATE matches SET ? WHERE match_id = (?)', [
             req.body,
-            req.params.id
+            req.params.match_id
         ]);
         res.json(result);
     } catch (error) {
@@ -64,7 +73,7 @@ const deleteMatch = async (req, res) => {
     try {
         const [result] = await pool.query(
             'DELETE FROM matches where match_id = (?)', [
-            req.params.id
+            req.params.match_id
         ]);
         if (result.affectedRows === 0)
             return res.status(404).json({ message: "Match not found" });
@@ -76,8 +85,8 @@ const deleteMatch = async (req, res) => {
 }
 
 module.exports = {
-    getMatches,
-    getMatchId,
+    getMatchesId,
+    getMatch,
     createMatch,
     updateMatch,
     deleteMatch

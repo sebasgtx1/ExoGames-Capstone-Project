@@ -32,7 +32,7 @@
 .EventImage {
     border-radius: 10px;
     background-color: azure;
-    background-image: url('./img/cancha.png');
+    background-image: url('./img/event-logo.png');
 }
 .details {
     width: 100%;

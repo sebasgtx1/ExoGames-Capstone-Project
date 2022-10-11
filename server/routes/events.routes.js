@@ -1,12 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 
-const { getEvents, getEventId, createEvent, updateEvent, deleteEvent } = require('../controllers/events.controller');
+const { getEvents, getMyEvents, getMyEventId, getEventId, createEvent, updateEvent, deleteEvent } = require('../controllers/events.controller');
 
 // get
 router.get('/', getEvents);
 router.get('/events', getEvents);
 router.get('/event/:id', getEventId);
+router.get('/event/:user_id/:id', getMyEventId);
+router.get('/events/:user_id', getMyEvents);
 
 //post
 router.post('/create_event', createEvent);

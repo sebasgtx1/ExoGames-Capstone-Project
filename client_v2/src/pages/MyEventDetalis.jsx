@@ -10,6 +10,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { UpdateMatchButton } from "../components/button_containers/UpdateMatchButton";
 import { GetCompetitor } from "../components/list/CompetitorInfo";
 import { GetVenue } from "../components/list/VenueInfo";
+import { AddMatchButton } from "../components/button_containers/AddMatchButton";
 
 
 
@@ -63,6 +64,7 @@ export function MyEventDetails() {
                 <p>
                     Wins: {event.wins} <br />
                     Losses: {event.losses}
+                    
                 </p>
                 <div >
                     <Button src={"/update_event/" + event.event_id} title="Update" />
@@ -79,7 +81,10 @@ export function MyEventDetails() {
                             <UpdateMatchButton match={match} />
                         </div>
                     ))}
+
                 </ul>
+                <AddMatchButton event ={event}/>
+                
             </div>
 
         </div>

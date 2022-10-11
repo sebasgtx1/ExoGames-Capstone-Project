@@ -34,13 +34,7 @@ export function UpdateVenue() {
                 onSubmit={async (values, actions) => {
                     try {
                         const resp = await updateVenueRequest(values, id);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Your work has been saved',
-                            showConfirmButton: false,
-                            timer: 1500
-                          })
+                        Swal.fire('Venue Updated succesfully');
                         navigate(-1)
                     } catch (error) {
                         console.log(error)

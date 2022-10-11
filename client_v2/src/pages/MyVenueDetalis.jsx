@@ -4,6 +4,7 @@ import { getMyVenueIdRequest } from "../api/venues.api";
 import styles from '../components/styles/VenueDetails.module.css'
 import { Button } from "../components/reusables/Button";
 import { DeleteButtonVenue } from "../components/button_containers/Delete_Button_venue";
+import { ButtonNoStyle } from "../components/reusables/ButtonNoStyle";
 
 
 
@@ -36,7 +37,7 @@ export function MyVenueDetails() {
                     <strong>Description:</strong> {venue.description}
                 </p>
                 <div >
-                <Button src={"/update_venue/" + venue.venue_id} title="Update" />
+                <ButtonNoStyle src={"/update_venue/" + venue.venue_id} title="Update" />
                 <DeleteButtonVenue venue_id={venue.venue_id} />
 
             </div>

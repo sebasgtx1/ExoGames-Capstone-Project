@@ -4,6 +4,7 @@ import { getMyCompetitorIdRequest } from "../api/competitors.api";
 import { Button } from "../components/reusables/Button";
 import styles from '../components/styles/CompetitorDetails.module.css'
 import { DeleteButtonCompetitor } from "../components/button_containers/Delete_Button_competitor";
+import { ButtonNoStyle } from "../components/reusables/ButtonNoStyle";
 
 
 export function MyCompetitorDetails() {
@@ -38,7 +39,7 @@ export function MyCompetitorDetails() {
                     <p><strong>Sport:</strong> {competitor.sport}</p>
                 </p>
                 <div >
-                    <Button src={"/update_competitor/" + competitor.competitor_id} title="Update" />
+                    <ButtonNoStyle src={"/update_competitor/" + competitor.competitor_id} title="Update" />
                     <DeleteButtonCompetitor competitor_id={competitor.competitor_id} />
 
                 </div>

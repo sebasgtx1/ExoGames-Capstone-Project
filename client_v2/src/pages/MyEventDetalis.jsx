@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getMyEventIdRequest } from "../api/events.api";
-import { Button } from "../components/reusables/Button";
 import { DeleteButton } from "../components/button_containers/Delete_Button";
 import styles from '../components/styles/EventDetails.module.css'
 import { getEventMatches } from "../api/matches.api";
 import { DeleteMatchButton } from "../components/button_containers/DeleteButtonMatch";
-import { AiFillDelete } from "react-icons/ai";
 import { UpdateMatchButton } from "../components/button_containers/UpdateMatchButton";
 import { GetCompetitor } from "../components/list/CompetitorInfo";
 import { GetVenue } from "../components/list/VenueInfo";
 import { AddMatchButton } from "../components/button_containers/AddMatchButton";
+import { ButtonNoStyle } from "../components/reusables/ButtonNoStyle";
 
 
 
@@ -67,7 +66,7 @@ export function MyEventDetails() {
                     
                 </p>
                 <div >
-                    <Button src={"/update_event/" + event.event_id} title="Update" />
+                    <ButtonNoStyle src={"/update_event/" + event.event_id} title="Update" />
                     <DeleteButton event_id={event.event_id} />
 
                 </div>

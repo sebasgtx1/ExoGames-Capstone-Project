@@ -25,7 +25,7 @@ import { UpdateCompetitor } from './pages/UpdateCompetitor'
 import { UpdateVenue } from './pages/UpdateVenue'
 import { UpdateMatch } from './pages/UpdateMatch'
 import { LoginPage } from './pages/LoginPage'
-import { RegisterPage } from './pages/ResgisterPage'
+import { RegisterPage } from './pages/RegisterPage'
 import { ButtonContainerLoged } from './components/button_containers/ButtonContainerLoged'
 import { UpdateEventCreation } from './pages/UpdateEventCreation'
 

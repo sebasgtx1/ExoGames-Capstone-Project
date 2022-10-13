@@ -8,8 +8,22 @@ import IncDecCounter from '../components/button_containers/IncDecCounter'
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
 
+const options = [
+    { value: 'football', label: 'Football' },
+    { value: 'basketball', label: 'Basketball' },
+    { value: 'baseball', label: 'Baseball' },
+    { value: 'archery', label: 'Archery' },
+    { value: 'paintball', label: 'Paintball' }
+]
+
 export function CreateCompetitor() {
     const navigate = useNavigate();
+    const [ optionSelected, setOptionSelected ] = useState('football')
+
+    const handleChangeSelected = (selectedOption) => {
+        console.log(selectedOption);
+        setOptionSelected(selectedOption.value);
+    };
     return (
         <div className={styles.center}>
             <h1>Create competitor</h1>
@@ -22,6 +36,7 @@ export function CreateCompetitor() {
 
                 }}
                 onSubmit={async (values, actions) => {
+                    values.sport = optionSelected;
                     console.log(values);
                     try {
                         await createCompetitorRequest(values);
@@ -64,7 +79,7 @@ export function CreateCompetitor() {
                             onChange={props.handleChange}
                             value={props.values.description} />
                         <h3></h3>
-                        <select name="sport" type="text"
+                        {/* <select name="sport" type="text"
                             onChange={props.handleChange}
                             defaultValue={props.values.sport}
                             required>
@@ -74,7 +89,8 @@ export function CreateCompetitor() {
                             <option value="baseball">Baseball</option>
                             <option value="Archery">Archery</option>
                             <option value="Paintball">Paintball</option>
-                        </select>
+                        </select> */}
+                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
                         <h3></h3>
 
                         <button type="reset" >Reset</button>

@@ -7,6 +7,9 @@ import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
 import IncDecCounter from '../components/button_containers/IncDecCounter'
 import Swal from 'sweetalert2'
+import { DropZone } from "../components/reusables/DropZone";
+import { useDropzone } from "react-dropzone"
+
 /* import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
  */
 
@@ -19,31 +22,27 @@ const options = [
 ]
 
 export function CreateEvent() {
-    const [ wins, setWins ] = useState(0)
-    const [ losses, setLosses ] = useState(0)
-    const [ optionSelected, setOptionSelected ] = useState('Football')
+    const [wins, setWins] = useState(0)
+    const [losses, setLosses] = useState(0)
+    const [optionSelected, setOptionSelected] = useState('Football')
 
-    let incWins =()=>{
-        if(wins<1000)
-        {
-            setWins(Number(wins)+1);
+    let incWins = () => {
+        if (wins < 1000) {
+            setWins(Number(wins) + 1);
         }
     };
     let decWins = () => {
-        if(wins>0)
-        {
+        if (wins > 0) {
             setWins(wins - 1);
         }
     };
-    let incLosses =()=>{
-        if(losses<1000)
-        {
-            setLosses(Number(losses)+1);
+    let incLosses = () => {
+        if (losses < 1000) {
+            setLosses(Number(losses) + 1);
         }
     };
     let decLosses = () => {
-        if(losses>0)
-        {
+        if (losses > 0) {
             setLosses(losses - 1);
         }
     };
@@ -51,6 +50,23 @@ export function CreateEvent() {
         console.log(selectedOption);
         setOptionSelected(selectedOption.value);
     };
+
+    const [files, setFiles] = useState([])
+
+    const { getRootProps, getInputProps } = useDropzone({
+        accept: "image/*",
+        onDrop: (acceptedFiles) => {
+            setFiles(
+                acceptedFiles.map((file) =>
+                    Object.assign(file, {
+                        preview: URL.createObjectURL(file),
+                    })
+                )
+            )
+        },
+    })
+    
+
 
     const navigate = useNavigate();
     return (
@@ -70,16 +86,20 @@ export function CreateEvent() {
                     values.wins = wins;
                     values.losses = losses;
                     values.sport = optionSelected;
+                    values.image = files[0].preview;
+                    console.log(files[0].preview);
                     try {
+
                         const resp = await createEventRequest(values);
                         actions.resetForm();
                         Swal.fire('Event Created succesfully')
-                        navigate('/create_match/' + resp.data.event_id,{
+                        navigate('/create_match/' + resp.data.event_id, {
                             state: {
-                              event_id: resp.data.event_id,
-                              event_name: resp.data.event_name,
-                              sport: resp.data.sport
-                            }});
+                                event_id: resp.data.event_id,
+                                event_name: resp.data.event_name,
+                                sport: resp.data.sport
+                            }
+                        });
                     } catch (error) {
                         console.log(error)
 
@@ -103,14 +123,14 @@ export function CreateEvent() {
                             onChange={props.handleChange}
                             value={props.values.description} />
                         <h3></h3>
-                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
+                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected} />
                         <h3></h3>
                         <h1>Upload an image</h1>
                         <h3></h3>
-                        <input type="file" name="image"
-                        onChange={props.handleChange}/>
+                        <DropZone func={[getInputProps, getRootProps]} files={files}/>
+
                         <h1>Rules</h1>
-                        <label>Wins</label><br/>
+                        <label>Wins</label><br />
                         <button onClick={decWins} type="button">-</button>
                         <input type="int" name="wins"
                             onChange={props.handleChange}
@@ -119,7 +139,7 @@ export function CreateEvent() {
                         <button onClick={incWins} type="button">+</button>
                         {/*< IncDecCounter />*/}
                         <h3></h3>
-                        <label>Losses</label><br/>
+                        <label>Losses</label><br />
                         <button onClick={decLosses} type="button">-</button>
                         <input type="text" name="losses"
                             onChange={props.handleChange}

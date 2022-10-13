@@ -77,7 +77,8 @@ const createEvent = async (req, res) => {
         ]);
         res.json({
             event_id: result.insertId,
-            event_name: event_name
+            event_name: event_name,
+            sport: sport
         });
     } catch (error) {
         return res.status(500).json({ message: error.message });

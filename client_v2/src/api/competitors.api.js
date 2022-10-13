@@ -18,6 +18,10 @@ export const getMyCompetitorIdRequest = async (user_id, id) => {
     return await axios.get(API + "competitor/" + user_id + "/" + id);
 }
 
+export const getCompetitorSport = async (sport) => {
+    return await axios.get(API + "competitors_sport/" + sport);
+}
+
 export const createCompetitorRequest = async (competitor) => {
     return await axios.post(API + "create_competitor", competitor);
 }

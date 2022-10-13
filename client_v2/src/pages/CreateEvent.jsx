@@ -11,11 +11,11 @@ import Swal from 'sweetalert2'
  */
 
 const options = [
-    { value: 'Football', label: 'Football' },
-    { value: 'Basketball', label: 'Basketball' },
-    { value: 'Baseball', label: 'Baseball' },
-    { value: 'Archery', label: 'Archery' },
-    { value: 'Paintball', label: 'Paintball' }
+    { value: 'football', label: 'Football' },
+    { value: 'basketball', label: 'Basketball' },
+    { value: 'baseball', label: 'Baseball' },
+    { value: 'archery', label: 'Archery' },
+    { value: 'paintball', label: 'Paintball' }
 ]
 
 export function CreateEvent() {
@@ -70,7 +70,6 @@ export function CreateEvent() {
                     values.wins = wins;
                     values.losses = losses;
                     values.sport = optionSelected;
-                    console.log(values);
                     try {
                         const resp = await createEventRequest(values);
                         actions.resetForm();
@@ -78,7 +77,8 @@ export function CreateEvent() {
                         navigate('/create_match/' + resp.data.event_id,{
                             state: {
                               event_id: resp.data.event_id,
-                              event_name: resp.data.event_name
+                              event_name: resp.data.event_name,
+                              sport: resp.data.sport
                             }});
                     } catch (error) {
                         console.log(error)
@@ -103,16 +103,6 @@ export function CreateEvent() {
                             onChange={props.handleChange}
                             value={props.values.description} />
                         <h3></h3>
-                        {/* <select name="sport" type="text"
-                            onChange={props.handleChange}
-                            value={props.values.sport}
-                            required>
-                            <option value="football">Football</option>
-                            <option value="basketball">Basketball</option>
-                            <option value="baseball">Baseball</option>
-                            <option value="Archery">Archery</option>
-                            <option value="Paintball">Paintball</option>
-                        </select><br/> */}
                         <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
                         <h3></h3>
                         <h1>Upload an image</h1>

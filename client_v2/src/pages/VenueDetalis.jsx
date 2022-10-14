@@ -24,6 +24,7 @@ export function VenueDetails() {
             <img
                     width={316}
                     height={234}
+                    src={venue.image}
                     className={styles.cardImage} />
                 
                 <p className={styles.firstItem}>

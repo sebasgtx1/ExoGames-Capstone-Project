@@ -27,6 +27,7 @@ export function MyCompetitorDetails() {
                 <img
                     width={316}
                     height={234}
+                    src={competitor.image}
                     className={styles.cardImage} />
 
                 <p className={styles.firstItem}>

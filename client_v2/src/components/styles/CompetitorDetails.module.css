@@ -14,6 +14,8 @@
   .cardImage {
     border-radius: 15px;
     background-image: url('./img/competitor-logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
   }
   
   .cardDetails {

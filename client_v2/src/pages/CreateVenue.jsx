@@ -22,7 +22,7 @@ export function CreateVenue() {
                     Resizer.imageFileResizer(
                         event.target.files[0],
                         316,
-                        234,
+                        219,
                         "JPEG",
                         100,
                         0,
@@ -31,7 +31,7 @@ export function CreateVenue() {
                         },
                         "base64",
                         316,
-                        234
+                        219
                     );
                 } catch (err) {
                     console.log(err);
@@ -95,7 +95,7 @@ export function CreateVenue() {
                             <img
                                 src={previewSource}
                                 alt="chosen"
-                                style={{ height: '244px', width: '316px', padding: '20px' }}
+                                style={{ height: '219px', width: '316px', padding: '20px' }}
                             />
                         )}
                         </div>

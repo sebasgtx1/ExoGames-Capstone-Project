@@ -8,6 +8,7 @@ export function VenueCard({ venue }) {
                 <img
                     width={316}
                     height={234}
+                    src={venue.image}
                     className={styles.VenueImage} />
                 <div>
                     <p>

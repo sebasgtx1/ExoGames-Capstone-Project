@@ -6,11 +6,7 @@ import { Formik } from 'formik';
 import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
-import IncDecCounter from '../components/button_containers/IncDecCounter'
 import Swal from 'sweetalert2'
-
-/* import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
- */
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -24,7 +20,8 @@ const options = [
 export function CreateEvent() {
     const [wins, setWins] = useState(0)
     const [losses, setLosses] = useState(0)
-    const [optionSelected, setOptionSelected] = useState('Football')
+    const [optionSelected, setOptionSelected] = useState('football')
+    const [previewSource, setPreviewSource] = useState();
 
     let incWins = () => {
         if (wins < 1000) {
@@ -50,7 +47,7 @@ export function CreateEvent() {
         setOptionSelected(selectedOption.value);
     };
 
-    const [previewSource, setPreviewSource] = useState();
+
     const handleChangeFile = (event) => {
 
         {

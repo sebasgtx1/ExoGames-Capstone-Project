@@ -8,6 +8,7 @@ export function MyCompetitorCard({ competitor, user_id }) {
                 <img
                     width={316}
                     height={234}
+                    src={competitor.image}
                     className={styles.CompetitorImage} />
                 <div>
                     <p>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Resizer from "react-image-file-resizer";
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { Formik } from 'formik';
@@ -7,6 +8,7 @@ import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
 import IncDecCounter from '../components/button_containers/IncDecCounter'
 import Swal from 'sweetalert2'
+
 /* import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
  */
 
@@ -18,39 +20,66 @@ const options = [
     { value: 'paintball', label: 'Paintball' }
 ]
 
-export function CreateEvent() {
-    const [ wins, setWins ] = useState(0)
-    const [ losses, setLosses ] = useState(0)
-    const [ optionSelected, setOptionSelected ] = useState('Football')
 
-    let incWins =()=>{
-        if(wins<1000)
-        {
-            setWins(Number(wins)+1);
+export function CreateEvent() {
+    const [wins, setWins] = useState(0)
+    const [losses, setLosses] = useState(0)
+    const [optionSelected, setOptionSelected] = useState('Football')
+
+    let incWins = () => {
+        if (wins < 1000) {
+            setWins(Number(wins) + 1);
         }
     };
     let decWins = () => {
-        if(wins>0)
-        {
+        if (wins > 0) {
             setWins(wins - 1);
         }
     };
-    let incLosses =()=>{
-        if(losses<1000)
-        {
-            setLosses(Number(losses)+1);
+    let incLosses = () => {
+        if (losses < 1000) {
+            setLosses(Number(losses) + 1);
         }
     };
     let decLosses = () => {
-        if(losses>0)
-        {
+        if (losses > 0) {
             setLosses(losses - 1);
         }
     };
     const handleChangeSelected = (selectedOption) => {
-        console.log(selectedOption);
         setOptionSelected(selectedOption.value);
     };
+
+    const [previewSource, setPreviewSource] = useState();
+    const handleChangeFile = (event) => {
+
+        {
+            let fileInput = false;
+            if (event.target.files[0]) {
+                fileInput = true;
+            }
+            if (fileInput) {
+                try {
+                    Resizer.imageFileResizer(
+                        event.target.files[0],
+                        316,
+                        234,
+                        "JPEG",
+                        100,
+                        0,
+                        (uri) => {
+                            setPreviewSource(uri)
+                        },
+                        "base64",
+                        316,
+                        234
+                    );
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        }
+    }
 
     const navigate = useNavigate();
     return (
@@ -70,16 +99,21 @@ export function CreateEvent() {
                     values.wins = wins;
                     values.losses = losses;
                     values.sport = optionSelected;
+
+                    values.image = previewSource;
+
                     try {
+
                         const resp = await createEventRequest(values);
                         actions.resetForm();
                         Swal.fire('Event Created succesfully')
-                        navigate('/create_match/' + resp.data.event_id,{
+                        navigate('/create_match/' + resp.data.event_id, {
                             state: {
-                              event_id: resp.data.event_id,
-                              event_name: resp.data.event_name,
-                              sport: resp.data.sport
-                            }});
+                                event_id: resp.data.event_id,
+                                event_name: resp.data.event_name,
+                                sport: resp.data.sport
+                            }
+                        });
                     } catch (error) {
                         console.log(error)
 
@@ -103,36 +137,47 @@ export function CreateEvent() {
                             onChange={props.handleChange}
                             value={props.values.description} />
                         <h3></h3>
-                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
+                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected} />
                         <h3></h3>
                         <h1>Upload an image</h1>
                         <h3></h3>
-                        <input type="file" name="image"
-                        onChange={props.handleChange}/>
+                        <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
+                        <div>
+                            {previewSource && (
+                            <img
+                                src={previewSource}
+                                alt="chosen"
+                                style={{ height: '244px', width: '316px', padding: '20px' }}
+                            />
+                        )}
+                        </div>
+                        
+
                         <h1>Rules</h1>
-                        <label>Wins</label><br/>
+                        <label>Wins</label><br />
                         <button onClick={decWins} type="button">-</button>
                         <input type="int" name="wins"
                             onChange={props.handleChange}
                             value={wins}
                             required />
                         <button onClick={incWins} type="button">+</button>
-                        {/*< IncDecCounter />*/}
+
                         <h3></h3>
-                        <label>Losses</label><br/>
+                        <label>Losses</label><br />
                         <button onClick={decLosses} type="button">-</button>
                         <input type="text" name="losses"
                             onChange={props.handleChange}
                             value={losses}
                             required />
                         <button onClick={incLosses} type="button">+</button>
-                        {/*< IncDecCounter />*/}
+ 
                         <h3></h3>
 
                         <button type="reset" >Reset</button>
                         <button type="submit">Next</button>
 
                     </form>
+
                 )}
             </Formik>
         </div>

@@ -46,6 +46,7 @@ export function MyEventDetails() {
                 <img
                     width={316}
                     height={234}
+                    src={event.image}
                     className={styles.cardImage} />
                 <h1><strong>{event.event_name}</strong> </h1>
 

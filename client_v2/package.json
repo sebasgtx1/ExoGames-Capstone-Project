@@ -9,17 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.4",
-    "@emotion/styled": "^11.10.4",
-    "@mui/icons-material": "^5.10.6",
-    "@mui/material": "^5.10.8",
-    "@mui/styled-engine": "^5.10.8",
     "axios": "^1.0.0",
     "cors": "^2.8.5",
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.7",
+    "react-dropzone": "^14.2.3",
     "react-icons": "^4.4.0",
+    "react-image-file-resizer": "^0.4.8",
     "react-router-dom": "^6.4.1",
     "react-select": "^5.4.0",
     "sweetalert2": "^11.4.38"

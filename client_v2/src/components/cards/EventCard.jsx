@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Button } from '../reusables/Button';
 import styles from '../styles/EventCard.module.css'
 
 

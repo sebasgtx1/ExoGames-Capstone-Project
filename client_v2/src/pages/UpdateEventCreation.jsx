@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router";
 import { useLocation } from "react-router-dom";
 import { Formik } from 'formik';
+import Select from 'react-select';
+import stylesSelect from '../components/styles/SelectComponent.module.css';
+import stylesInput from '../components/styles/InputElement.module.css';
 import { getEventsIdRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import { useEffect, useState } from "react";

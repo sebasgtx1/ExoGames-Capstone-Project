@@ -7,10 +7,24 @@ import { useEffect, useState } from "react";
 import { getCompetitorIdRequest, updateCompetitorRequest } from "../api/competitors.api";
 import Swal from 'sweetalert2'
 
+const options = [
+    { value: 'football', label: 'Football' },
+    { value: 'basketball', label: 'Basketball' },
+    { value: 'baseball', label: 'Baseball' },
+    { value: 'archery', label: 'Archery' },
+    { value: 'paintball', label: 'Paintball' }
+]
+
 export function UpdateCompetitor() {
     const { id } = useParams();
     console.log(id);
     const [competitor, setCompetitor] = useState([])
+    const [ optionSelected, setOptionSelected ] = useState('football')
+
+    const handleChangeSelected = (selectedOption) => {
+        console.log(selectedOption);
+        setOptionSelected(selectedOption.value);
+    };
 
     useEffect(() => {
 
@@ -36,6 +50,7 @@ export function UpdateCompetitor() {
 
                 }}
                 onSubmit={async (values, actions) => {
+                    values.sport = optionSelected;
                     try {
                         const resp = await updateCompetitorRequest(values, id);
                         Swal.fire({
@@ -77,17 +92,7 @@ export function UpdateCompetitor() {
                             onChange={props.handleChange}
                             value={competitor.description} />
                         <h3></h3>
-                        <select name="sport" type="text"
-                            onChange={props.handleChange}
-                            defaultValue={competitor.sport}
-                            required>
-                            <option>Select sport</option>
-                            <option value="football">Football</option>
-                            <option value="basketball">Basketball</option>
-                            <option value="baseball">Baseball</option>
-                            <option value="Archery">Archery</option>
-                            <option value="Paintball">Paintball</option>
-                        </select>
+                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
                         <h3></h3>
 
                         <button type="reset" >Reset</button>

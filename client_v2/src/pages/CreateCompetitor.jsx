@@ -37,7 +37,6 @@ export function CreateCompetitor() {
                 }}
                 onSubmit={async (values, actions) => {
                     values.sport = optionSelected;
-                    console.log(values);
                     try {
                         await createCompetitorRequest(values);
                         actions.resetForm();
@@ -79,17 +78,6 @@ export function CreateCompetitor() {
                             onChange={props.handleChange}
                             value={props.values.description} />
                         <h3></h3>
-                        {/* <select name="sport" type="text"
-                            onChange={props.handleChange}
-                            defaultValue={props.values.sport}
-                            required>
-                            <option>Select sport</option>
-                            <option value="football">Football</option>
-                            <option value="basketball">Basketball</option>
-                            <option value="baseball">Baseball</option>
-                            <option value="Archery">Archery</option>
-                            <option value="Paintball">Paintball</option>
-                        </select> */}
                         <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
                         <h3></h3>
 

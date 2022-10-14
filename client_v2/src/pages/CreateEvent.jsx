@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
+import stylesInput from '../components/styles/InputElement.module.css';
 import IncDecCounter from '../components/button_containers/IncDecCounter'
 import Swal from 'sweetalert2'
 /* import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'
@@ -21,7 +22,7 @@ const options = [
 export function CreateEvent() {
     const [ wins, setWins ] = useState(0)
     const [ losses, setLosses ] = useState(0)
-    const [ optionSelected, setOptionSelected ] = useState('Football')
+    const [ optionSelected, setOptionSelected ] = useState('football')
 
     let incWins =()=>{
         if(wins<1000)
@@ -115,18 +116,18 @@ export function CreateEvent() {
                         <input type="int" name="wins"
                             onChange={props.handleChange}
                             value={wins}
+                            className={stylesInput.Width}
                             required />
                         <button onClick={incWins} type="button">+</button>
-                        {/*< IncDecCounter />*/}
                         <h3></h3>
                         <label>Losses</label><br/>
                         <button onClick={decLosses} type="button">-</button>
                         <input type="text" name="losses"
                             onChange={props.handleChange}
                             value={losses}
+                            className={stylesInput.Width}
                             required />
                         <button onClick={incLosses} type="button">+</button>
-                        {/*< IncDecCounter />*/}
                         <h3></h3>
 
                         <button type="reset" >Reset</button>

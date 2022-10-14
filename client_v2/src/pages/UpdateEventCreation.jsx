@@ -89,6 +89,8 @@ export function UpdateEventCreation() {
                         })} catch {
                             navigate(-1)
                         }
+                        
+
 
                         const resp = await updateEventRequest(values, event_id);
                         

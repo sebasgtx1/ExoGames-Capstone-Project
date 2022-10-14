@@ -45,7 +45,8 @@ export function MyEventDetails() {
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
+                    src={event.image}
                     className={styles.cardImage} />
                 <h1><strong>{event.event_name}</strong> </h1>
 

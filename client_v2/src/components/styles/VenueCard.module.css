@@ -33,6 +33,7 @@
     border-radius: 10px;
     background-color: azure;
     background-image: url('./img/venue-logo.png');
+    background-size: 100%;
     background-repeat: no-repeat;
     justify-content: center;
 }

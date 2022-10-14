@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Select from 'react-select';
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import { createCompetitorRequest } from "../api/competitors.api";
 import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
-import IncDecCounter from '../components/button_containers/IncDecCounter'
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
+import Resizer from "react-image-file-resizer";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -19,6 +19,36 @@ const options = [
 export function CreateCompetitor() {
     const navigate = useNavigate();
     const [ optionSelected, setOptionSelected ] = useState('football')
+    const [previewSource, setPreviewSource] = useState();
+    const handleChangeFile = (event) => {
+
+        {
+            let fileInput = false;
+            if (event.target.files[0]) {
+                fileInput = true;
+            }
+            if (fileInput) {
+                try {
+                    Resizer.imageFileResizer(
+                        event.target.files[0],
+                        316,
+                        219,
+                        "JPEG",
+                        100,
+                        0,
+                        (uri) => {
+                            setPreviewSource(uri)
+                        },
+                        "base64",
+                        316,
+                        219
+                    );
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        }
+    }
 
     const handleChangeSelected = (selectedOption) => {
         console.log(selectedOption);
@@ -32,11 +62,13 @@ export function CreateCompetitor() {
                     name: "",
                     team_players: "",
                     description: "",
-                    sport: "football"
+                    sport: "football",
+                    image: ""
 
                 }}
                 onSubmit={async (values, actions) => {
                     values.sport = optionSelected;
+                    values.image = previewSource;
                     try {
                         await createCompetitorRequest(values);
                         actions.resetForm();
@@ -80,6 +112,19 @@ export function CreateCompetitor() {
                         <h3></h3>
                         <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
                         <h3></h3>
+
+                        <h1>Upload an image</h1>
+                        <h3></h3>
+                        <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
+                        <div>
+                            {previewSource && (
+                            <img
+                                src={previewSource}
+                                alt="chosen"
+                                style={{ height: '219px', width: '316px', padding: '20px' }}
+                            />
+                        )}
+                        </div>
 
                         <button type="reset" >Reset</button>
                         <button type="submit">Submit</button>

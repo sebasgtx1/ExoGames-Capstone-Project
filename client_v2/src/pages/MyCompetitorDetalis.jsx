@@ -26,7 +26,8 @@ export function MyCompetitorDetails() {
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
+                    src={competitor.image}
                     className={styles.cardImage} />
 
                 <p className={styles.firstItem}>

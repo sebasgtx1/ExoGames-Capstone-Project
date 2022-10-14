@@ -1,4 +1,7 @@
 import React from "react";
+import Select from 'react-select';
+import stylesSelect from '../components/styles/SelectComponent.module.css';
+import stylesInput from '../components/styles/InputElement.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router";
 import { Formik } from 'formik';

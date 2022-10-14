@@ -13,7 +13,7 @@ export function EventCard({ event }) {
             <Link to={"/event/" + event.event_id}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
                     className={styles.EventImage}
                     src={event.image} />
                 <div>

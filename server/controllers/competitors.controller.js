@@ -79,14 +79,15 @@ const getCompetitorId = async (req, res) => {
 
 const createCompetitor = async (req, res) => {
     try {
-        const { name, sport, description, team_players } = req.body;
+        const { name, sport, description, team_players, image } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO competitors (user_id, name, team_players, description, sport) VALUES (?, ?, ?, ?, ?)', [
+            'INSERT INTO competitors (user_id, name, team_players, description, sport, image) VALUES (?, ?, ?, ?, ?, ?)', [
             4, //user_id
             name,
             team_players,
             description,
-            sport
+            sport,
+            image
         ]);
         res.status(200).json({ message: "Competitor created succecsfully" })
     } catch (error) {

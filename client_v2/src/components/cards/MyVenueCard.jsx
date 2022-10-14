@@ -7,7 +7,7 @@ export function MyVenueCard({ venue, user_id }) {
             <Link to={"/venue/" + user_id + "/" + venue.venue_id}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
                     src={venue.image}
                     className={styles.VenueImage} />
                 <div>

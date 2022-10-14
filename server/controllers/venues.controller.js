@@ -65,12 +65,13 @@ const getVenueId = async (req, res) => {
 
 const createVenue = async (req, res) => {
     try {
-        const { name, description } = req.body;
+        const { name, description, image } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO venues (user_id, name, description) VALUES (?, ?, ?)', [
+            'INSERT INTO venues (user_id, name, description, image) VALUES (?, ?, ?, ?)', [
             4, // user_id
             name,
-            description
+            description,
+            image
         ]);
         res.status(200).json({ message: "venue created succecsfully" })
     } catch (error) {

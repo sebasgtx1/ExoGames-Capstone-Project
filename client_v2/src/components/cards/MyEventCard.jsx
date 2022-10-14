@@ -8,7 +8,7 @@ export function MyEventCard({ event, user_id }) {
             <Link to={"/event/" + user_id + "/" + event.event_id}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
                     className={styles.EventImage}
                     src={event.image} />
                 <div>

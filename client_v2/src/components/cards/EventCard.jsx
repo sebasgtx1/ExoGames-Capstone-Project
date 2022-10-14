@@ -5,8 +5,6 @@ import styles from '../styles/EventCard.module.css'
 
 export function EventCard({ event }) {
 
-    const base64String = btoa(String.fromCharCode(...new Uint8Array(event.image.data)));
-    console.log(base64String );
 
     return (
 
@@ -17,7 +15,7 @@ export function EventCard({ event }) {
                     width={316}
                     height={234}
                     className={styles.EventImage}
-                    src={`data:image/png;base64,${base64String}`} />
+                    src={event.image} />
                 <div>
                     <strong><h3>{event.event_name}</h3></strong>
                     <p>

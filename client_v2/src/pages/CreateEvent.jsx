@@ -199,11 +199,11 @@ export function CreateEvent() {
 
 
                         <div className={stylesCheckBox.switch_button}>
-                            <h3>Private</h3>
+                            <p>Private</p>
                             {/* <!-- Checkbox --> */}
                             <input onChange={handleChexbox} type="checkbox" name="switch_button" id="switch_label" className={stylesCheckBox.switch_button__checkbox} />
                             {/* <!-- Botón --> */}
-                            <label for="switch_label" className={stylesCheckBox.switch_button__label}></label>
+                            <label htmlFor="switch_label" className={stylesCheckBox.switch_button__label}></label>
                         </div>
                         <br/><br/>
                         <button type="reset" >Reset</button>

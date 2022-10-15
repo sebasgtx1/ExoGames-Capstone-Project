@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const userRouter = require('./routes/user.routes');
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.use(require('./routes/events.routes'));
 app.use(require('./routes/competitors.routes'));
 app.use(require('./routes/matches.routes'));
 app.use(require('./routes/venues.routes'));
+
+app.use(require('./routes/user.routes'));
 
 app.listen(4000);
 console.log('Server on port', 4000);

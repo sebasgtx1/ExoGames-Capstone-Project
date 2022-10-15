@@ -27,6 +27,12 @@ export const updateEventRequest = async (params, id) => {
 }
 
 export const deleteEventRequest = async (id) => {
-    return await axios.delete(API + "delete_event/" + id);
+    return await axios.put(API + "delete_event/" + id);
 }
+
+export const PublishEventRequest = async (id, status) => {
+    return await axios.put(API + "publish/" + id, status);
+}
+
+
 

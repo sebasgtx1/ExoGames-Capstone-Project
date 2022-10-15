@@ -4,7 +4,8 @@ const { pool } = require('./db_conexion');
 const getEvents = async (req, res) => {
     try {
         const [result] = await pool.query(
-            'SELECT * FROM events ORDER BY event_id DESC'
+            'SELECT * FROM events WHERE (public_status = (?) AND status = (?)) ORDER BY event_id DESC',
+            ['public', 'active']
         );
         res.json(result);
     } catch (error) {
@@ -17,7 +18,8 @@ const getMyEvents = async (req, res) => {
     try {
         const user_id = parseInt(req.params.user_id);
         const [result] = await pool.query(
-            'SELECT * FROM events WHERE user_id = (?) ORDER BY event_id DESC', [user_id]
+            'SELECT * FROM events WHERE (user_id = (?) AND status = (?)) ORDER BY event_id DESC', 
+            [user_id, 'active']
         );
         if (result.length === 0)
             return res.status(404).json({ message: "Event not found" });
@@ -64,16 +66,18 @@ const getEventId = async (req, res) => {
 
 const createEvent = async (req, res) => {
     try {
-        const { event_name, sport, image, description, wins, losses } = req.body;
+        const { event_name, sport, image, description, wins, losses, status, public_status } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO events (user_id, event_name, sport, image, description, wins, losses) VALUES (?, ?, ?, ?, ?, ? ,?)', [
+            'INSERT INTO events (user_id, event_name, sport, image, description, wins, losses, status, public_status) VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)', [
             4, //user_id
             event_name,
             sport,
             image,
             description,
             wins,
-            losses
+            losses,
+            status,
+            public_status
         ]);
         res.json({
             event_id: result.insertId,
@@ -102,13 +106,32 @@ const updateEvent = async (req, res) => {
 const deleteEvent = async (req, res) => {
     try {
         const [result] = await pool.query(
-            'DELETE FROM events where event_id = (?)', [
+            'UPDATE events SET status = (?) WHERE event_id = (?)', [
+            'inactive',
             req.params.id
         ]);
-        if (result.affectedRows === 0)
-            return res.status(404).json({ message: "Event not found" });
+        
 
         return res.sendStatus(204);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
+const un_PublishEvent = async (req, res) => {
+    try {
+        
+        const { public_status } = req.body;
+        console.log(req.body);
+        const [result] = await pool.query(
+            'UPDATE events SET public_status = (?) WHERE event_id = (?)', [
+            public_status,
+            req.params.id
+        ]);
+
+        return res.sendStatus(200);
+
+        
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -121,5 +144,6 @@ module.exports = {
     getEventId,
     createEvent,
     updateEvent,
-    deleteEvent
+    deleteEvent,
+    un_PublishEvent
 };

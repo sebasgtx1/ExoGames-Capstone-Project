@@ -17,7 +17,7 @@ router.post('/create_competitor', createCompetitor);
 router.put('/update_competitor/:id', updateCompetitor);
 
 //delete
-router.delete('/delete_competitor/:id', deleteCompetitor);
+router.put('/delete_competitor/:id', deleteCompetitor);
 
 
 module.exports = router;

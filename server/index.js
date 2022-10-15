@@ -15,7 +15,6 @@ app.use(require('./routes/events.routes'));
 app.use(require('./routes/competitors.routes'));
 app.use(require('./routes/matches.routes'));
 app.use(require('./routes/venues.routes'));
-
 app.use(require('./routes/user.routes'));
 
 app.listen(4000);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCompetitorsRequest } from "../../api/competitors.api";
+import { getCompetitorSport } from "../../api/competitors.api";
 
 export function CompetitrosList(props) {
 
@@ -7,7 +7,7 @@ export function CompetitrosList(props) {
     useEffect(() => {
 
         async function load() {
-            const resp = await getCompetitorsRequest();
+            const resp = await getCompetitorSport(props.sport);
             setCompetitors(resp.data);
 
         }

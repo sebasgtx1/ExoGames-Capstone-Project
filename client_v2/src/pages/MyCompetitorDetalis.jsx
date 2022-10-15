@@ -26,10 +26,11 @@ export function MyCompetitorDetails() {
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
+                    src={competitor.image}
                     className={styles.cardImage} />
 
-                <p className={styles.firstItem}>
+                <div className={styles.firstItem}>
                     <h1><strong>{competitor.name}</strong> </h1> 
                     <p><strong>Description:</strong> {competitor.description} <br /></p>
 
@@ -37,7 +38,7 @@ export function MyCompetitorDetails() {
 
 
                     <p><strong>Sport:</strong> {competitor.sport}</p>
-                </p>
+                </div>
                 <div >
                     <ButtonNoStyle src={"/update_competitor/" + competitor.competitor_id} title="Update" />
                     <DeleteButtonCompetitor competitor_id={competitor.competitor_id} />

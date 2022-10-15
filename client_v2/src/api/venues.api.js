@@ -26,5 +26,5 @@ export const updateVenueRequest = async (params, id) => {
 }
 
 export const deleteVenueRequest = async (id) => {
-    return await axios.delete(API + "delete_venue/" + id);
+    return await axios.put(API + "delete_venue/" + id);
 }

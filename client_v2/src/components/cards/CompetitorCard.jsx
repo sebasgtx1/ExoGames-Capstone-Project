@@ -7,7 +7,8 @@ export function CompetitorCard({ competitor }) {
             <Link to={"/competitor/" + competitor.competitor_id}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
+                    src={competitor.image}
                     className={styles.CompetitorImage} />
                 <div>
                     <p>

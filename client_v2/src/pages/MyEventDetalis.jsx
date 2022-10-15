@@ -10,6 +10,7 @@ import { GetCompetitor } from "../components/list/CompetitorInfo";
 import { GetVenue } from "../components/list/VenueInfo";
 import { AddMatchButton } from "../components/button_containers/AddMatchButton";
 import { ButtonNoStyle } from "../components/reusables/ButtonNoStyle";
+import { PublishEvent } from "../components/button_containers/PublishButton";
 
 
 
@@ -45,7 +46,8 @@ export function MyEventDetails() {
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
                     width={316}
-                    height={234}
+                    height={219}
+                    src={event.image}
                     className={styles.cardImage} />
                 <h1><strong>{event.event_name}</strong> </h1>
 
@@ -67,6 +69,7 @@ export function MyEventDetails() {
                 </p>
                 <div >
                     <ButtonNoStyle src={"/update_event/" + event.event_id} title="Update" />
+                    <PublishEvent event_id={event.event_id} status={event.public_status} />
                     <DeleteButton event_id={event.event_id} />
 
                 </div>

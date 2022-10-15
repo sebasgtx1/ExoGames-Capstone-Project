@@ -10,11 +10,11 @@ export function ButtonContainer() {
                     <Button src="/events" title="Events"></Button>
                     <Button src="/venues" title="Venues"></Button>
                     <Button src="/competitors" title="Competitors"></Button>
-                    <Button src="/my_events" title="Login"></Button>
+                    <Button src="/login" title="Login"></Button>
                 </ul>
             </div>
             <div>
-                <SearchBar />
+                {/* <SearchBar /> */}
             </div>
         </div>
     );

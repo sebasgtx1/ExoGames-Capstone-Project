@@ -19,6 +19,7 @@
     border-radius: 14px 40px;
 
     /* Inside auto layout */
+    color: white !important;
     flex: none;
     order: 0;
     align-self: stretch;
@@ -26,6 +27,7 @@
 }
 
 .EventCard:hover {
+    color: white !important;
     opacity: 0.8;
 }
 
@@ -33,6 +35,9 @@
     border-radius: 10px;
     background-color: azure;
     background-image: url('./img/event-logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+
 }
 .details {
     width: 100%;

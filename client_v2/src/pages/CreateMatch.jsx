@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { useParams } from "react-router";
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { Formik } from 'formik';
-import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import { CompetitrosList } from "../components/list/CompetitorsList";
 import { useLocation } from "react-router-dom";
@@ -16,6 +14,7 @@ export function CreateMatch(props) {
     const location = useLocation();
     const navigate = useNavigate();
     const event_id = location.state.event_id;
+    const sport = location.state.sport;
 
     function handleClick() {
 
@@ -27,6 +26,19 @@ export function CreateMatch(props) {
             showConfirmButton: false,
             timer: 1500
         })
+    }
+    function BackClick() {
+
+        navigate('/update_create_event/' + event_id, {state:{
+            event_id: event_id
+
+        }})
+    }
+
+    
+    function Cancel() {
+
+        navigate(-1)
     }
     return (
         <div className={styles.center}>
@@ -44,7 +56,6 @@ export function CreateMatch(props) {
 
                 }}
                 onSubmit={async (values, actions) => {
-                    console.log(values);
                     try {
                         const resp = await createMatchRequest(event_id, values);
                         Swal.fire('Match Created succesfully').then(() => {
@@ -65,7 +76,7 @@ export function CreateMatch(props) {
                     <form onSubmit={props.handleSubmit}>
                         <label>competitor 1</label>
 
-                        <CompetitrosList name="competitor1_id"
+                        <CompetitrosList name="competitor1_id" sport={sport}
                             onChange={props.handleChange}
 
                         />
@@ -80,6 +91,7 @@ export function CreateMatch(props) {
                         <label>competitor 2</label>
                         <CompetitrosList
                             name="competitor2_id"
+                            sport={sport}
                             onChange={props.handleChange} />
                         <select name="competitor2_group"
                             onChange={props.handleChange} required>
@@ -104,7 +116,7 @@ export function CreateMatch(props) {
                             onChange={props.handleChange} />
                         <h3></h3>
 
-                        <button type="reset" >Reset</button>
+                        <button onClick={BackClick} >Back</button>
                         <button type="submit">Submit</button>
                         <button onClick={handleClick}>Finish</button>
 

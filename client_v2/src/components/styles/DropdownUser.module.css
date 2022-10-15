@@ -1,11 +1,7 @@
 .dropdown_menu {
     position: absolute;
-    /* 
-    left: 0;
-    z-index: 100;
-    width: 215px; */
-    top: 12%;
-    left: 82%;
+    top: 0%;
+    left: 87.5%;
     right: inherit;
     padding-top: 4px;
     padding-bottom: 4px; 

@@ -31,5 +31,5 @@ export const updateCompetitorRequest = async (params, id) => {
 }
 
 export const deleteCompetitorRequest = async (id) => {
-    return await axios.delete(API + "delete_competitor/" + id);
+    return await axios.put(API + "delete_competitor/" + id);
 }

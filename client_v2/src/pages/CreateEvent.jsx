@@ -24,6 +24,8 @@ export function CreateEvent() {
     const [losses, setLosses] = useState(0)
     const [optionSelected, setOptionSelected] = useState('football')
     const [previewSource, setPreviewSource] = useState();
+    const [publicStatus, setPublicStatus] = useState('public');
+    const [saveStatus, setSaveStatus] = useState(false);
 
     let incWins = () => {
         if (wins < 1000) {
@@ -48,6 +50,18 @@ export function CreateEvent() {
     const handleChangeSelected = (selectedOption) => {
         setOptionSelected(selectedOption.value);
     };
+
+    const handleChexbox = (e) => {
+
+        e.target.checked ? setPublicStatus('private') : setPublicStatus('public')
+
+    }
+    const SaveDraft = (e) => {
+
+        setPublicStatus('private');
+        setSaveStatus(true)
+
+    }
 
 
     const handleChangeFile = (event) => {
@@ -91,28 +105,38 @@ export function CreateEvent() {
                     sport: "football",
                     image: "",
                     wins: "",
-                    losses: ""
+                    losses: "",
+                    status: "active",
+                    public_status: ""
 
                 }}
                 onSubmit={async (values, actions) => {
                     values.wins = wins;
                     values.losses = losses;
                     values.sport = optionSelected;
-
+                    values.public_status = publicStatus
                     values.image = previewSource;
 
                     try {
 
                         const resp = await createEventRequest(values);
                         actions.resetForm();
-                        Swal.fire('Event Created succesfully')
-                        navigate('/create_match/' + resp.data.event_id, {
-                            state: {
-                                event_id: resp.data.event_id,
-                                event_name: resp.data.event_name,
-                                sport: resp.data.sport
-                            }
-                        });
+
+                        if (saveStatus) {
+                            Swal.fire('Event Saved succesfully')
+                            navigate('/my_events')
+
+                        }
+                        else {
+                            Swal.fire('Event Created succesfully')
+                            navigate('/create_match/' + resp.data.event_id, {
+                                state: {
+                                    event_id: resp.data.event_id,
+                                    event_name: resp.data.event_name,
+                                    sport: resp.data.sport
+                                }
+                            });
+                        }
                     } catch (error) {
                         console.log(error)
 
@@ -143,14 +167,14 @@ export function CreateEvent() {
                         <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
                         <div>
                             {previewSource && (
-                            <img
-                                src={previewSource}
-                                alt="chosen"
-                                style={{ height: '219px', width: '316px', padding: '20px' }}
-                            />
-                        )}
+                                <img
+                                    src={previewSource}
+                                    alt="chosen"
+                                    style={{ height: '219px', width: '316px', padding: '20px' }}
+                                />
+                            )}
                         </div>
-                        
+
 
                         <h1>Rules</h1>
                         <label>Wins</label><br />
@@ -172,7 +196,13 @@ export function CreateEvent() {
                         <button onClick={incLosses} type="button">+</button>
                         <h3></h3>
 
+                        <div >
+                            <input onChange={handleChexbox} type="checkbox" />
+                            <label >private </label>
+                        </div>
+
                         <button type="reset" >Reset</button>
+                        <button type="submit" onClick={SaveDraft}>Save draft</button>
                         <button type="submit">Next</button>
 
                     </form>

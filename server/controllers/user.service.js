@@ -5,13 +5,63 @@ module.exports = {
     await pool.query(
       "INSERT INTO users(username, email, password, status) VALUES(?, ?, ?, ?)",
       [
-        data.username, data.email, data.password, data.status,
+        data.username, data.email, data.password, data.status
       ],
       (error, results, fields) => {
         if (error) {
           return callBack(error);
         }
         return callBack(null, results);
+      }
+    );
+  },
+  getUsers: async (callBack) => {
+    pool.query(
+      "SELECT user_id, username, email, status FROM users",
+      [],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    )
+  },
+  getUserById: async (id, callBack) => {
+    pool.query(
+      "SELECT user_id, username, email, status FROM users WHERE user_id = ?",
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    )
+  },
+  updateUser: async (data, callBack) => {
+    pool.query(
+      "UPDATE users SET username = ?, email = ?, status = ? WHERE user_id = ?",
+      [
+        data.username, data.email, data.status, data.user_id,
+      ],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results);
+      }
+    )
+  },
+  deleteUser: async (data, callBack) => {
+    pool.query(
+      "DELETE FROM users WHERE user_id = ?",
+      [data.user_id],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
       }
     );
   },

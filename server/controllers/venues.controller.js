@@ -4,7 +4,7 @@ const { pool } = require('./db_conexion');
 const getVenues = async (req, res) => {
     try {
         const [result] = await pool.query(
-            'SELECT * FROM venues ORDER BY venue_id DESC'
+            'SELECT * FROM venues WHERE status = (?) ORDER BY venue_id DESC', ['active']
         );
         res.json(result);
     } catch (error) {
@@ -17,7 +17,7 @@ const getMyVenues= async (req, res) => {
     try {
         const user_id = parseInt(req.params.user_id);
         const [result] = await pool.query(
-            'SELECT * FROM venues WHERE user_id = (?) ORDER BY venue_id DESC', [user_id]
+            'SELECT * FROM venues WHERE (user_id = (?) AND status = (?)) ORDER BY venue_id DESC', [user_id, 'active']
         );
         if (result.length === 0)
             return res.status(404).json({ message: "Event not found" });
@@ -67,11 +67,12 @@ const createVenue = async (req, res) => {
     try {
         const { name, description, image } = req.body;
         const [result] = await pool.query(
-            'INSERT INTO venues (user_id, name, description, image) VALUES (?, ?, ?, ?)', [
+            'INSERT INTO venues (user_id, name, description, image, status) VALUES (?, ?, ?, ?, ?)', [
             4, // user_id
             name,
             description,
-            image
+            image,
+            'active'
         ]);
         res.status(200).json({ message: "venue created succecsfully" })
     } catch (error) {
@@ -96,11 +97,12 @@ const updateVenue = async (req, res) => {
 const deleteVenue = async (req, res) => {
     try {
         const [result] = await pool.query(
-            'DELETE FROM venues where venue_id = (?)', [
-            req.params.id
-        ]);
-        if (result.affectedRows === 0)
-            return res.status(404).json({ message: "venue not found" });
+            'UPDATE venues SET status = (?) WHERE venue_id = (?)', [
+                'inactive',
+                req.params.id
+            ]
+        );
+
 
         return res.sendStatus(204);
     } catch (error) {

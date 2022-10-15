@@ -16,7 +16,7 @@ router.post('/create_venue', createVenue);
 router.put('/update_venue/:id', updateVenue);
 
 //delete
-router.delete('/delete_venue/:id', deleteVenue);
+router.put('/delete_venue/:id', deleteVenue);
 
 
 module.exports = router;

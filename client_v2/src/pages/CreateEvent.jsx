@@ -7,6 +7,7 @@ import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
 import stylesInput from '../components/styles/InputElement.module.css';
+import stylesCheckBox from '../components/styles/CheckBox.module.css';
 import Swal from 'sweetalert2'
 
 const options = [
@@ -172,6 +173,14 @@ export function CreateEvent() {
                         <button onClick={incLosses} type="button">+</button>
                         <h3></h3>
 
+                        <div className={stylesCheckBox.switch_button}>
+                            <h3>Private</h3>
+                            {/* <!-- Checkbox --> */}
+                            <input type="checkbox" name="switch_button" id="switch_label" className={stylesCheckBox.switch_button__checkbox} />
+                            {/* <!-- Botón --> */}
+                            <label for="switch_label" className={stylesCheckBox.switch_button__label}></label>
+                        </div>
+                        <br/><br/>
                         <button type="reset" >Reset</button>
                         <button type="submit">Next</button>
 

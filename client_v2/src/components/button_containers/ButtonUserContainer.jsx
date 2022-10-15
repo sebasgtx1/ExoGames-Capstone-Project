@@ -5,7 +5,8 @@ import { Button } from '../reusables/Button';
 import { ButtonNoStyle } from '../reusables/ButtonNoStyle';
 import { SearchBar } from '../reusables/SearchBar';
 import Swal from 'sweetalert2'
-import 'react-dropdown/style.css';
+/* import 'react-dropdown/style.css';
+ */
 import { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap'

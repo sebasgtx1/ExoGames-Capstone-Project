@@ -50,7 +50,7 @@
     border-radius: 30px;
 
     /* Inside auto layout */
-    color: white;
+    color: white !important;
     flex: none;
     order: 0;
     flex-grow: 1;
@@ -93,6 +93,7 @@
 
 .dataInsideButton:hover {
     background-color:#bebebe;
+    color: white !important;
 }
 
 .dataUserInsideButton:hover {

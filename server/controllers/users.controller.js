@@ -34,7 +34,7 @@ const { sign } = require("jsonwebtoken");
     }
 
   }
-  getUserByUserId: (req, res) => {
+  /* const getUserByUserId = async (req, res) => {
     const id = req.params.id;
     getUserByUserId(id, (err, results) => {
       if (err) {
@@ -130,11 +130,13 @@ const { sign } = require("jsonwebtoken");
         });
       }
     });
-  },
+  }, */
 
 
 
   module.exports = {
-    createUser
+    createUser,
+    getUserByUserId,
+
   };
 

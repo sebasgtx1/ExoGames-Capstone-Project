@@ -18,7 +18,7 @@ const getMyEvents = async (req, res) => {
     try {
         const user_id = parseInt(req.params.user_id);
         const [result] = await pool.query(
-            'SELECT * FROM events WHERE (user_id = (?) AND status = (?)) ORDER BY event_id DESC', 
+            'SELECT * FROM events WHERE (user_id = (?) AND status = (?)) ORDER BY event_id DESC',
             [user_id, 'active']
         );
         if (result.length === 0)
@@ -110,7 +110,7 @@ const deleteEvent = async (req, res) => {
             'inactive',
             req.params.id
         ]);
-        
+
 
         return res.sendStatus(204);
     } catch (error) {
@@ -120,7 +120,7 @@ const deleteEvent = async (req, res) => {
 
 const un_PublishEvent = async (req, res) => {
     try {
-        
+
         const { public_status } = req.body;
         console.log(req.body);
         const [result] = await pool.query(
@@ -131,7 +131,7 @@ const un_PublishEvent = async (req, res) => {
 
         return res.sendStatus(200);
 
-        
+
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

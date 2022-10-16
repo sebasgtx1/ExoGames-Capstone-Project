@@ -1,10 +1,14 @@
 const {
-  create 
+  create,
+  getUserByUserEmail,
+  getUserByUserId,
+  getUsers,
+  updateUser,
+  deleteUser,
 } = require("./user.service");
 
-const { create } = require("./user.service");
-
-const { genSaltSync, hashSync } = require("bcrypt");
+const { genSaltSync, hashSync, compareSync } = require("bcrypt");
+const { sign } = require("jsonwebtoken");
 
 module.exports = {
   createUser: (req, res) => {
@@ -25,7 +29,7 @@ module.exports = {
       });
     });
   },
-  getUserById: (req, res) => {
+  getUserByUserId: (req, res) => {
     const id = req.params.id;
     getUserByUserId(id, (err, results) => {
       if (err) {
@@ -35,9 +39,10 @@ module.exports = {
       if (!results) {
         return res.json({
           success: 0,
-          message: "Record not found",
+          message: "Record not Found",
         });
       }
+      results.password = undefined;
       return res.json({
         success: 1,
         data: results,
@@ -88,6 +93,37 @@ module.exports = {
         success: 1,
         message: "user deleted successfully",
       });
+    });
+  },
+  login: (req, res) => {
+    const body = req.body;
+    getUserByUserEmail(body.email, (err, results) => {
+      if (err) {
+        console.log(err);
+      }
+      if (!results) {
+        return res.json({
+          success: 0,
+          data: "Invalid email or password",
+        });
+      }
+      const result = compareSync(body.password, results.password);
+      if (result) {
+        results.password = undefined;
+        const jsontoken = sign({ result: results }, "qwe1234", {
+          expiresIn: "390h",
+        });
+        return res.json({
+          success: 1,
+          message: "login successfully",
+          token: jsontoken,
+        });
+      } else {
+        return res.json({
+          success: 0,
+          data: "Invalid email or password",
+        });
+      }
     });
   },
 };

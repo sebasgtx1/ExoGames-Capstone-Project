@@ -1,4 +1,4 @@
-const { pool } = require("./db_conexion");
+const pool = require("./db_conexion");
 
 module.exports = {
   create: async (data, callBack) => {
@@ -27,7 +27,7 @@ module.exports = {
       }
     )
   },
-  getUserById: async (id, callBack) => {
+  getUserByUserId: async (id, callBack) => {
     pool.query(
       "SELECT user_id, username, email, status FROM users WHERE user_id = ?",
       [id],
@@ -65,4 +65,16 @@ module.exports = {
       }
     );
   },
+  getUserByUserEmail: async (email, callBack) => {
+    pool.query(
+      "SELECT * FROM users WHERE email = ?",
+      [email],
+      (error, results, fields) => {
+        if (error) {
+          return callBack(error);
+        }
+        return callBack(null, results[0]);
+      }
+    );
+  }
 };

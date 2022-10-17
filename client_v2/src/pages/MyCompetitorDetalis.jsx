@@ -5,11 +5,15 @@ import { Button } from "../components/reusables/Button";
 import styles from '../components/styles/CompetitorDetails.module.css'
 import { DeleteButtonCompetitor } from "../components/button_containers/Delete_Button_competitor";
 import { ButtonNoStyle } from "../components/reusables/ButtonNoStyle";
+import { useLocation } from "react-router-dom";
+import { ButtonUserContainer } from '../components/button_containers/ButtonUserContainer'
 
 
 export function MyCompetitorDetails() {
     const { user_id, id } = useParams();
-    const [competitor, setCompetitors] = useState([])
+    const [competitor, setCompetitors] = useState([]);
+    const location = useLocation();
+    const {token, username} = location.state;
 
     useEffect(() => {
 
@@ -21,7 +25,8 @@ export function MyCompetitorDetails() {
         getCompetitor();
     }, [user_id, id])
 
-    return (
+    return (<>
+        <ButtonUserContainer user_id={user_id} token={token} username={username}/>  
         <div className={styles.detailsContainer}>
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
@@ -40,12 +45,12 @@ export function MyCompetitorDetails() {
                     <p><strong>Sport:</strong> {competitor.sport}</p>
                 </div>
                 <div >
-                    <ButtonNoStyle src={"/update_competitor/" + competitor.competitor_id} title="Update" />
-                    <DeleteButtonCompetitor competitor_id={competitor.competitor_id} />
+                    <ButtonNoStyle src={"/update_competitor/" + competitor.competitor_id} title="Update" user_id={user_id} token={token} username={username}/>
+                    <DeleteButtonCompetitor competitor_id={competitor.competitor_id} user_id={user_id} token={token} username={username}/>
 
                 </div>
             </div>
 
         </div>
-    );
+        </>);
 }

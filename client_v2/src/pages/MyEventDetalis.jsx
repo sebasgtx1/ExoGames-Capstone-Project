@@ -74,9 +74,9 @@ export function MyEventDetails() {
                     
                 </p>
                 <div >
-                    <ButtonNoStyle src={"/update_event/" + event.event_id} title="Update" user_id={user_id} token={token}/>
-                    <PublishEvent event_id={event.event_id} status={event.public_status} user_id={user_id} token={token}/>
-                    <DeleteButton event_id={event.event_id} user_id={user_id} token={token}/>
+                    <ButtonNoStyle src={"/update_event/" + event.event_id} title="Update" user_id={user_id} token={token} username={username}/>
+                    <PublishEvent event_id={event.event_id} status={event.public_status} user_id={user_id} token={token} username={username}/>
+                    <DeleteButton event_id={event.event_id} user_id={user_id} token={token} username={username}/>
 
                 </div>
                 <ul >
@@ -85,13 +85,13 @@ export function MyEventDetails() {
 
                             <li > match {match.match_id} : <GetCompetitor id={match.competitor1_id} />  vs <GetCompetitor id={match.competitor2_id} /> venue : <GetVenue id={match.venue_id} /> date : {match.date} time : {match.time}</li>
 
-                            <DeleteMatchButton match_id={match.match_id} />
-                            <UpdateMatchButton match={match} />
+                            <DeleteMatchButton match_id={match.match_id} user_id={user_id} token={token} username={username} />
+                            <UpdateMatchButton match={match} user_id={user_id} token={token} username={username} sport={event.sport}/>
                         </div>
                     ))}
 
                 </ul>
-                <AddMatchButton event ={event}/>
+                <AddMatchButton event ={event} user_id={user_id} token={token} username={username}/>
                 
             </div>
 

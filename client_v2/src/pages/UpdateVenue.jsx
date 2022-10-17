@@ -6,10 +6,13 @@ import styles from '../components/styles/CreateEvent.module.css'
 import { useEffect, useState } from "react";
 import { getVenueIdRequest, updateVenueRequest } from "../api/venues.api";
 import Swal from 'sweetalert2'
+import { useLocation } from "react-router-dom";
 
 export function UpdateVenue() {
     const { id } = useParams();
     const [venue, setVenue] = useState([])
+    const location = useLocation();
+    const {user_id, token } = location.state;
 
     useEffect(() => {
 
@@ -33,7 +36,7 @@ export function UpdateVenue() {
                 }}
                 onSubmit={async (values, actions) => {
                     try {
-                        const resp = await updateVenueRequest(values, id);
+                        const resp = await updateVenueRequest(values, id, token);
                         Swal.fire('Venue Updated succesfully');
                         navigate(-1)
                     } catch (error) {

@@ -7,7 +7,6 @@ import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
 import stylesInput from '../components/styles/InputElement.module.css';
-import { ButtonUserContainer } from '../components/button_containers/ButtonUserContainer'
 import stylesCheckBox from '../components/styles/CheckBox.module.css';
 import Swal from 'sweetalert2'
 
@@ -28,7 +27,7 @@ export function CreateEvent() {
     const [previewSource, setPreviewSource] = useState();
     const [publicStatus, setPublicStatus] = useState('public');
     const [saveStatus, setSaveStatus] = useState(false);
-    const { user_id, token } = location.state;
+    const { user_id, token, username } = location.state;
 
 
     let incWins = () => {
@@ -133,7 +132,8 @@ export function CreateEvent() {
                             navigate('/my_events', {
                                 state: {
                                     user_id: user_id,
-                                    token: token
+                                    token: token,
+                                    username: username
                                 }
                             })
 
@@ -146,7 +146,8 @@ export function CreateEvent() {
                                     event_name: resp.data.event_name,
                                     sport: resp.data.sport,
                                     user_id: user_id,
-                                    token: token
+                                    token: token,
+                                    username: username
 
                                 }
                             });

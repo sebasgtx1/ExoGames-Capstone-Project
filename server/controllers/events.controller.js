@@ -22,7 +22,7 @@ const getMyEvents = async (req, res) => {
             [user_id, 'active']
         );
         if (result.length === 0)
-            return res.status(204).json({ message: "Events not found" });
+            return res.json({ message: "Events not found" });
 
         res.json(result);
     } catch (error) {
@@ -122,7 +122,6 @@ const un_PublishEvent = async (req, res) => {
     try {
 
         const { public_status } = req.body;
-        console.log(req.body);
         const [result] = await pool.query(
             'UPDATE events SET public_status = (?) WHERE event_id = (?)', [
             public_status,

@@ -15,7 +15,7 @@ export function MyEventsGrid({ user_id, token, username }) {
         loadTask();
     }, [])
 
-    if (events.map) {
+
         return (
             <ul className={styles.EventGrid}>
                 {events.message == 'Events not found' ? null : events.map((event) => (
@@ -23,14 +23,5 @@ export function MyEventsGrid({ user_id, token, username }) {
                 ))}
             </ul>
         );
-        
-    } else {
-        return (
-            <ul className={styles.EventGrid}>
-                
-            </ul>
-        );
-        
-    }
     
 }

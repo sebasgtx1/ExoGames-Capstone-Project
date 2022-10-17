@@ -20,14 +20,19 @@ export function PublishEvent(props) {
       confirmButtonText: 'Yes, Do it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        console.log(status);
-        const resp = await PublishEventRequest(props.event_id, {public_status : status});
+        const resp = await PublishEventRequest(props.event_id, {public_status : status}, props.token);
         Swal.fire(
           'Pubish!',
           'Your Event is ' + status +  ' now',
           'success'
         )
-        navigate('/my_events')
+        navigate('/my_events', {
+          state: {
+              user_id: props.user_id,
+              token: props.token,
+              username: props.username
+          }
+      });
       }
     })
   }

@@ -48,6 +48,7 @@ export const PublishEventRequest = async (id, status, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
+    
     return await axios.put(API + "publish/" + id, status, config);
 }
 

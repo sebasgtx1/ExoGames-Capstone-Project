@@ -19,7 +19,7 @@ router.put('/update_event/:id', checkToken, updateEvent);
 router.put('/publish/:id', checkToken, un_PublishEvent);
 
 //delete
-router.put('/delete_event/:id', checkToken, deleteEvent);
+router.put('/delete_event/:id', deleteEvent); // revisar validacion del toquen
 
 
 module.exports = router;

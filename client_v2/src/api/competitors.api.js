@@ -10,7 +10,7 @@ export const getCompetitorIdRequest = async (id) => {
     return await axios.get(API + "competitor/" + id);
 }
 
-export const getMyCompetitorsRequest = async (user_id) => {
+export const getMyCompetitorsRequest = async (user_id, token) => {
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
@@ -18,7 +18,7 @@ export const getMyCompetitorsRequest = async (user_id) => {
 }
 
 export const getMyCompetitorIdRequest = async (user_id, id) => {
-    return await axios.get(API + "competitor/" + user_id + "/" + id);
+    return await axios.get(API + "my_competitor/" + user_id + "/" + id);
 }
 
 export const getCompetitorSport = async (sport) => {

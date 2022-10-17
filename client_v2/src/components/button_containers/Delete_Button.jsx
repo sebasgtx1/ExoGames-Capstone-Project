@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { deleteEventRequest } from '../../api/events.api';
 import stylesButton from "../styles/ButtonContainer.module.css"
 import Swal from 'sweetalert2'
@@ -17,13 +17,19 @@ export function DeleteButton(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const resp = await deleteEventRequest(props.event_id);
+        const resp = await deleteEventRequest(props.event_id, props.token);
         Swal.fire(
           'Deleted!',
           'Your event has been deleted.',
           'success'
         )
-        navigate('/my_events')
+        navigate('/my_events', {
+          state: {
+              user_id: props.user_id,
+              token: props.token,
+              username: props.username
+          }
+      })
       }
     })
   }

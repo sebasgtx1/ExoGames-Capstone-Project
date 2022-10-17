@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import { createCompetitorRequest } from "../api/competitors.api";
 import styles from '../components/styles/CreateEvent.module.css'
 import stylesSelect from '../components/styles/SelectComponent.module.css';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import Resizer from "react-image-file-resizer";
 
@@ -18,8 +18,10 @@ const options = [
 
 export function CreateCompetitor() {
     const navigate = useNavigate();
+    const location = useLocation()
     const [ optionSelected, setOptionSelected ] = useState('football')
     const [previewSource, setPreviewSource] = useState();
+    const { user_id, token, username } = location.state;
     const handleChangeFile = (event) => {
 
         {
@@ -51,7 +53,6 @@ export function CreateCompetitor() {
     }
 
     const handleChangeSelected = (selectedOption) => {
-        console.log(selectedOption);
         setOptionSelected(selectedOption.value);
     };
     return (
@@ -59,6 +60,7 @@ export function CreateCompetitor() {
             <h1>Create competitor</h1>
             <Formik
                 initialValues={{
+                    user_id: user_id,
                     name: "",
                     team_players: "",
                     description: "",
@@ -70,7 +72,7 @@ export function CreateCompetitor() {
                     values.sport = optionSelected;
                     values.image = previewSource;
                     try {
-                        await createCompetitorRequest(values);
+                        await createCompetitorRequest(values, token);
                         actions.resetForm();
                         Swal.fire({
                             position: 'top-end',
@@ -79,7 +81,13 @@ export function CreateCompetitor() {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        navigate('/my_competitors')
+                        navigate('/my_competitors', {
+                            state: {
+                                user_id: user_id,
+                                token: token,
+                                username: username
+                            }
+                        })
                     } catch (error) {
                         console.log(error)
 

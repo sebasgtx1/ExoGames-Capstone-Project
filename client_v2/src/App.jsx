@@ -28,6 +28,8 @@ import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { UpdateEventCreation } from './pages/UpdateEventCreation'
 import { LandingUserPage } from './pages/LandingUserPage'
+import { VenuesUserPage } from './pages/VenuesUserPage'
+import { CompetitorsUserPage } from './pages/CompetitorsUserPage'
 
 function App() {
 
@@ -58,39 +60,39 @@ function App() {
 
           {/* Landing page with Login */}
           <Route path='/events/:user_id' element={<LandingUserPage/>} />
-          <Route path='/venues/:user_id' element={<> <ButtonUserContainer user_id="4" /> <VenuesPage /></>} />
-          <Route path='/competitors/:user_id' element={<> <ButtonUserContainer user_id="4" /> <CompetitorsPage/></>} />
+          <Route path='/venues/:user_id' element={<VenuesUserPage/>} />
+          <Route path='/competitors/:user_id' element={<CompetitorsUserPage/>} />
 
           {/* Detail pages with login */}
           <Route path='/my_event/:user_id/:id' element={<> < MyEventDetails /></>} />
-          <Route path='/my_competitor/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyCompetitorDetails /></>} />
-          <Route path='/my_venue/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyVenueDetails/></>} />
+          <Route path='/my_competitor/:user_id/:id' element={<>  < MyCompetitorDetails /></>} />
+          <Route path='/my_venue/:user_id/:id' element={<> < MyVenueDetails/></>} />
 
           <Route path='/event/:id/:user_id' element={<> < EventDetails /></>} />
-          <Route path='/competitor/:id/:user_id' element={<> <ButtonUserContainer/> < CompetitorDetails /></>} />
-          <Route path='/venue/:id/:user_id' element={<> <ButtonUserContainer /> < VenueDetails /></>} />
+          <Route path='/competitor/:id/:user_id' element={<> < CompetitorDetails /></>} />
+          <Route path='/venue/:id/:user_id' element={<> < VenueDetails /></>} />
 
           {/* User views*/}
           <Route path="/my_events" element={<> <MyEventsPage/> </>} />
-          <Route path="/my_competitors" element={<> <ButtonUserContainer user_id="4" /> <MyCompetitorsPage user_id="4" /></>} />
-          <Route path="/my_venues" element={<> <ButtonUserContainer user_id="4" /> <MyVenuesPage user_id="4" /></>} />
+          <Route path="/my_competitors" element={<>  <MyCompetitorsPage /></>} />
+          <Route path="/my_venues" element={<>  <MyVenuesPage /></>} />
 
           {/* create event flow*/}
           <Route path="/create_event" element={<> <CreateEvent/></>} />
           <Route path="/create_match/:event_id" element={<> <CreateMatch /></>} />
           
           {/* create venue flow*/}
-          <Route path="/create_venue" element={<> <ButtonUserContainer user_id="4"/> <CreateVenue /></>} />
+          <Route path="/create_venue" element={<> <CreateVenue /></>} />
 
           {/* create competitor flow*/}
-          <Route path="/create_competitor" element={<> <ButtonUserContainer user_id="4"/> <CreateCompetitor /></>} />
+          <Route path="/create_competitor" element={<>  <CreateCompetitor /></>} />
 
           {/* update flow*/}
-          <Route path="/update_create_event/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateEventCreation /></>} />
+          <Route path="/update_create_event/:id" element={<>  <UpdateEventCreation /></>} />
           <Route path="/update_event/:id" element={<>  <UpdateEvent /></>} />
-          <Route path="/update_competitor/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateCompetitor /></>} />
-          <Route path="/update_venue/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateVenue /></>} />
-          <Route path="/update_match/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateMatch /></>} />
+          <Route path="/update_competitor/:id" element={<>  <UpdateCompetitor /></>} />
+          <Route path="/update_venue/:id" element={<>  <UpdateVenue /></>} />
+          <Route path="/update_match/:id" element={<>  <UpdateMatch /></>} />
 
           {/* login / resgister */}
           <Route path="/login" element={<> <LoginPage /></>} />

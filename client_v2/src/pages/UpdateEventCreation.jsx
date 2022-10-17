@@ -12,11 +12,20 @@ import { useEffect, useState } from "react";
 import { updateEventRequest } from "../api/events.api";
 import Swal from 'sweetalert2'
 
+const options = [
+    { value: 'football', label: 'Football' },
+    { value: 'basketball', label: 'Basketball' },
+    { value: 'baseball', label: 'Baseball' },
+    { value: 'archery', label: 'Archery' },
+    { value: 'paintball', label: 'Paintball' }
+]
+
 export function UpdateEventCreation() {
     const location = useLocation();
     const navigate = useNavigate();
-    const event_id = location.state.event_id;
+    const { event_id, user_id, token, username } = location.state;
     const [event, setEvents] = useState([])
+    const [defaultLabel, setLabel] = useState('')
     const [ wins, setWins ] = useState(0)
     const [ losses, setLosses ] = useState(0)
     const [ optionSelected, setOptionSelected ] = useState('football')
@@ -55,6 +64,10 @@ export function UpdateEventCreation() {
         async function getEvent() {
             const resp = await getEventsIdRequest(event_id);
             setEvents(resp.data);
+            setLosses(resp.data.losses)
+            setWins(resp.data.wins)
+            setLabel(String(resp.data.sport));
+            setOptionSelected( resp.data.sport)
 
         }
         getEvent();

@@ -1,13 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { AiTwotoneEdit } from "react-icons/ai";
 
-export function UpdateMatchButton(props) {
+export function UpdateMatchButton({ match, user_id, token, username, sport }) {
     const navigate = useNavigate();
     const confirm = () => {
 
-        navigate('/update_match/' + props.match.match_id, {
+        navigate('/update_match/' + match.match_id, {
             state : {
-                match: props.match
+                match: match,
+                token: token,
+                user_id : user_id,
+                username : username,
+                sport: sport
             }
         })
         

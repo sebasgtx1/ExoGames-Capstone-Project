@@ -17,13 +17,19 @@ export function DeleteButtonCompetitor(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const resp = await deleteCompetitorRequest(props.competitor_id);
+        const resp = await deleteCompetitorRequest(props.competitor_id, props.token);
         Swal.fire(
           'Deleted!',
           'Your Competitor has been deleted.',
           'success'
         )
-        navigate('/my_competitors')
+        navigate('/my_competitors', {
+          state: {
+              user_id: props.user_id,
+              token: props.token,
+              username: props.username
+          }
+      })
       }
     })
   }

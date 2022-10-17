@@ -20,7 +20,7 @@ const getMyCompetitors = async (req, res) => {
             'SELECT * FROM competitors WHERE (user_id = (?) AND status = (?))  ORDER BY competitor_id DESC', [user_id, 'active']
         );
         if (result.length === 0)
-            return res.status(404).json({ message: "competitor not found" });
+            return res.json({ message: "Competitors not found" });
 
         res.json(result);
     } catch (error) {
@@ -80,10 +80,10 @@ const getCompetitorId = async (req, res) => {
 
 const createCompetitor = async (req, res) => {
     try {
-        const { name, sport, description, team_players, image } = req.body;
+        const { user_id, name, sport, description, team_players, image } = req.body;
         const [result] = await pool.query(
             'INSERT INTO competitors (user_id, name, team_players, description, sport, image, status) VALUES (?, ?, ?, ?, ?, ?, ?)', [
-            4, //user_id
+            user_id,
             name,
             team_players,
             description,

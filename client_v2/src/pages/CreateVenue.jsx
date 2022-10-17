@@ -1,15 +1,17 @@
 import React, { useState } from "react";
-import { Form, Formik } from 'formik';
+import { Formik } from 'formik';
 import styles from '../components/styles/CreateEvent.module.css'
 import { createVenueRequest } from "../api/venues.api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import Resizer from "react-image-file-resizer";
 
 
 export function CreateVenue() {
     const navigate = useNavigate();
+    const location = useLocation()
     const [previewSource, setPreviewSource] = useState();
+    const { user_id, token, username } = location.state;
     const handleChangeFile = (event) => {
 
         {
@@ -44,6 +46,7 @@ export function CreateVenue() {
             <h1>Create Venue</h1>
             <Formik
                 initialValues={{
+                    user_id: user_id,
                     name: "",
                     description: "",
                     image: ""
@@ -52,7 +55,7 @@ export function CreateVenue() {
                 onSubmit={async (values, actions) => {
                     values.image = previewSource;
                     try {
-                        await createVenueRequest(values);
+                        await createVenueRequest(values, token);
                         actions.resetForm();
                         Swal.fire({
                             position: 'top-end',
@@ -61,7 +64,13 @@ export function CreateVenue() {
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        navigate('/my_venues')
+                        navigate('/my_venues', {
+                            state: {
+                                user_id: user_id,
+                                token: token,
+                                username: username
+                            }
+                        })
 
                     } catch (error) {
                         console.log(error)

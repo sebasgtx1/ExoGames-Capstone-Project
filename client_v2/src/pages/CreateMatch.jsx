@@ -13,14 +13,15 @@ import Swal from 'sweetalert2'
 export function CreateMatch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { event_id, sport, user_id, token } = location.state;
+    const { event_id, sport, user_id, token, username, addMatch } = location.state;
 
     function handleClick() {
 
         navigate('/my_events', {
             state: {
                 user_id: user_id,
-                token: token
+                token: token,
+                username: username
             }
         })
         Swal.fire({
@@ -37,17 +38,19 @@ export function CreateMatch() {
             state: {
                 event_id: event_id,
                 user_id: user_id,
-                token: token
+                token: token,
+                username: username
 
             }
         })
     }
 
-
-    function Cancel() {
-
-        navigate(-1)
+    let button = <button onClick={BackClick} >Back</button>
+    if (addMatch) {
+        button = null;
+        
     }
+
     return (
         <div className={styles.center}>
             <h1>Create match</h1>
@@ -120,7 +123,7 @@ export function CreateMatch() {
                             onChange={props.handleChange} />
                         <h3></h3>
 
-                        <button onClick={BackClick} >Back</button>
+                        {button}
                         <button type="submit">Submit</button>
                         <button onClick={handleClick}>Finish</button>
 

@@ -52,6 +52,7 @@ export function RegisterPage() {
                         placeholder="password"
                         onChange={props.handleChange}
                         value={props.password} required/>
+                        <br /><br />
                         <button type="submit">Register</button>
 
                     </form>

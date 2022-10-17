@@ -105,6 +105,7 @@ const login = async (req, res) => {
         success: 1,
         message: "login successfully",
         user_id: result[0].user_id,
+        username: result[0].username,
         token: jsontoken,
       });
     } else {

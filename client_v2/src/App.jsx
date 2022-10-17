@@ -27,6 +27,7 @@ import { UpdateMatch } from './pages/UpdateMatch'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { UpdateEventCreation } from './pages/UpdateEventCreation'
+import { LandingUserPage } from './pages/LandingUserPage'
 
 function App() {
 
@@ -51,33 +52,32 @@ function App() {
           <Route path='/competitors' element={<> <ButtonContainer /> <CompetitorsPage /></>} />
 
           {/* Detail pages without login */}
-          <Route path='/event/:id' element={<> <ButtonContainer /> < EventDetails /></>} />
+          <Route path='/event/:id' element={<> < EventDetails /></>} />
           <Route path='/competitor/:id' element={<> <ButtonContainer /> < CompetitorDetails /></>} />
           <Route path='/venue/:id' element={<> <ButtonContainer /> < VenueDetails /></>} />
 
           {/* Landing page with Login */}
-          <Route path='/events/:user_id' element={<> <ButtonUserContainer user_id="4" /> <LandingPage /></>} />
+          <Route path='/events/:user_id' element={<LandingUserPage/>} />
           <Route path='/venues/:user_id' element={<> <ButtonUserContainer user_id="4" /> <VenuesPage /></>} />
           <Route path='/competitors/:user_id' element={<> <ButtonUserContainer user_id="4" /> <CompetitorsPage/></>} />
 
           {/* Detail pages with login */}
-          <Route path='/event/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyEventDetails /></>} />
-          <Route path='/competitor/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyCompetitorDetails /></>} />
-          <Route path='/venue/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyVenueDetails/></>} />
+          <Route path='/my_event/:user_id/:id' element={<> < MyEventDetails /></>} />
+          <Route path='/my_competitor/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyCompetitorDetails /></>} />
+          <Route path='/my_venue/:user_id/:id' element={<> <ButtonUserContainer user_id="4"/> < MyVenueDetails/></>} />
 
-          <Route path='/event/:id/:user_id' element={<> <ButtonUserContainer/> < EventDetails /></>} />
+          <Route path='/event/:id/:user_id' element={<> < EventDetails /></>} />
           <Route path='/competitor/:id/:user_id' element={<> <ButtonUserContainer/> < CompetitorDetails /></>} />
           <Route path='/venue/:id/:user_id' element={<> <ButtonUserContainer /> < VenueDetails /></>} />
 
           {/* User views*/}
-          <Route path='/user' element={<> <ButtonUserContainer user_id="4"/> < MyEventsPage user_id="4" /></>} />
-          <Route path="/my_events" element={<> <ButtonUserContainer user_id="4" />  <MyEventsPage user_id="4" /> </>} />
+          <Route path="/my_events" element={<> <MyEventsPage/> </>} />
           <Route path="/my_competitors" element={<> <ButtonUserContainer user_id="4" /> <MyCompetitorsPage user_id="4" /></>} />
           <Route path="/my_venues" element={<> <ButtonUserContainer user_id="4" /> <MyVenuesPage user_id="4" /></>} />
 
           {/* create event flow*/}
-          <Route path="/create_event" element={<> <ButtonUserContainer user_id="4"/> <CreateEvent /></>} />
-          <Route path="/create_match/:event_id" element={<> <ButtonUserContainer user_id="4"/> <CreateMatch user_id="4" /></>} />
+          <Route path="/create_event" element={<> <CreateEvent/></>} />
+          <Route path="/create_match/:event_id" element={<> <CreateMatch /></>} />
           
           {/* create venue flow*/}
           <Route path="/create_venue" element={<> <ButtonUserContainer user_id="4"/> <CreateVenue /></>} />
@@ -87,7 +87,7 @@ function App() {
 
           {/* update flow*/}
           <Route path="/update_create_event/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateEventCreation /></>} />
-          <Route path="/update_event/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateEvent /></>} />
+          <Route path="/update_event/:id" element={<>  <UpdateEvent /></>} />
           <Route path="/update_competitor/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateCompetitor /></>} />
           <Route path="/update_venue/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateVenue /></>} />
           <Route path="/update_match/:id" element={<> <ButtonUserContainer user_id="4"/> <UpdateMatch /></>} />

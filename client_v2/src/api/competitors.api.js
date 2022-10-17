@@ -11,6 +11,9 @@ export const getCompetitorIdRequest = async (id) => {
 }
 
 export const getMyCompetitorsRequest = async (user_id) => {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
     return await axios.get(API + "competitors/" + user_id);
 }
 

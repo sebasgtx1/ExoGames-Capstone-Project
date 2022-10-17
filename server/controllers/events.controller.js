@@ -22,7 +22,7 @@ const getMyEvents = async (req, res) => {
             [user_id, 'active']
         );
         if (result.length === 0)
-            return res.status(404).json({ message: "Event not found" });
+            return res.status(204).json({ message: "Events not found" });
 
         res.json(result);
     } catch (error) {
@@ -66,10 +66,10 @@ const getEventId = async (req, res) => {
 
 const createEvent = async (req, res) => {
     try {
-        const { event_name, sport, image, description, wins, losses, status, public_status } = req.body;
+        const { user_id, event_name, sport, image, description, wins, losses, status, public_status } = req.body;
         const [result] = await pool.query(
             'INSERT INTO events (user_id, event_name, sport, image, description, wins, losses, status, public_status) VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)', [
-            4, //user_id
+            user_id,
             event_name,
             sport,
             image,

@@ -10,6 +10,7 @@ import styles from '../components/styles/CreateEvent.module.css'
 import { useEffect, useState } from "react";
 import { updateEventRequest } from "../api/events.api";
 import Swal from 'sweetalert2'
+import { useLocation } from "react-router-dom";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -25,6 +26,9 @@ export function UpdateEvent() {
     const [ wins, setWins ] = useState(0)
     const [ losses, setLosses ] = useState(0)
     const [ optionSelected, setOptionSelected ] = useState('football')
+    const location = useLocation();
+    const {user_id, token } = location.state;
+    console.log(location.state);
 
     let incWins =()=>{
         if(wins<1000)
@@ -81,7 +85,8 @@ export function UpdateEvent() {
                     description: event.description,
                     sport: event.sport,
                     wins: event.wins,
-                    losses: event.losses
+                    losses: event.losses,
+                    token: token
 
                 }}
                 onSubmit={async (values, actions) => {

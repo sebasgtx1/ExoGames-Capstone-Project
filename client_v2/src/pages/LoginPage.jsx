@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import Swal from 'sweetalert2'
+import { LoginRequest } from "../api/users.api";
 
 export function LoginPage() {
 
@@ -24,12 +25,13 @@ export function LoginPage() {
                 }}
                 onSubmit={async (values, actions) => {
                     try {
-                        //const resp = await createEventRequest(values);
-                        //actions.resetForm();
-                        console.log(values);
-                        navigate('/user',{
+                        const resp = await LoginRequest(values);
+                        const data = resp.data
+                        navigate('/my_events',{
                             state: {
-                              user_id: 4
+                              user_id: data.user_id,
+                              username:data.username,
+                              token: data.token
                             }});
                     } catch (error) {
                         console.log(error)

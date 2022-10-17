@@ -11,6 +11,8 @@ import { GetVenue } from "../components/list/VenueInfo";
 import { AddMatchButton } from "../components/button_containers/AddMatchButton";
 import { ButtonNoStyle } from "../components/reusables/ButtonNoStyle";
 import { PublishEvent } from "../components/button_containers/PublishButton";
+import { useLocation } from "react-router-dom";
+import { ButtonUserContainer } from '../components/button_containers/ButtonUserContainer'
 
 
 
@@ -18,6 +20,8 @@ export function MyEventDetails() {
     const { user_id, id } = useParams();
     const [event, setEvents] = useState([])
     const [matches, setMaches] = useState([])
+    const location = useLocation();
+    const {token, username} = location.state;
 
     useEffect(() => {
 
@@ -42,6 +46,8 @@ export function MyEventDetails() {
 
 
     return (
+        <>
+        <ButtonUserContainer user_id={user_id} token={token} username={username}/>
         <div className={styles.detailsContainer}>
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
@@ -68,13 +74,13 @@ export function MyEventDetails() {
                     
                 </p>
                 <div >
-                    <ButtonNoStyle src={"/update_event/" + event.event_id} title="Update" />
-                    <PublishEvent event_id={event.event_id} status={event.public_status} />
-                    <DeleteButton event_id={event.event_id} />
+                    <ButtonNoStyle src={"/update_event/" + event.event_id} title="Update" user_id={user_id} token={token}/>
+                    <PublishEvent event_id={event.event_id} status={event.public_status} user_id={user_id} token={token}/>
+                    <DeleteButton event_id={event.event_id} user_id={user_id} token={token}/>
 
                 </div>
                 <ul >
-                    {matches.map((match) => (
+                    {matches.message == 'Matches not found' ? null : matches.map((match) => (
                         <div key={match.match_id}>
 
                             <li > match {match.match_id} : <GetCompetitor id={match.competitor1_id} />  vs <GetCompetitor id={match.competitor2_id} /> venue : <GetVenue id={match.venue_id} /> date : {match.date} time : {match.time}</li>
@@ -90,5 +96,6 @@ export function MyEventDetails() {
             </div>
 
         </div>
+        </>
     );
 }

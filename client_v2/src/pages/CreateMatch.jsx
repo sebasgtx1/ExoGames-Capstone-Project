@@ -10,15 +10,19 @@ import { createMatchRequest } from "../api/matches.api";
 import Swal from 'sweetalert2'
 
 
-export function CreateMatch(props) {
+export function CreateMatch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const event_id = location.state.event_id;
-    const sport = location.state.sport;
+    const { event_id, sport, user_id, token } = location.state;
 
     function handleClick() {
 
-        navigate('/my_events')
+        navigate('/my_events', {
+            state: {
+                user_id: user_id,
+                token: token
+            }
+        })
         Swal.fire({
             position: 'top-end',
             icon: 'success',
@@ -29,13 +33,17 @@ export function CreateMatch(props) {
     }
     function BackClick() {
 
-        navigate('/update_create_event/' + event_id, {state:{
-            event_id: event_id
+        navigate('/update_create_event/' + event_id, {
+            state: {
+                event_id: event_id,
+                user_id: user_id,
+                token: token
 
-        }})
+            }
+        })
     }
 
-    
+
     function Cancel() {
 
         navigate(-1)
@@ -52,23 +60,19 @@ export function CreateMatch(props) {
                     competitor1_group: "",
                     competitor2_group: "",
                     date: "",
-                    time: ""
+                    time: "",
+                    token: token
 
                 }}
                 onSubmit={async (values, actions) => {
                     try {
                         const resp = await createMatchRequest(event_id, values);
                         Swal.fire('Match Created succesfully').then(() => {
-                            window.location.reload();
+                            window.location.reload(false);
                         })
-
-
-
                     } catch (error) {
                         console.log(error)
-
                     }
-
                 }}
 
             >

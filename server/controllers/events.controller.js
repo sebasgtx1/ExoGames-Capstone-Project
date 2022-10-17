@@ -18,11 +18,11 @@ const getMyEvents = async (req, res) => {
     try {
         const user_id = parseInt(req.params.user_id);
         const [result] = await pool.query(
-            'SELECT * FROM events WHERE (user_id = (?) AND status = (?)) ORDER BY event_id DESC', 
+            'SELECT * FROM events WHERE (user_id = (?) AND status = (?)) ORDER BY event_id DESC',
             [user_id, 'active']
         );
         if (result.length === 0)
-            return res.status(404).json({ message: "Event not found" });
+            return res.json({ message: "Events not found" });
 
         res.json(result);
     } catch (error) {
@@ -66,10 +66,10 @@ const getEventId = async (req, res) => {
 
 const createEvent = async (req, res) => {
     try {
-        const { event_name, sport, image, description, wins, losses, status, public_status } = req.body;
+        const { user_id, event_name, sport, image, description, wins, losses, status, public_status } = req.body;
         const [result] = await pool.query(
             'INSERT INTO events (user_id, event_name, sport, image, description, wins, losses, status, public_status) VALUES (?, ?, ?, ?, ?, ? ,?, ?, ?)', [
-            4, //user_id
+            user_id,
             event_name,
             sport,
             image,
@@ -110,7 +110,7 @@ const deleteEvent = async (req, res) => {
             'inactive',
             req.params.id
         ]);
-        
+
 
         return res.sendStatus(204);
     } catch (error) {
@@ -120,9 +120,8 @@ const deleteEvent = async (req, res) => {
 
 const un_PublishEvent = async (req, res) => {
     try {
-        
+
         const { public_status } = req.body;
-        console.log(req.body);
         const [result] = await pool.query(
             'UPDATE events SET public_status = (?) WHERE event_id = (?)', [
             public_status,
@@ -131,7 +130,7 @@ const un_PublishEvent = async (req, res) => {
 
         return res.sendStatus(200);
 
-        
+
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }

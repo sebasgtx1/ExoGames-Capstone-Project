@@ -20,7 +20,7 @@ const getMyVenues= async (req, res) => {
             'SELECT * FROM venues WHERE (user_id = (?) AND status = (?)) ORDER BY venue_id DESC', [user_id, 'active']
         );
         if (result.length === 0)
-            return res.status(404).json({ message: "Event not found" });
+            return res.json({ message: "Venues not found" });
 
         res.json(result);
     } catch (error) {
@@ -65,10 +65,10 @@ const getVenueId = async (req, res) => {
 
 const createVenue = async (req, res) => {
     try {
-        const { name, description, image } = req.body;
+        const { user_id, name, description, image } = req.body;
         const [result] = await pool.query(
             'INSERT INTO venues (user_id, name, description, image, status) VALUES (?, ?, ?, ?, ?)', [
-            4, // user_id
+            user_id,
             name,
             description,
             image,

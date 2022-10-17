@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getCompetitorIdRequest } from "../api/competitors.api";
+import { useLocation } from "react-router-dom";
 import styles from '../components/styles/CompetitorDetails.module.css'
+import { ButtonContainer } from "../components/button_containers/ButtonContainer";
+import { ButtonUserContainer } from "../components/button_containers/ButtonUserContainer";
 
 
 export function CompetitorDetails() {
     const { id } = useParams();
     const [competitor, setCompetitors] = useState([])
+    const location = useLocation();
+    const {user_id, token, username} = location.state;
 
     useEffect(() => {
 
@@ -17,8 +22,15 @@ export function CompetitorDetails() {
         }
         getCompetitor();
     }, [id])
+    let button = <ButtonContainer/>
+    if (user_id && token) {
 
-    return (
+      button = <ButtonUserContainer user_id={user_id} token={token} username={username}/>  
+    }
+
+
+    return (<>
+        {button}
         <div className={styles.detailsContainer}>
             <div className={`${styles.col} ${styles.cardDetails}`}>
                 <img
@@ -38,5 +50,5 @@ export function CompetitorDetails() {
                 </div>
             </div>
         </div>
-    );
+        </>);
 }

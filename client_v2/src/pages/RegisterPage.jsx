@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from 'react-router-dom';
-import Select from 'react-select';
 import { Formik } from 'formik';
-import { createEventRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
-import stylesSelect from '../components/styles/SelectComponent.module.css';
-import IncDecCounter from '../components/button_containers/IncDecCounter'
 import Swal from 'sweetalert2'
+import { createUserRequest } from "../api/users.api";
 
 
 export function RegisterPage() {
@@ -24,13 +21,10 @@ export function RegisterPage() {
                 }}
                 onSubmit={async (values, actions) => {
                     try {
-                        //const resp = await createEventRequest(values);
-                        //actions.resetForm();
-                        console.log(values);
-                        navigate('/user',{
-                            state: {
-                              user_id: 4
-                            }});
+                        const resp = await createUserRequest(values);
+                        console.log(resp.data);
+                        Swal.fire('Your Account has been created')
+                        navigate('/login');
                     } catch (error) {
                         console.log(error)
 

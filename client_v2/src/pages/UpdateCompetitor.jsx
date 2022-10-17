@@ -1,7 +1,6 @@
 import React from "react";
 import Select from 'react-select';
 import stylesSelect from '../components/styles/SelectComponent.module.css';
-import stylesInput from '../components/styles/InputElement.module.css';
 import { useNavigate } from 'react-router-dom';
 import { useParams } from "react-router";
 import { Formik } from 'formik';
@@ -9,6 +8,7 @@ import styles from '../components/styles/CreateEvent.module.css'
 import { useEffect, useState } from "react";
 import { getCompetitorIdRequest, updateCompetitorRequest } from "../api/competitors.api";
 import Swal from 'sweetalert2'
+import { useLocation } from "react-router-dom";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -20,12 +20,12 @@ const options = [
 
 export function UpdateCompetitor() {
     const { id } = useParams();
-    console.log(id);
+    const location = useLocation();
+    const {user_id, token } = location.state;
     const [competitor, setCompetitor] = useState([])
     const [ optionSelected, setOptionSelected ] = useState('football')
 
     const handleChangeSelected = (selectedOption) => {
-        console.log(selectedOption);
         setOptionSelected(selectedOption.value);
     };
 
@@ -55,7 +55,7 @@ export function UpdateCompetitor() {
                 onSubmit={async (values, actions) => {
                     values.sport = optionSelected;
                     try {
-                        const resp = await updateCompetitorRequest(values, id);
+                        const resp = await updateCompetitorRequest(values, id, token);
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',

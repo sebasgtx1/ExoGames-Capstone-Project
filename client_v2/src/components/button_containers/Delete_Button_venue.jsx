@@ -17,13 +17,19 @@ export function DeleteButtonVenue(props) {
       confirmButtonText: 'Yes, delete it!'
     }).then(async (result) => {
       if (result.isConfirmed) {
-        const resp = await deleteVenueRequest(props.venue_id);
+        const resp = await deleteVenueRequest(props.venue_id, props.token);
         Swal.fire(
           'Deleted!',
           'Your venue has been deleted.',
           'success'
         )
-        navigate('/my_venues')
+        navigate('/my_venues', {
+          state: {
+              user_id: props.user_id,
+              token: props.token,
+              username: props.username
+          }
+      })
       }
     })
   }

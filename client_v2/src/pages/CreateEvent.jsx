@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Resizer from "react-image-file-resizer";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { Formik } from 'formik';
 import { createEventRequest } from '../api/events.api';
@@ -20,13 +20,15 @@ const options = [
 
 
 export function CreateEvent() {
-
+    const location = useLocation()
     const [wins, setWins] = useState(0)
     const [losses, setLosses] = useState(0)
     const [optionSelected, setOptionSelected] = useState('football')
     const [previewSource, setPreviewSource] = useState();
     const [publicStatus, setPublicStatus] = useState('public');
     const [saveStatus, setSaveStatus] = useState(false);
+    const { user_id, token, username } = location.state;
+
 
     let incWins = () => {
         if (wins < 1000) {
@@ -96,11 +98,12 @@ export function CreateEvent() {
     }
 
     const navigate = useNavigate();
-    return (
+    return (<>
         <div className={styles.center}>
             <h1>Create Event</h1>
             <Formik
                 initialValues={{
+                    user_id: user_id,
                     event_name: "",
                     description: "",
                     sport: "football",
@@ -108,7 +111,8 @@ export function CreateEvent() {
                     wins: "",
                     losses: "",
                     status: "active",
-                    public_status: ""
+                    public_status: "",
+                    token: token
 
                 }}
                 onSubmit={async (values, actions) => {
@@ -120,12 +124,18 @@ export function CreateEvent() {
 
                     try {
 
-                        const resp = await createEventRequest(values);
+                        const resp = await createEventRequest(values, token);
                         actions.resetForm();
 
                         if (saveStatus) {
                             Swal.fire('Event Saved succesfully')
-                            navigate('/my_events')
+                            navigate('/my_events', {
+                                state: {
+                                    user_id: user_id,
+                                    token: token,
+                                    username: username
+                                }
+                            })
 
                         }
                         else {
@@ -134,7 +144,11 @@ export function CreateEvent() {
                                 state: {
                                     event_id: resp.data.event_id,
                                     event_name: resp.data.event_name,
-                                    sport: resp.data.sport
+                                    sport: resp.data.sport,
+                                    user_id: user_id,
+                                    token: token,
+                                    username: username
+
                                 }
                             });
                         }
@@ -205,7 +219,7 @@ export function CreateEvent() {
                             {/* <!-- Botón --> */}
                             <label htmlFor="switch_label" className={stylesCheckBox.switch_button__label}></label>
                         </div>
-                        <br/><br/>
+                        <br /><br />
                         <button type="reset" >Reset</button>
                         <button type="submit" onClick={SaveDraft}>Save draft</button>
                         <button type="submit">Next</button>
@@ -215,5 +229,5 @@ export function CreateEvent() {
                 )}
             </Formik>
         </div>
-    );
+    </>);
 }

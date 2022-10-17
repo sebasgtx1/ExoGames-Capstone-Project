@@ -6,7 +6,7 @@ const { getCompetitors, getCompetitorId, getMyCompetitorSport, getMyCompetitorId
 // get
 router.get('/competitors', getCompetitors);
 router.get('/competitor/:id', getCompetitorId);
-router.get('/competitor/:user_id/:id', getMyCompetitorId);
+router.get('/my_competitor/:user_id/:id', getMyCompetitorId);
 router.get('/competitors/:user_id', getMyCompetitors);
 router.get('/competitors_sport/:sport', getMyCompetitorSport);
 

@@ -16,13 +16,13 @@ export function DeleteMatchButton(props) {
             confirmButtonText: 'Yes, delete it!'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                const resp = await deleteMatchRequest(props.match_id);
+                const resp = await deleteMatchRequest(props.match_id, props.token);
                 Swal.fire(
                     'Deleted!',
                     'match deleted.',
                     'success'
                 ).then(() => {
-                    window.location.reload();
+                    window.location.reload(false);
                 })
             }
         })

@@ -10,6 +10,7 @@ import styles from '../components/styles/CreateEvent.module.css'
 import { useEffect, useState } from "react";
 import { updateEventRequest } from "../api/events.api";
 import Swal from 'sweetalert2'
+import { useLocation } from "react-router-dom";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -22,9 +23,12 @@ const options = [
 export function UpdateEvent() {
     const { id } = useParams();
     const [event, setEvents] = useState([])
+    const [defaultLabel, setLabel] = useState('')
     const [ wins, setWins ] = useState(0)
     const [ losses, setLosses ] = useState(0)
     const [ optionSelected, setOptionSelected ] = useState('football')
+    const location = useLocation();
+    const {user_id, token } = location.state;
 
     let incWins =()=>{
         if(wins<1000)
@@ -51,7 +55,6 @@ export function UpdateEvent() {
         }
     };
     const handleChangeSelected = (selectedOption) => {
-        console.log(selectedOption);
         setOptionSelected(selectedOption.value);
     };
 
@@ -61,15 +64,14 @@ export function UpdateEvent() {
         async function getEvent() {
             const resp = await getEventsIdRequest(id);
             setEvents(resp.data);
+            setLosses(resp.data.losses)
+            setWins(resp.data.wins)
+            setLabel(String(resp.data.sport));
+            setOptionSelected( resp.data.sport)
 
         }
         getEvent();
     }, [id])
-
-    function Cancel() {
-
-        navigate(-1)
-    }
 
     const navigate = useNavigate();
     return (
@@ -89,7 +91,7 @@ export function UpdateEvent() {
                     values.losses = losses;
                     values.sport = optionSelected;
                     try {
-                        const resp = await updateEventRequest(values, id);
+                        const resp = await updateEventRequest(values, id, token);
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -125,7 +127,7 @@ export function UpdateEvent() {
                             defaultValue={event.description}
                             />
                         <h3></h3>
-                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
+                        <Select name="sport" type="text"  defaultValue={{label : defaultLabel}} className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
 
                         <h3></h3>
                         <label>Wins</label><br/>
@@ -137,7 +139,7 @@ export function UpdateEvent() {
                             required />
                         <button onClick={incWins} type="button">+</button>
                         <h3></h3>
-                        <label>Losses</label>
+                        <label>Losses</label> <br />
                         <button onClick={decLosses} type="button">-</button>
                         <input type="text" name="losses"
                             onChange={props.handleChange}
@@ -148,7 +150,7 @@ export function UpdateEvent() {
 
                         <h3></h3>
 
-                        <button onClick={Cancel} >Cancel</button>
+                        <button type="reset" >reset</button>
                         <button type="submit">Update</button>
 
                     </form>

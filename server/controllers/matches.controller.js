@@ -7,7 +7,7 @@ const getMatchesId = async (req, res) => {
             'SELECT * FROM matches WHERE event_id = (?)', [event_id]
         );
         if (result.length === 0)
-            return res.status(404).json({ message: "Matches not found" });
+            return res.json({ message: "Matches not found" });
 
         res.json(result);
     } catch (error) {

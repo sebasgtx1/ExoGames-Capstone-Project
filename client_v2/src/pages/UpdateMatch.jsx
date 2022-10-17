@@ -10,12 +10,13 @@ import Swal from 'sweetalert2'
 
 
 
-export function UpdateMatch(props) {
+export function UpdateMatch() {
+
     const navigate = useNavigate();
     const location = useLocation();
 
+    const { user_id, token, username, sport, match } = location.state;
 
-    const match = location.state.match;
     return (
         <div className={styles.center}>
             <h1>Update match </h1>
@@ -32,7 +33,7 @@ export function UpdateMatch(props) {
 
                 }}
                 onSubmit={async (values, actions) => {
-                    console.log(values);
+
                     try {
 
                         const resp = await updateMatchRequest(values, match.match_id);
@@ -51,7 +52,9 @@ export function UpdateMatch(props) {
                     <form onSubmit={props.handleSubmit}>
                         <label>competitor 1</label>
 
-                        <CompetitrosList name="competitor1_id"
+                        <CompetitrosList
+                            name="competitor1_id"
+                            sport={sport}
                             onChange={props.handleChange}
 
                         />
@@ -65,6 +68,7 @@ export function UpdateMatch(props) {
 
                         <label>competitor 2</label>
                         <CompetitrosList
+                            sport={sport}
                             name="competitor2_id"
                             onChange={props.handleChange} />
                         <select name="competitor2_group"

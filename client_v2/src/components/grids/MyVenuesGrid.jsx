@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { getMyVenuesRequest } from "../../api/venues.api";
-import { MyVenueCard } from "../cards/MyVenueCard";
+import { VenueCard } from "../cards/VenueCard";
 import styles from "../styles/EventsGrid.module.css"
 
-export function MyVenuesGrid(props) {
+export function MyVenuesGrid({ user_id, token, username }) {
     const [venues, setVenues] = useState([])
     useEffect(() => {
 
         async function loadTask() {
-            const resp = await getMyVenuesRequest(props.user_id);
+            const resp = await getMyVenuesRequest(user_id, token);
             setVenues(resp.data);
 
         }
@@ -16,8 +16,8 @@ export function MyVenuesGrid(props) {
     }, [])
     return (
         <ul className={styles.EventGrid}>
-            {venues.map((venue) => (
-                <MyVenueCard key={venue.venue_id} venue={venue} user_id={props.user_id}/>
+            {venues.message == 'Venues not found' ? null : venues.map((venue) => (
+                <VenueCard key={venue.venue_id} venue={venue} src={"/my_venue/" + user_id + "/" + venue.venue_id} user_id={user_id} token={token} username={username}/>
             ))}
         </ul>
     );

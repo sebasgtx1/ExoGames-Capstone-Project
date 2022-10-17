@@ -35,11 +35,9 @@ function App() {
 
 
   return (
-
     <>
       <header>
         <LogoExogames />
-
       </header>
       <main>
         <Routes>
@@ -55,8 +53,8 @@ function App() {
 
           {/* Detail pages without login */}
           <Route path='/event/:id' element={<> < EventDetails /></>} />
-          <Route path='/competitor/:id' element={<> <ButtonContainer /> < CompetitorDetails /></>} />
-          <Route path='/venue/:id' element={<> <ButtonContainer /> < VenueDetails /></>} />
+          <Route path='/competitor/:id' element={<>  < CompetitorDetails /></>} />
+          <Route path='/venue/:id' element={<>  < VenueDetails /></>} />
 
           {/* Landing page with Login */}
           <Route path='/events/:user_id' element={<LandingUserPage/>} />
@@ -97,9 +95,6 @@ function App() {
           {/* login / resgister */}
           <Route path="/login" element={<> <LoginPage /></>} />
           <Route path="/register" element={<> <RegisterPage /></>} />
-
- 
-
         </Routes>
 
       </main>

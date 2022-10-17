@@ -9,7 +9,7 @@ import { ButtonUserContainer } from "../components/button_containers/ButtonUserC
 
 export function VenueDetails() {
     const { id } = useParams();
-    const [venue, setVenues] = useState([])
+    const [venue, setVenues] = useState([]) 
     const location = useLocation();
     const {user_id, token, username} = location.state;
 

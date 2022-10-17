@@ -139,7 +139,7 @@ export function CreateEvent() {
 
                         }
                         else {
-                            Swal.fire('Event Created succesfully')
+                            Swal.fire('Event created succesfully')
                             navigate('/create_match/' + resp.data.event_id, {
                                 state: {
                                     event_id: resp.data.event_id,

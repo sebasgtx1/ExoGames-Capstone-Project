@@ -81,39 +81,37 @@ export function CreateMatch() {
             >
                 {(props) => (
                     <form onSubmit={props.handleSubmit}>
-                        <label>competitor 1</label>
+                        {/* <label>competitor 1</label> */}
 
-                        <CompetitrosList name="competitor1_id" sport={sport}
+                        <CompetitrosList 
+                            name="competitor1_id" 
+                            sport={sport}
                             onChange={props.handleChange}
-
                         />
+                        
+                        {/* <label>competitor 2</label> */}
+                        <CompetitrosList
+                            name="competitor2_id"
+                            sport={sport}
+                            onChange={props.handleChange} />
+                        <br /><br />
                         <select name="competitor1_group"
                             onChange={props.handleChange} required>
                             <option>Group</option>
                             <option value="A">Group A</option>
                             <option value="B">Group B</option>
                         </select>
-                        <h3></h3>
-
-                        <label>competitor 2</label>
-                        <CompetitrosList
-                            name="competitor2_id"
-                            sport={sport}
-                            onChange={props.handleChange} />
                         <select name="competitor2_group"
                             onChange={props.handleChange} required>
                             <option >Group</option>
                             <option value="A">Group A</option>
                             <option value="B">Group B</option>
                         </select>
-                        <h3></h3>
-                        <label>Venue</label>
+                        <br /><br />
                         <VenueList
                             name="venue_id"
                             onChange={props.handleChange} />
-                        <h3></h3>
-
-                        <h3></h3>
+                        <br /><br />
                         <label>Date</label>
                         <input type="text" name="date"
                             onChange={props.handleChange} />

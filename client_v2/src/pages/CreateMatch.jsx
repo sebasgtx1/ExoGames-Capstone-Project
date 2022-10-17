@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from 'react-router-dom';
-import Select from 'react-select';
 import { Formik } from 'formik';
 import styles from '../components/styles/CreateEvent.module.css'
 import { CompetitrosList } from "../components/list/CompetitorsList";
@@ -13,6 +14,7 @@ import Swal from 'sweetalert2'
 export function CreateMatch() {
     const location = useLocation();
     const navigate = useNavigate();
+    const [startDate, setStartDate] = useState(new Date());
     const { event_id, sport, user_id, token, username, addMatch } = location.state;
 
     function handleClick() {
@@ -51,6 +53,8 @@ export function CreateMatch() {
         
     }
 
+    
+
     return (
         <div className={styles.center}>
             <h1>Create match</h1>
@@ -68,6 +72,8 @@ export function CreateMatch() {
 
                 }}
                 onSubmit={async (values, actions) => {
+                    values.date = startDate;
+                    console.log(values);
                     try {
                         const resp = await createMatchRequest(event_id, values);
                         Swal.fire('Match Created succesfully').then(() => {
@@ -112,11 +118,13 @@ export function CreateMatch() {
                             name="venue_id"
                             onChange={props.handleChange} />
                         <br /><br />
+                        
                         <label>Date</label>
-                        <input type="text" name="date"
+                        <DatePicker selected={startDate} onChange={(startDate) => setStartDate(startDate)} />
+                        {/* <input type="text" name="date"
                             onChange={props.handleChange} />
-                        <h3></h3>
-                        <label>Time</label>
+                        <h3></h3> */}
+                        <label>Time</label><br />
                         <input type="text" name="time"
                             onChange={props.handleChange} />
                         <h3></h3>

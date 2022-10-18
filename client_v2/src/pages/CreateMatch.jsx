@@ -9,6 +9,7 @@ import { useLocation } from "react-router-dom";
 import { VenueList } from "../components/list/VenuesList";
 import { createMatchRequest } from "../api/matches.api";
 import Swal from 'sweetalert2'
+import vs from "../components/styles/img/vs.svg"
 
 
 export function CreateMatch() {
@@ -100,7 +101,7 @@ export function CreateMatch() {
                             name="competitor2_id"
                             sport={sport}
                             onChange={props.handleChange} />
-                        <br /><br />
+                        <br /><img src={vs}></img><br />
                         <select name="competitor1_group"
                             onChange={props.handleChange} required>
                             <option>Group</option>

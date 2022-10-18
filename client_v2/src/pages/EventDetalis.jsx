@@ -8,6 +8,7 @@ import { GetVenue } from "../components/list/VenueInfo";
 import { useLocation } from "react-router-dom";
 import { ButtonContainer } from "../components/button_containers/ButtonContainer";
 import { ButtonUserContainer } from "../components/button_containers/ButtonUserContainer";
+import vs from "../components/styles/img/vs.svg"
 
 
 export function EventDetails() {
@@ -49,7 +50,7 @@ export function EventDetails() {
         <>
         {button}
         <div className={styles.detailsContainer}>
-            <div className={`${styles.col} ${styles.cardDetails}`}>
+            <div>
                 <img
                     width={316}
                     height={219}
@@ -64,21 +65,24 @@ export function EventDetails() {
                     <strong>Description</strong><br /> {event.description}
                 </p>
                 <p>
-                    <strong>sport:</strong> {event.sport}
+                    <strong>Sport : </strong> {event.sport}
                 </p>
 
-                <h2> <strong>Rules</strong> </h2>
+                {/* <h2> <strong>Rules</strong> </h2>
                 <p>
                     Wins: {event.wins} <br />
                     Losses: {event.losses}
-                </p>
+                </p> */}
                 
-
+                <h2> <strong>Matches</strong> </h2>
                 <ul >
                     {matches.message == 'Matches not found' ? null : matches.map((match) => (
                         <div key={match.match_id}>
 
-                            <li > match {match.match_id} : <GetCompetitor id={match.competitor1_id} />  vs <GetCompetitor id={match.competitor2_id} /> venue : <GetVenue id={match.venue_id} /> date : {match.date} time : {match.time}</li>
+                            <li className={styles.MatchesStyle}>
+                            <GetCompetitor id={match.competitor1_id} /> <img src={vs}></img> <GetCompetitor id={match.competitor2_id} /> <br />
+                            <GetVenue id={match.venue_id} /> <br />
+                            {match.date}, {match.time}</li> <br />
                         </div>
                     ))}
                 </ul>

@@ -139,7 +139,7 @@ export function CreateEvent() {
 
                         }
                         else {
-                            Swal.fire('Event Created succesfully')
+                            Swal.fire('Event created succesfully')
                             navigate('/create_match/' + resp.data.event_id, {
                                 state: {
                                     event_id: resp.data.event_id,
@@ -193,22 +193,22 @@ export function CreateEvent() {
 
                         <h1>Rules</h1>
                         <label>Wins</label><br />
-                        <button onClick={decWins} type="button">-</button>
                         <input type="int" name="wins"
                             onChange={props.handleChange}
                             value={wins}
                             className={stylesInput.Width}
                             required />
                         <button onClick={incWins} type="button">+</button>
+                        <button onClick={decWins} type="button">-</button>
                         <h3></h3>
                         <label>Losses</label><br />
-                        <button onClick={decLosses} type="button">-</button>
                         <input type="text" name="losses"
                             onChange={props.handleChange}
                             value={losses}
                             className={stylesInput.Width}
                             required />
                         <button onClick={incLosses} type="button">+</button>
+                        <button onClick={decLosses} type="button">-</button>
                         <h3></h3>
 
 

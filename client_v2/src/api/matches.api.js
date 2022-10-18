@@ -21,3 +21,7 @@ export const updateMatchRequest = async (params, id) => {
 export const deleteMatchRequest = async (id) => {
     return await axios.delete(API + "delete_match/" + id);
 }
+
+export const deleteMatches = async (id) => {
+    return await axios.delete(API + "delete_matches/" + id);
+}

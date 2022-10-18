@@ -84,10 +84,26 @@ const deleteMatch = async (req, res) => {
     }
 }
 
+const deleteMatches = async (req, res) => {
+    try {
+        const [result] = await pool.query(
+            'DELETE FROM matches where event_id = (?)', [
+            req.params.event_id
+        ]);
+        if (result.affectedRows === 0)
+            return res.json({ message: "Matches not found" });
+
+        return res.sendStatus(204);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
+
 module.exports = {
     getMatchesId,
     getMatch,
     createMatch,
     updateMatch,
-    deleteMatch
+    deleteMatch,
+    deleteMatches
 };

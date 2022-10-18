@@ -54,6 +54,7 @@ export function LoginPage() {
                         placeholder="password"
                         onChange={props.handleChange}
                         value={props.password} required/>
+                        <br /><br />
                         <button type="submit">Login</button>
                         <button onClick={goRegister}>Register</button>
 

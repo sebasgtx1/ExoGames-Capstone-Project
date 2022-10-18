@@ -1,7 +1,7 @@
 import React from 'react';
 import { ButtonUserContainer } from '../components/button_containers/ButtonUserContainer'
 import { useLocation } from "react-router-dom";
-import { EventGrid } from '../components/grids/EventsGrid'; // tenemos que crear el eventsUserGrid
+import { EventGrid } from '../components/grids/EventsGrid'; 
 
 
 export function LandingUserPage() {

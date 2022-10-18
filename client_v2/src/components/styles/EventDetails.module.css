@@ -1,7 +1,10 @@
 .detailsContainer {
     display: flex;
     justify-content: center;
+    text-align: center;
     flex-wrap: wrap;
+    width: 100%;
+    font-size: 1.5rem;
   }
   
   .col {
@@ -9,6 +12,10 @@
     margin: 15px;
     height: auto;
     width: 80%;
+  }
+
+  .MatchesStyle {
+    list-style: none;
   }
   
   .cardImage {

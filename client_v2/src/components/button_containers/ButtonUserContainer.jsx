@@ -24,11 +24,11 @@ export function ButtonUserContainer(props) {
             <aside className={stylesDropdownUser.dropdown_menu}>
                 <Dropdown isOpen={dropdown} toggle={openCloseDropdown} size="lg">
                     <DropdownToggle caret>
-                        {props.username}
+                        Hello {props.username}!
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem divider />
-                        <DropdownItem><Link to="/my_events" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>My Events</Link>
+                        <DropdownItem><Link  to="/my_events" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>My Events</Link>
                         </DropdownItem>
                         <DropdownItem><Link to="/my_venues" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>My Venues</Link></DropdownItem>
                         <DropdownItem><Link to="/my_competitors" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>My Competitors</Link></DropdownItem>

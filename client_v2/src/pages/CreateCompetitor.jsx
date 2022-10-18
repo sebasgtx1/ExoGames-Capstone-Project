@@ -133,7 +133,7 @@ export function CreateCompetitor() {
                             />
                         )}
                         </div>
-
+                        <br />
                         <button type="reset" >Reset</button>
                         <button type="submit">Submit</button>
 

@@ -24,7 +24,7 @@ export function ButtonUserContainer(props) {
             <aside className={stylesDropdownUser.dropdown_menu}>
                 <Dropdown isOpen={dropdown} toggle={openCloseDropdown} size="lg">
                     <DropdownToggle caret>
-                        {props.username}
+                        Hello {props.username}!
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem divider />

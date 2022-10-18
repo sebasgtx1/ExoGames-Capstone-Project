@@ -15,7 +15,7 @@ export function EventCard({ event, src, user_id, token, username }) {
                     <p>Sport : {event.sport}</p>
                     <div className={styles.hr}/>
                     <div className={styles.containerDate}>
-                        <p className={styles.Day}>Day<br /></p>
+                        <p className={styles.Day}>Day</p>
                         <p className={styles.Year}>Year</p>
                     </div>
                     <p>Venue</p>

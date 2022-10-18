@@ -50,18 +50,6 @@
     /* End name of event style */
 }
 
-.hr {
-    /* Line 4 */
-
-
-    width: 180px;
-    height: 0px;
-
-    border: 1px solid #D7D2D9;
-    margin-left: 20px;
-    margin-bottom: -50px;
-}
-
 .EventImage {
     border-radius: 10px;
     background-color: azure;
@@ -72,6 +60,18 @@
 }
 .details {
     width: 100%;
+}
+
+.hr {
+    /* Line 4 */
+
+
+    width: 180px;
+    height: 0px;
+
+    border: 1px solid #D7D2D9;
+    margin-left: 20px;
+    margin-bottom: -50px;
 }
 
 .containerDate {

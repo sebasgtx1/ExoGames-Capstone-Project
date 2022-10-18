@@ -1,36 +1,16 @@
 .dropdown_menu {
     position: absolute;
     top: 0%;
-    left: 80%;
+    left: 84%;
     right: inherit;
     padding-top: 4px;
     padding-bottom: 4px; 
     margin-top: 2px;
     list-style: none;
-    background-color: grey;
     background-clip: padding-box;
     border: 1px solid var(--color-border-default);
-    border-radius: 6px;
+    border-radius: 10px;
     box-shadow: var(--color-shadow-large);
-}
-
-/* ul tag */
-.dataButtons {
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    display:inline-block !important;
-}
-
-/* li tag */
-.dataButton {
-    float: left !important;
-    display: block !important;
-    color: white !important;
-    text-align: center !important;
-    margin:0px 1px !important;
-    padding: 14px 16px !important;
 }
 
 /* a tag */
@@ -52,12 +32,12 @@
     padding: 12px 8px !important;
     gap: 8px !important;
 
-    width: 210.33px !important;
+    width: 170px !important;
     height: 44px !important;
 
     /* Light_and_Dark/02 */
     background: #3a3a3a !important;
-    border-radius: 30px !important;
+    border-radius: 10px !important;
 
     /* Inside auto layout */
     color: white !important;

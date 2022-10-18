@@ -51,7 +51,6 @@ export function CreateMatch() {
     let button = <button onClick={BackClick} >Back</button>
     if (addMatch) {
         button = null;
-        
     }
 
     
@@ -74,7 +73,6 @@ export function CreateMatch() {
                 }}
                 onSubmit={async (values, actions) => {
                     values.date = startDate.toISOString().substring(0, 10);
-                    console.log(values.date);
                     try {
                         const resp = await createMatchRequest(event_id, values);
                         Swal.fire('Match Created succesfully').then(() => {

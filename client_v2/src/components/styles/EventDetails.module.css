@@ -14,7 +14,9 @@
     width: 80%;
   }
 
-  .MatchesStyle {
+  .matches {
+    background-color: #7c7c7c;
+    border-radius: 15px;
     list-style: none;
   }
   

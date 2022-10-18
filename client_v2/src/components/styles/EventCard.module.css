@@ -11,7 +11,7 @@
     gap: 8px;
 
     width: 316px;
-    height: 364px;
+    height: 400px;
 
     /* Light_and_Dark/09 */
     background: #282828;
@@ -31,6 +31,37 @@
     opacity: 0.8;
 }
 
+.EventCardText {
+    /* Name of event */
+    width: 316px;
+    height: 20px;
+
+    /* Body/2 */
+
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    /* identical to box height, or 150% */
+
+    letter-spacing: 0.1px;
+    text-indent: 20px;
+    /* End name of event style */
+}
+
+.hr {
+    /* Line 4 */
+
+
+    width: 180px;
+    height: 0px;
+
+    border: 1px solid #D7D2D9;
+    margin-left: 20px;
+    margin-bottom: -50px;
+}
+
 .EventImage {
     border-radius: 10px;
     background-color: azure;
@@ -41,4 +72,78 @@
 }
 .details {
     width: 100%;
+}
+
+.containerDate {
+    display: flex;
+    background: #424242;
+    box-shadow: -5px 7px 15px rgba(0, 0, 0, 0.29);
+    margin-left: 200px;
+    margin-right: 20px;
+    height: 70px;
+}
+
+.Day {
+    /* Day */
+
+
+    width: 54px;
+    height: 20px;
+    margin-top: 10%;
+
+    /* Body/2 light */
+
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 25px;
+    line-height: 19px;
+    /* identical to box height, or 122% */
+
+    text-align: right;
+    letter-spacing: 0.114518px;
+
+    /* Secondary/little_details */
+
+    color: #EAF900;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+}
+
+.Year {
+    /* Year */
+
+
+    width: 40px;
+    height: 30px;
+    margin-top: 40%;
+    margin-left: -30%;
+
+    /* Label/1 */
+
+    font-family: 'Lexend';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 19px;
+    /* identical to box height, or 162% */
+
+    text-align: right;
+    letter-spacing: 0.114518px;
+
+    /* Light_and_Dark/01 */
+
+    color: #FFFFFF;
+
+
+    /* Inside auto layout */
+
+    flex: none;
+    order: 1;
+    flex-grow: 0;
 }

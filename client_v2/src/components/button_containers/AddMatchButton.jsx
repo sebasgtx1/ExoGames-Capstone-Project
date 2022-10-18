@@ -19,7 +19,7 @@ export function AddMatchButton({event, user_id, token, username}) {
     }
     return (
 
-        <button className={stylesButton.dataInsideButton} onClick={confirm}><BiAddToQueue />Add match</button>
+        <button className={stylesButton.dataUserInsideButton} onClick={confirm}><BiAddToQueue />Add match</button>
 
 
     )

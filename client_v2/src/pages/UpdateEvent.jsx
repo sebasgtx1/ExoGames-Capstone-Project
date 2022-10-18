@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { updateEventRequest } from "../api/events.api";
 import Swal from 'sweetalert2'
 import { useLocation } from "react-router-dom";
+import { deleteMatches } from "../api/matches.api";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -24,33 +25,29 @@ export function UpdateEvent() {
     const { id } = useParams();
     const [event, setEvents] = useState([])
     const [defaultLabel, setLabel] = useState('')
-    const [ wins, setWins ] = useState(0)
-    const [ losses, setLosses ] = useState(0)
-    const [ optionSelected, setOptionSelected ] = useState('football')
+    const [wins, setWins] = useState(0)
+    const [losses, setLosses] = useState(0)
+    const [optionSelected, setOptionSelected] = useState('football')
     const location = useLocation();
-    const {user_id, token } = location.state;
+    const { user_id, token } = location.state;
 
-    let incWins =()=>{
-        if(wins<1000)
-        {
-            setWins(Number(wins)+1);
+    let incWins = () => {
+        if (wins < 1000) {
+            setWins(Number(wins) + 1);
         }
     };
     let decWins = () => {
-        if(wins>0)
-        {
+        if (wins > 0) {
             setWins(wins - 1);
         }
     };
-    let incLosses =()=>{
-        if(losses<1000)
-        {
-            setLosses(Number(losses)+1);
+    let incLosses = () => {
+        if (losses < 1000) {
+            setLosses(Number(losses) + 1);
         }
     };
     let decLosses = () => {
-        if(losses>0)
-        {
+        if (losses > 0) {
             setLosses(losses - 1);
         }
     };
@@ -67,7 +64,7 @@ export function UpdateEvent() {
             setLosses(resp.data.losses)
             setWins(resp.data.wins)
             setLabel(String(resp.data.sport));
-            setOptionSelected( resp.data.sport)
+            setOptionSelected(resp.data.sport)
 
         }
         getEvent();
@@ -90,16 +87,49 @@ export function UpdateEvent() {
                     values.wins = wins;
                     values.losses = losses;
                     values.sport = optionSelected;
+                    console.log(optionSelected, event.sport);
+
+
                     try {
-                        const resp = await updateEventRequest(values, id, token);
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Your work has been saved',
-                            showConfirmButton: false,
-                            timer: 1500
-                          })
-                        navigate(-1)
+                        if (optionSelected != event.sport) {
+                            Swal.fire({
+                                title: 'Are you sure to change the sport?',
+                                text: "All your matches are going to be deleted!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes!'
+                            }).then(async (result) => {
+                                if (result.isConfirmed) {
+                                    const resp = await deleteMatches(event.event_id);
+                                    console.log(event.event_id, resp.data);
+                                    const resp2 = await updateEventRequest(values, id, token);
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'success',
+                                        title: 'Your work has been saved',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                    navigate(-1)
+                                }
+                            })
+                        }
+                        else {
+                            const resp = await updateEventRequest(values, id, token);
+                            Swal.fire({
+                                position: 'top-end',
+                                icon: 'success',
+                                title: 'Your work has been saved',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                            navigate(-1)
+                        }
+                        
+                       
+                        
                     } catch (error) {
                         console.log(error)
 
@@ -111,11 +141,11 @@ export function UpdateEvent() {
                     <form onSubmit={props.handleSubmit}>
                         <h3></h3>
                         <input type="text" name="event_name"
-                        placeholder="Event Name"
+                            placeholder="Event Name"
 
                             onChange={props.handleChange}
                             defaultValue={event.event_name}
-                            
+
                             required />
                         <h3></h3>
                         <textarea
@@ -125,12 +155,12 @@ export function UpdateEvent() {
 
                             onChange={props.handleChange}
                             defaultValue={event.description}
-                            />
+                        />
                         <h3></h3>
-                        <Select name="sport" type="text"  defaultValue={{label : defaultLabel}} className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
+                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected} />
 
                         <h3></h3>
-                        <label>Wins</label><br/>
+                        <label>Wins</label><br />
                         <button onClick={decWins} type="button">-</button>
                         <input type="int" name="wins"
                             onChange={props.handleChange}

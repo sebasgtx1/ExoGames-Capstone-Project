@@ -51,12 +51,14 @@ export function EventDetails() {
         {button}
         <div className={styles.detailsContainer}>
             <div>
-                <img
-                    width={316}
-                    height={219}
-                    className={styles.cardImage}
-                    src={event.image} />
-                <h1><strong>{event.event_name}</strong> </h1>
+                <article>
+                    <img
+                        width={450}
+                        height={300}
+                        className={styles.cardImage}
+                        src={event.image} />
+                    <h1><strong>{event.event_name}</strong> </h1>
+                </article>
 
                 <p className={styles.firstItem}>
 
@@ -74,12 +76,11 @@ export function EventDetails() {
                     Losses: {event.losses}
                 </p> */}
                 
-                <h2> <strong>Matches</strong> </h2>
+                <h2> {matches.message == 'Matches not found' ? null : <strong>Matches</strong>} </h2>
                 <ul >
                     {matches.message == 'Matches not found' ? null : matches.map((match) => (
                         <div key={match.match_id}>
-
-                            <li className={styles.MatchesStyle}>
+                            <li className={styles.matches}>
                             <GetCompetitor id={match.competitor1_id} /> <img src={vs}></img> <GetCompetitor id={match.competitor2_id} /> <br />
                             <GetVenue id={match.venue_id} /> <br />
                             {match.date}, {match.time}</li> <br />

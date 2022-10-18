@@ -52,15 +52,20 @@ export function MyEventDetails() {
         <ButtonUserContainer user_id={user_id} token={token} username={username}/>
         <div className={styles.detailsContainer}>
             <div>
-                <img
-                    width={316}
-                    height={219}
-                    src={event.image}
-                    className={styles.cardImage} />
-                <h1><strong>{event.event_name}</strong> </h1>
+                <article>
+                    <img
+                        width={450}
+                        height={300}
+                        src={event.image}
+                        className={styles.cardImage} />
+                    <h1><strong>{event.event_name}</strong></h1>
+                </article>
+
+                <li className={stylesButtons.dataButton}><ButtonNoStyle className={stylesButtons.dataButton} src={"/update_event/" + event.event_id} title="Update" user_id={user_id} token={token} username={username}/></li>
+                <li className={stylesButtons.dataButton}><PublishEvent event_id={event.event_id} status={event.public_status} user_id={user_id} token={token} username={username}/></li>
+                <li className={stylesButtons.dataButton}><DeleteButton event_id={event.event_id} user_id={user_id} token={token} username={username}/></li>
 
                 <p className={styles.firstItem}>
-
                 </p>
                 <p>
                     <strong>Description</strong><br /> {event.description}
@@ -75,12 +80,12 @@ export function MyEventDetails() {
                     Losses: {event.losses}
                     
                 </p> */}
-                <h2> <strong>Matches</strong> </h2>
+                <h2> {matches.message == 'Matches not found' ? null : <strong>Matches</strong>} </h2>
                 <ul >
                     {matches.message == 'Matches not found' ? null : matches.map((match) => (
                         <div key={match.match_id}>
 
-                            <li className={styles.MatchesStyle}>
+                            <li className={styles.matches}>
                             <GetCompetitor id={match.competitor1_id} /> <img src={vs}></img> <GetCompetitor id={match.competitor2_id} /> <br />
                             <GetVenue id={match.venue_id} /> <br />
                             {match.date}, {match.time}</li>
@@ -91,9 +96,6 @@ export function MyEventDetails() {
                     ))}
                 </ul>
                 <ul className={stylesButtons.dataButtons}>
-                    <li className={stylesButtons.dataButton}><ButtonNoStyle className={stylesButtons.dataButton} src={"/update_event/" + event.event_id} title="Update" user_id={user_id} token={token} username={username}/></li>
-                    <li className={stylesButtons.dataButton}><PublishEvent event_id={event.event_id} status={event.public_status} user_id={user_id} token={token} username={username}/></li>
-                    <li className={stylesButtons.dataButton}><DeleteButton event_id={event.event_id} user_id={user_id} token={token} username={username}/></li>
                     <li className={stylesButtons.dataButton}><AddMatchButton event ={event} user_id={user_id} token={token} username={username}/></li>
                 </ul>
                 

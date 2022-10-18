@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getEventsRequest } from "../../api/events.api";
+import { getEventMatches } from "../../api/matches.api";
 import { EventCard } from "../cards/EventCard"
 import styles from "../styles/EventsGrid.module.css"
 

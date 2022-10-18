@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
@@ -7,11 +9,12 @@ import { CompetitrosList } from "../components/list/CompetitorsList";
 import { VenueList } from "../components/list/VenuesList";
 import { updateMatchRequest } from "../api/matches.api";
 import Swal from 'sweetalert2'
+import vs from "../components/styles/img/vs.svg"
 
 
 
 export function UpdateMatch() {
-
+    const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -33,7 +36,7 @@ export function UpdateMatch() {
 
                 }}
                 onSubmit={async (values, actions) => {
-
+                    values.date = startDate.toISOString().substring(0, 10);
                     try {
 
                         const resp = await updateMatchRequest(values, match.match_id);
@@ -50,51 +53,48 @@ export function UpdateMatch() {
             >
                 {(props) => (
                     <form onSubmit={props.handleSubmit}>
-                        <label>competitor 1</label>
+                    {/* <label>competitor 1</label> */}
 
-                        <CompetitrosList
-                            name="competitor1_id"
+                        <CompetitrosList 
+                            name="competitor1_id" 
                             sport={sport}
                             onChange={props.handleChange}
-
                         />
+                        
+                        {/* <label>competitor 2</label> */}
+                        <CompetitrosList
+                            name="competitor2_id"
+                            sport={sport}
+                            onChange={props.handleChange} />
+                        <br /><img src={vs}></img><br />
                         <select name="competitor1_group"
                             onChange={props.handleChange} required>
                             <option>Group</option>
                             <option value="A">Group A</option>
                             <option value="B">Group B</option>
                         </select>
-                        <h3></h3>
-
-                        <label>competitor 2</label>
-                        <CompetitrosList
-                            sport={sport}
-                            name="competitor2_id"
-                            onChange={props.handleChange} />
                         <select name="competitor2_group"
                             onChange={props.handleChange} required>
                             <option >Group</option>
                             <option value="A">Group A</option>
                             <option value="B">Group B</option>
                         </select>
-                        <h3></h3>
-                        <label>Venue</label>
+                        <br /><br />
                         <VenueList
                             name="venue_id"
                             onChange={props.handleChange} />
-                        <h3></h3>
-
-                        <h3></h3>
+                        <br /><br />
+                        
                         <label>Date</label>
-                        <input type="text" name="date"
+                        <DatePicker selected={startDate} onChange={(startDate) => setStartDate(startDate)} />
+                        {/* <input type="text" name="date"
                             onChange={props.handleChange} />
-                        <h3></h3>
-                        <label>Time</label>
+                        <h3></h3> */}
+                        <label>Time</label><br />
                         <input type="text" name="time"
                             onChange={props.handleChange} />
-                        <h3></h3>
-
-                        <button type="reset" >Reset</button>
+                        <br /><br />
+                        <button type="reset">Reset</button>
                         <button type="submit">Update</button>
 
                     </form>

@@ -38,7 +38,7 @@ export function PublishEvent(props) {
   }
   return (
 
-    <button className={stylesButton.dataInsideButton} onClick={confirm}> {title} </button>
+    <button className={stylesButton.dataUserInsideButton} onClick={confirm}> {title} </button>
 
 
   )

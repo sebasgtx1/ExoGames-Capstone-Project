@@ -35,7 +35,7 @@ export function DeleteButton(props) {
   }
   return (
 
-    <button className={stylesButton.dataInsideButton} onClick={confirm}> <AiFillDelete/> Delete </button>
+    <button className={stylesButton.dataUserInsideButton} onClick={confirm}> <AiFillDelete/> Delete </button>
 
 
   )

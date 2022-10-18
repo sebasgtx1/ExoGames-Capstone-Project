@@ -10,19 +10,21 @@ export function EventCard({ event, src, user_id, token, username }) {
                     height={219}
                     className={styles.EventImage}
                     src={event.image} />
-                <div>
+                <div className={styles.EventCardText}>
                     <strong><h3>{event.event_name}</h3></strong>
-                    <p>
-                        Sport : {event.sport}
-                    </p>
+                    <p>Sport : {event.sport}</p>
+                    <div className={styles.hr}/>
+                    <div className={styles.containerDate}>
+                        <p className={styles.Day}>Day</p>
+                        <p className={styles.Year}>Year</p>
+                    </div>
+                    <p>Venue</p>
+                    <strong><h3>Venue's name</h3></strong>
                 </div>
             </Link>
 
 
         </li>
-
-
-
     );
 
 

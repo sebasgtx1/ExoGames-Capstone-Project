@@ -13,7 +13,18 @@ export function MyCompetitorDetails() {
     const { user_id, id } = useParams();
     const [competitor, setCompetitors] = useState([]);
     const location = useLocation();
-    const {token, username} = location.state;
+    let { token, username } = {};
+
+
+    if (!(location.state)) {
+        token = window.localStorage.getItem("token");
+        username = window.localStorage.getItem("username");
+
+    }
+    else {
+        token = location.state.token;
+        username = location.state.username;
+    }
 
     useEffect(() => {
 

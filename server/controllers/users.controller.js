@@ -22,8 +22,10 @@ const createUser = async (req, res) => {
 
   } catch (error) {
 
-    return res.status(500).json({ message: error.message });
-
+    return res.status(500).json({
+      success: 0,
+      data: "This account alredy exists",
+    })
   }
 }
 
@@ -94,8 +96,10 @@ const login = async (req, res) => {
   try {
     const [result] = await pool.query("SELECT * FROM users WHERE (email = ? AND status = ?)", [body.email, 'active']);
     if (result.length === 0)
-      return res.status(404).json({ message: "Invalid email: User not Found" });
-
+      return res.status(404).json({
+        success: 0,
+        data: "Invalid email",
+      })
     const comp = compareSync(body.password, result[0].password);
     if (comp) {
       const jsontoken = sign({ comp: result[0] }, "qwe1234", {
@@ -109,7 +113,7 @@ const login = async (req, res) => {
         token: jsontoken,
       });
     } else {
-      return res.json({
+      return res.status(404).json({
         success: 0,
         data: "Invalid password",
       });

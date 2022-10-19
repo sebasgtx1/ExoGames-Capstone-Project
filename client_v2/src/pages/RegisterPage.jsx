@@ -14,20 +14,27 @@ export function RegisterPage() {
             <h1>Register</h1>
             <Formik
                 initialValues={{
-                    username:"",
-                    email:"",
-                    password:""
+                    username: "",
+                    email: "",
+                    password: ""
 
                 }}
                 onSubmit={async (values, actions) => {
                     try {
                         const resp = await createUserRequest(values);
-                        console.log(resp.data);
+
                         Swal.fire('Your Account has been created')
                         navigate('/login');
-                    } catch (error) {
-                        console.log(error)
 
+
+                    } catch (error) {
+                        Swal.fire({
+                            position: 'top-end',
+                            title: error.response.data.data,
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
                     }
                 }}
 
@@ -36,22 +43,22 @@ export function RegisterPage() {
                     <form onSubmit={props.handleSubmit}>
                         <h3></h3>
                         <input name="username"
-                        type="text" 
-                        placeholder="username"
-                        onChange={props.handleChange}
-                        value={props.username} required/>
+                            type="text"
+                            placeholder="username"
+                            onChange={props.handleChange}
+                            value={props.username} required />
                         <h3></h3>
                         <input name="email"
-                        type="text" 
-                        placeholder="email"
-                        onChange={props.handleChange}
-                        value={props.email} required/>
+                            type="text"
+                            placeholder="email"
+                            onChange={props.handleChange}
+                            value={props.email} required />
                         <h3></h3>
                         <input name="password"
-                        type="password" 
-                        placeholder="password"
-                        onChange={props.handleChange}
-                        value={props.password} required/>
+                            type="password"
+                            placeholder="password"
+                            onChange={props.handleChange}
+                            value={props.password} required />
                         <br /><br />
                         <button type="submit">Register</button>
 

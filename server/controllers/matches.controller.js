@@ -4,7 +4,7 @@ const getMatchesId = async (req, res) => {
     try {
         const event_id = parseInt(req.params.event_id);
         const [result] = await pool.query(
-            'SELECT * FROM matches WHERE event_id = (?)', [event_id]
+            'SELECT * FROM matches WHERE event_id = (?) ORDER BY date ASC', [event_id]
         );
         if (result.length === 0)
             return res.json({ message: "Matches not found" });

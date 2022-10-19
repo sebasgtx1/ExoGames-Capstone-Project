@@ -1,16 +1,17 @@
 import React from "react";
 import { useNavigate } from 'react-router-dom';
-import { useParams } from "react-router";
 import { useLocation } from "react-router-dom";
 import { Formik } from 'formik';
 import Select from 'react-select';
+import Resizer from "react-image-file-resizer";
 import stylesSelect from '../components/styles/SelectComponent.module.css';
 import stylesInput from '../components/styles/InputElement.module.css';
 import { getEventsIdRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
+import stylesCheckBox from '../components/styles/CheckBox.module.css';
 import { useEffect, useState } from "react";
 import { updateEventRequest } from "../api/events.api";
-import Swal from 'sweetalert2'
+
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -25,10 +26,11 @@ export function UpdateEventCreation() {
     const navigate = useNavigate();
     const { event_id, user_id, token, username } = location.state;
     const [event, setEvents] = useState([])
-    const [defaultLabel, setLabel] = useState('')
+    const [previewSource, setPreviewSource] = useState();
+    const [publicStatus, setPublicStatus] = useState('public');
     const [ wins, setWins ] = useState(0)
     const [ losses, setLosses ] = useState(0)
-    const [ optionSelected, setOptionSelected ] = useState('football')
+    const [ optionSelected, setOptionSelected ] = useState()
 
     let incWins =()=>{
         if(wins<1000)
@@ -55,7 +57,6 @@ export function UpdateEventCreation() {
         }
     };
     const handleChangeSelected = (selectedOption) => {
-        console.log(selectedOption);
         setOptionSelected(selectedOption.value);
     };
 
@@ -66,12 +67,46 @@ export function UpdateEventCreation() {
             setEvents(resp.data);
             setLosses(resp.data.losses)
             setWins(resp.data.wins)
-            setLabel(String(resp.data.sport));
-            setOptionSelected( resp.data.sport)
 
         }
         getEvent();
     }, [event_id])
+
+    const handleChexbox = (e) => {
+
+        e.target.checked ? setPublicStatus('private') : setPublicStatus('public')
+
+    }
+
+    const handleChangeFile = (event) => {
+
+        {
+            let fileInput = false;
+            if (event.target.files[0]) {
+                fileInput = true;
+            }
+            if (fileInput) {
+                try {
+                    Resizer.imageFileResizer(
+                        event.target.files[0],
+                        316,
+                        219,
+                        "JPEG",
+                        100,
+                        0,
+                        (uri) => {
+                            setPreviewSource(uri)
+                        },
+                        "base64",
+                        316,
+                        219
+                    );
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        }
+    }
 
 
 
@@ -84,7 +119,9 @@ export function UpdateEventCreation() {
                     description: event.description,
                     sport: event.sport,
                     wins: event.wins,
-                    losses: event.losses
+                    losses: event.losses,
+                    image: event.image,
+                    public_status: event.public_status,
 
                 }
                 }
@@ -92,27 +129,19 @@ export function UpdateEventCreation() {
                 onSubmit={async (values, actions) => {
                     values.wins = wins;
                     values.losses = losses;
-                    values.sport = optionSelected;
+                    values.sport = optionSelected ? optionSelected : event.sport;
+                    values.public_status = publicStatus
+                    values.image = previewSource ? previewSource : event.image;
                     try {
 
-                        try {
-                            const check = values.map((item) => {
-                            console.log(item);
-                            if (typeof item == 'undefined') {
-                                
-                                navigate(-1)
-                            }
-                        })} catch {
-                            navigate(-1)
-                        }
-                        
-
-
-                        const resp = await updateEventRequest(values, event_id);
+                        const resp = await updateEventRequest(values, event_id, token);
                         
 
                         navigate('/create_match/' + event_id, {
                             state: {
+                                user_id: user_id,
+                                username: username,
+                                token: token,
                                 event_id: event_id,
                                 event_name: values.event_name,
                                 sport: values.sport
@@ -147,26 +176,55 @@ export function UpdateEventCreation() {
                             defaultValue={event.description}
                         />
                         <h3></h3>
-                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
+                        {event && event.sport && <Select name="sport" type="text" defaultValue={{ value: event.sport, label: event.sport}} className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected} />}
 
                         <h3></h3>
-                        <label>Wins</label><br/>
-                        <button onClick={decWins} type="button">-</button>
+                        <h1>Upload an image</h1>
+                        <h3></h3>
+                        <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
+                        <div>
+                            {previewSource && (
+                                <img
+                                    src={previewSource}
+                                    alt="chosen"
+                                    style={{ height: '219px', width: '316px', padding: '20px' }}
+                                />
+                            )}
+                        </div>
+
+
+                        <h1>Rules</h1>
+                        <label>Wins</label><br />
+
                         <input type="int" name="wins"
                             onChange={props.handleChange}
                             value={wins}
                             className={stylesInput.Width}
                             required />
                         <button onClick={incWins} type="button">+</button>
+                        <button onClick={decWins} type="button">-</button>
+
                         <h3></h3>
-                        <label>Losses</label>
-                        <button onClick={decLosses} type="button">-</button>
+                        <label>Losses</label> <br />
+
                         <input type="text" name="losses"
                             onChange={props.handleChange}
                             value={losses}
                             className={stylesInput.Width}
                             required />
                         <button onClick={incLosses} type="button">+</button>
+                        <button onClick={decLosses} type="button">-</button>
+
+
+                        <h3></h3>
+                        <div className={stylesCheckBox.switch_button}>
+                            <p>Private</p>
+                            {/* <!-- Checkbox --> */}
+                            <input onChange={handleChexbox} type="checkbox" name="switch_button" id="switch_label" className={stylesCheckBox.switch_button__checkbox} />
+                            {/* <!-- Botón --> */}
+                            <label htmlFor="switch_label" className={stylesCheckBox.switch_button__label}></label>
+                        </div>
+                        <br /><br />
 
                         <h3></h3>
                         <button type="reset" >Reset</button>

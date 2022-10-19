@@ -71,7 +71,7 @@ export function CreateMatch() {
         button = null;
     }
 
-    
+
 
     return (
         <div className={styles.center}>
@@ -95,14 +95,39 @@ export function CreateMatch() {
                     {values.time = (startTime.$H + ":" + startTime.$m)};
                     console.log("New date :", values.date);
                     console.log("New time :", values.time);
-                    try {
-                        const resp = await createMatchRequest(event_id, values);
-                        Swal.fire('Match Created succesfully').then(() => {
-                            window.location.reload(false);
+                    if (values.competitor1_id == values.competitor2_id) {
+                        Swal.fire({
+                            position: 'top-end',
+                            title: "The competitors for the match has to be diferent",
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 3500
                         })
-                    } catch (error) {
-                        console.log(error)
+                        
+
+                    } else if (values.competitor1_group == values.competitor2_group) {
+                        Swal.fire({
+                            position: 'top-end',
+                            title: "The group has to be different for each competitor",
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 3500
+                        })
+
+                    } 
+                    else {
+
+                        try {
+                            const resp = await createMatchRequest(event_id, values);
+                            Swal.fire('Match Created succesfully').then(() => {
+                                window.location.reload(false);
+                            })
+                        } catch (error) {
+                            console.log(error)
+                        }
+
                     }
+
                 }}
 
             >
@@ -110,12 +135,12 @@ export function CreateMatch() {
                     <form onSubmit={props.handleSubmit}>
                         {/* <label>competitor 1</label> */}
 
-                        <CompetitrosList 
-                            name="competitor1_id" 
+                        <CompetitrosList
+                            name="competitor1_id"
                             sport={sport}
                             onChange={props.handleChange}
                         />
-                        
+
                         {/* <label>competitor 2</label> */}
                         <CompetitrosList
                             name="competitor2_id"
@@ -139,16 +164,6 @@ export function CreateMatch() {
                             name="venue_id"
                             onChange={props.handleChange} />
                         <br /><br />
-                        
-                        
-                        {/* <DatePicker selected={startDate} onChange={(startDate) => setStartDate(startDate)} /> */}
-                        {/* <input type="text" name="date"
-                            onChange={props.handleChange} />
-                        <h3></h3> */}
-                        
-                        {/* <input type="text" name="time"
-                            onChange={props.handleChange} />
-                        <h3></h3> */}
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
                             <Stack spacing={1} className={styles.DateTime}>
                                 <label>Date</label>

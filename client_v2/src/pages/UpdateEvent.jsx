@@ -180,7 +180,7 @@ export function UpdateEvent() {
 
                         <h3></h3>
 
-                        <button type="reset" >reset</button>
+                        <button type="Reset" >reset</button>
                         <button type="submit">Update</button>
 
                     </form>

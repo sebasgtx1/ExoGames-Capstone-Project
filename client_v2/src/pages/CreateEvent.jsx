@@ -220,7 +220,7 @@ export function CreateEvent() {
                             <label htmlFor="switch_label" className={stylesCheckBox.switch_button__label}></label>
                         </div>
                         <br /><br />
-                        <button type="reset" >Reset</button>
+                        <button type="reset">Reset</button>
                         <button type="submit" onClick={SaveDraft}>Save draft</button>
                         <button type="submit">Next</button>
 

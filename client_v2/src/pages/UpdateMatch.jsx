@@ -37,6 +37,27 @@ export function UpdateMatch() {
                 }}
                 onSubmit={async (values, actions) => {
                     values.date = startDate.toISOString().substring(0, 10);
+                    if (values.competitor1_id == values.competitor2_id) {
+                        Swal.fire({
+                            position: 'top-end',
+                            title: "The competitors for the match has to be diferent",
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 3500
+                        })
+                        
+
+                    } else if (values.competitor1_group == values.competitor2_group) {
+                        Swal.fire({
+                            position: 'top-end',
+                            title: "The group has to be different for each competitor",
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 3500
+                        })
+
+                    } 
+                    else {
                     try {
 
                         const resp = await updateMatchRequest(values, match.match_id);
@@ -47,6 +68,7 @@ export function UpdateMatch() {
                     } catch (error) {
                         console.log(error)
 
+                    }
                     }
 
                 }}

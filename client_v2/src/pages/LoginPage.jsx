@@ -34,7 +34,14 @@ export function LoginPage() {
                               token: data.token
                             }});
                     } catch (error) {
-                        console.log(error)
+                        console.log(error.response.data.data)
+                        Swal.fire({
+                            position: 'top-end',
+                            title: error.response.data.data,
+                            icon: 'warning',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
 
                     }
                 }}

@@ -108,7 +108,7 @@ export function UpdateMatch() {
                         <br /><br />
                         
                         <label>Date</label>
-                        <DatePicker selected={startDate} onChange={(startDate) => setStartDate(startDate)} />
+                        <DatePicker selected={new Date(match.date)} onChange={(startDate) => setStartDate(startDate)} />
                         {/* <input type="text" name="date"
                             onChange={props.handleChange} />
                         <h3></h3> */}

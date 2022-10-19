@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { getCompetitorIdRequest, updateCompetitorRequest } from "../api/competitors.api";
 import Swal from 'sweetalert2'
 import { useLocation } from "react-router-dom";
+import Resizer from "react-image-file-resizer";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -21,9 +22,11 @@ const options = [
 export function UpdateCompetitor() {
     const { id } = useParams();
     const location = useLocation();
+    const [previewSource, setPreviewSource] = useState();
     const {user_id, token } = location.state;
     const [competitor, setCompetitor] = useState([])
-    const [ optionSelected, setOptionSelected ] = useState('football')
+    const [ optionSelected, setOptionSelected ] = useState();
+    const navigate = useNavigate();
 
     const handleChangeSelected = (selectedOption) => {
         setOptionSelected(selectedOption.value);
@@ -39,7 +42,37 @@ export function UpdateCompetitor() {
         getVenue();
     }, [id])
 
-    const navigate = useNavigate();
+
+
+    const handleChangeFile = (event) => {
+
+        {
+            let fileInput = false;
+            if (event.target.files[0]) {
+                fileInput = true;
+            }
+            if (fileInput) {
+                try {
+                    Resizer.imageFileResizer(
+                        event.target.files[0],
+                        316,
+                        219,
+                        "JPEG",
+                        100,
+                        0,
+                        (uri) => {
+                            setPreviewSource(uri)
+                        },
+                        "base64",
+                        316,
+                        219
+                    );
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+        }
+    }
     return (
         <div className={styles.center}>
             <h1>Update competitor</h1>
@@ -49,11 +82,13 @@ export function UpdateCompetitor() {
                     name: competitor.name,
                     team_players: competitor.team_players,
                     description: competitor.description,
-                    sport: competitor.sport
+                    sport: competitor.sport,
+                    image: competitor.image
 
                 }}
                 onSubmit={async (values, actions) => {
-                    values.sport = optionSelected;
+                    values.sport = optionSelected ? optionSelected : competitor.sport;
+                    values.image = previewSource? previewSource : competitor.image;
                     try {
                         const resp = await updateCompetitorRequest(values, id, token);
                         Swal.fire({
@@ -93,10 +128,23 @@ export function UpdateCompetitor() {
                             rows="3"
                             placeholder="Description"
                             onChange={props.handleChange}
-                            value={competitor.description} />
+                            defaultValue ={competitor.description} />
                         <h3></h3>
-                        <Select name="sport" type="text" className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected}/>
+                        {competitor && competitor.sport && <Select name="sport" type="text" defaultValue={{ value: competitor.sport, label: competitor.sport}} className={stylesSelect.SelectComponent} classNamePrefix="Select" options={options} onChange={handleChangeSelected} />}
                         <h3></h3>
+                        <h1>Upload an image</h1>
+                        <h3></h3>
+                        <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
+                        <div>
+                            {previewSource && (
+                            <img
+                                src={previewSource}
+                                alt="chosen"
+                                style={{ height: '219px', width: '316px', padding: '20px' }}
+                            />
+                        )}
+                        </div>
+                        <br />
 
                         <button type="reset" >Reset</button>
                         <button type="submit">Submit</button>

@@ -7,6 +7,7 @@ const getEvents = async (req, res) => {
             'SELECT * FROM events WHERE (public_status = (?) AND status = (?)) ORDER BY event_id DESC',
             ['public', 'active']
         );
+
         res.json(result);
     } catch (error) {
         return res.status(500).json({ message: error.message });

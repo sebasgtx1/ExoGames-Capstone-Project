@@ -15,7 +15,7 @@ export function RegisterPage() {
     const [emailError, setEmailError] = useState("example@gmail.com")
     const [password, setPassword] = useState()
     const [repassword, setRePassword] = useState()
-    const [passwordError, setPasswordError] = useState("Password must contain at least 8 characters and 15 maximum , 1 number, 1 upper and 1 lowercase and 1 especial character!")
+    const [passwordError, setPasswordError] = useState("Password must contain at least 8 characters and 15 maximum , 1 number, 1 upper, 1 lowercase and 1 especial character!")
     const [repasswordError, setRePasswordError] = useState()
     const [username, setUsername] = useState()
     const [usernameError, setUsernameError] = useState("Username must contain at least 6 characteres and 12 maximum")
@@ -47,7 +47,7 @@ export function RegisterPage() {
             setPasswordError("")
         }
         else {
-            setPasswordError("Password must contain at least 8 characters and 15 maximum , 1 number, 1 upper and 1 lowercase and 1 especial character!")
+            setPasswordError("Password must contain at least 8 characters and 15 maximum , 1 number, 1 upper, 1 lowercase and 1 especial character!")
             setPassword(null)
         }
         
@@ -62,7 +62,7 @@ export function RegisterPage() {
         }
         else {
 
-            setRePasswordError("the passwords do not match")
+            setRePasswordError("the passwords doesn't match")
             setRePassword(null)
 
 

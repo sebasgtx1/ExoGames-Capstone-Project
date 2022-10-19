@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from 'react-router-dom';
 import { Formik } from 'formik';
 import styles from '../components/styles/CreateEvent.module.css'
@@ -10,13 +8,33 @@ import { VenueList } from "../components/list/VenuesList";
 import { createMatchRequest } from "../api/matches.api";
 import Swal from 'sweetalert2'
 import vs from "../components/styles/img/vs.svg"
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import dayjs from 'dayjs';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 
 export function CreateMatch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const [startDate, setStartDate] = useState(new Date());
     const { event_id, sport, user_id, token, username, addMatch } = location.state;
+    const [startDate, setStartDate] = useState(new Date());
+    const [startTime, setStartTime] = useState(new Date());
+
+    const handleChangeDate = (newValue) => {
+        setStartDate(newValue);
+    };
+
+    const handleChangeTime = (newValue) => {
+        setStartTime(newValue);
+    };
 
     function handleClick() {
 
@@ -72,7 +90,11 @@ export function CreateMatch() {
 
                 }}
                 onSubmit={async (values, actions) => {
-                    values.date = startDate.toISOString().substring(0, 10);
+                    {startDate.$M += 1}
+                    {values.date = (startDate.$y + "-" + startDate.$M + "-" + startDate.$D)};
+                    {values.time = (startTime.$H + ":" + startTime.$m)};
+                    console.log("New date :", values.date);
+                    console.log("New time :", values.time);
                     if (values.competitor1_id == values.competitor2_id) {
                         Swal.fire({
                             position: 'top-end',
@@ -142,17 +164,26 @@ export function CreateMatch() {
                             name="venue_id"
                             onChange={props.handleChange} />
                         <br /><br />
-
-                        <label>Date</label>
-                        <DatePicker selected={startDate} onChange={(startDate) => setStartDate(startDate)} />
-                        {/* <input type="text" name="date"
-                            onChange={props.handleChange} />
-                        <h3></h3> */}
-                        <label>Time</label><br />
-                        <input type="text" name="time"
-                            onChange={props.handleChange} />
-                        <h3></h3>
-
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Stack spacing={1} className={styles.DateTime}>
+                                <label>Date</label>
+                                    <DesktopDatePicker
+                                    label="Date desktop"
+                                    inputFormat="MM/DD/YYYY"
+                                    value={startDate}
+                                    onChange={handleChangeDate}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    />
+                                    <label>Time</label><br />
+                                    <TimePicker
+                                    label="Time"
+                                    value={startTime}
+                                    onChange={handleChangeTime}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    />
+                            </Stack>
+                            </LocalizationProvider>
+                        <br />
                         {button}
                         <button type="submit">Submit</button>
                         <button onClick={handleClick}>Finish</button>

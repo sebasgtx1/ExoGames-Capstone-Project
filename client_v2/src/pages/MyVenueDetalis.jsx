@@ -13,8 +13,18 @@ export function MyVenueDetails() {
     const { user_id, id } = useParams();
     const [venue, setVenues] = useState([]);
     const location = useLocation();
-    const {token, username} = location.state;
+    let { token, username } = {};
 
+
+    if (!(location.state)) {
+        token = window.localStorage.getItem("token");
+        username = window.localStorage.getItem("username");
+
+    }
+    else {
+        token = location.state.token;
+        username = location.state.username;
+    }
     useEffect(() => {
 
         async function getVenue() {

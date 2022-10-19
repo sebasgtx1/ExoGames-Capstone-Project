@@ -23,10 +23,24 @@ export function UpdateCompetitor() {
     const { id } = useParams();
     const location = useLocation();
     const [previewSource, setPreviewSource] = useState();
-    const {user_id, token } = location.state;
     const [competitor, setCompetitor] = useState([])
     const [ optionSelected, setOptionSelected ] = useState();
     const navigate = useNavigate();
+    let { user_id, token, username } = {};
+
+
+    if (!(location.state)) {
+        user_id = window.localStorage.getItem("user_id");
+        token = window.localStorage.getItem("token");
+        username = window.localStorage.getItem("username");
+        
+
+    }
+    else {
+        user_id = location.state.user_id;
+        token = location.state.token;
+        username = location.state.username;
+    }
 
     const handleChangeSelected = (selectedOption) => {
         setOptionSelected(selectedOption.value);

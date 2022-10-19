@@ -14,12 +14,24 @@ import vs from "../components/styles/img/vs.svg"
 export function EventDetails() {
     const { id } = useParams();
     const location = useLocation();
-    const {user_id, token, username} = location.state;
-
     const [event, setEvents] = useState([])
     const [matches, setMaches] = useState([])
 
-    
+    let { user_id, token, username } = {};
+
+
+    if (!(location.state)) {
+        user_id = window.localStorage.getItem("user_id");
+        token = window.localStorage.getItem("token");
+        username = window.localStorage.getItem("username");
+        
+
+    }
+    else {
+        user_id = location.state.user_id;
+        token = location.state.token;
+        username = location.state.username;
+    }
 
     useEffect(() => {
 

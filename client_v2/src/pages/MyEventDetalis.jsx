@@ -23,7 +23,18 @@ export function MyEventDetails() {
     const [event, setEvents] = useState([])
     const [matches, setMaches] = useState([])
     const location = useLocation();
-    const {token, username} = location.state;
+    let { token, username } = {};
+
+
+    if (!(location.state)) {
+        token = window.localStorage.getItem("token");
+        username = window.localStorage.getItem("username");
+
+    }
+    else {
+        token = location.state.token;
+        username = location.state.username;
+    }
 
     useEffect(() => {
 

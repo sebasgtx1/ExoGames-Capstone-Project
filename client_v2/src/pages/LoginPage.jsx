@@ -27,6 +27,9 @@ export function LoginPage() {
                     try {
                         const resp = await LoginRequest(values);
                         const data = resp.data
+                        window.localStorage.setItem("user_id", data.user_id);
+                        window.localStorage.setItem("token", data.token);
+                        window.localStorage.setItem("username", data.username);
                         navigate('/my_events',{
                             state: {
                               user_id: data.user_id,

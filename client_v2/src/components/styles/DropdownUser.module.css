@@ -3,14 +3,23 @@
     top: 0%;
     left: 84%;
     right: inherit;
-    padding-top: 4px;
+    /* padding-top: 4px;
     padding-bottom: 4px; 
     margin-top: 2px;
     list-style: none;
     background-clip: padding-box;
     border: 1px solid var(--color-border-default);
     border-radius: 10px;
-    box-shadow: var(--color-shadow-large);
+    box-shadow: var(--color-shadow-large); */
+    /* pointer-events: none; */
+}
+
+.DropdownToggle:hover {
+    background-color: #bebebe !important;
+    border-color: 1px solid #bebebe !important;
+    width: 207px !important;
+    height: 48.5px !important;
+    /* pointer-events: auto !important; */
 }
 
 /* a tag */

@@ -25,8 +25,8 @@ export function CreateMatch() {
     const location = useLocation();
     const navigate = useNavigate();
     const { event_id, sport, user_id, token, username, addMatch } = location.state;
-    const [startDate, setStartDate] = useState(new Date());
-    const [startTime, setStartTime] = useState(new Date());
+    const [startDate, setStartDate] = useState(dayjs(new Date()));
+    const [startTime, setStartTime] = useState(dayjs(new Date()));
 
     const handleChangeDate = (newValue) => {
         setStartDate(newValue);

@@ -17,6 +17,9 @@
 .DropdownToggle:hover {
     background-color: #bebebe !important;
     border-color: 1px solid #bebebe !important;
+    width: 207px !important;
+    height: 48.5px !important;
+    /* pointer-events: auto !important; */
 }
 
 /* a tag */

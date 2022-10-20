@@ -23,7 +23,7 @@ export function ButtonUserContainer(props) {
         <div className={stylesButton.center_div}>
             <aside className={stylesDropdownUser.dropdown_menu}>
                 <Dropdown isOpen={dropdown} toggle={openCloseDropdown} size="lg">
-                    <DropdownToggle caret>
+                    <DropdownToggle className={stylesDropdownUser.DropdownToggle} caret>
                         Hello {props.username}!
                     </DropdownToggle>
                     <DropdownMenu>

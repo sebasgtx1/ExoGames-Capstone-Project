@@ -182,7 +182,7 @@ export function CreateMatch() {
                                     renderInput={(params) => <TextField {...params} />}
                                     />
                             </Stack>
-                            </LocalizationProvider>
+                        </LocalizationProvider>
                         <br />
                         {button}
                         <button type="submit">Submit</button>

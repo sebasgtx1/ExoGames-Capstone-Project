@@ -42,3 +42,7 @@ button:hover {
   font-size: 17px;
   padding: auto 20px;
 }
+
+input, textarea {
+  border-radius: 5px;
+}

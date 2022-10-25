@@ -9,7 +9,7 @@ export function AddMatchButton({event, user_id, token, username}) {
         navigate('/create_match/' + event.event_id, {
             state: {
                 event_id: event.event_id,
-                sport: event.sport,
+                sport: event?.sport,
                 user_id: user_id,
                 token: token,
                 username: username,

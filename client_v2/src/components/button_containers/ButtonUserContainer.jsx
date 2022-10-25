@@ -37,7 +37,7 @@ export function ButtonUserContainer(props) {
                         <DropdownItem><Link to="/create_venue" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>Create Venue</Link></DropdownItem>
                         <DropdownItem><Link to="/create_competitor" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>Create Competitor</Link></DropdownItem>
                         <DropdownItem divider />
-                        <DropdownItem><Link to="/events" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton}>Log Out</Link></DropdownItem>
+                        <DropdownItem><Link to="/events" state={{ user_id: props.user_id, token: props.token, username: props.username }} className={stylesDropdownUser.dataInsideButton} >Log Out</Link></DropdownItem>
                         <DropdownItem divider />
                     </DropdownMenu>
                 </Dropdown>

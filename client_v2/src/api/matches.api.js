@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = "http://localhost:4000/"
+const API = "http://157.230.84.201/"
 
 export const getEventMatches = async (event_id) => {
     return await axios.get(API + "matches/" + event_id);

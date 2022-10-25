@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = "http://157.230.84.201/"
+const API = "https://sea-lion-app-xw53b.ondigitalocean.app/"
 
 export const getCompetitorsRequest = async () => {
     return await axios.get(API + "competitors");

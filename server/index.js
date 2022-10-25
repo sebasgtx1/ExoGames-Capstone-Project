@@ -17,5 +17,6 @@ app.use(require('./routes/matches.routes'));
 app.use(require('./routes/venues.routes'));
 app.use(require('./routes/user.routes'));
 
-app.listen(4000);
-console.log('Server on port', 4000);
+app.listen('4000','0.0.0.0',()=>{
+    console.log("server is listening on 4000 port");
+})

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = "http://localhost:4000/"
+const API = "https://sea-lion-app-xw53b.ondigitalocean.app/"
 
 export const getEventMatches = async (event_id) => {
     return await axios.get(API + "matches/" + event_id);

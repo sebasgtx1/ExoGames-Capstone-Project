@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import stylesSelect from '../components/styles/SelectComponent.module.css';
-import Resizer from "react-image-file-resizer";
+import { uploadFile } from "../api/upload.api";
 import stylesInput from '../components/styles/InputElement.module.css';
 import { useParams } from "react-router";
 import { Formik } from 'formik';
@@ -10,7 +10,6 @@ import { getEventsIdRequest } from '../api/events.api';
 import styles from '../components/styles/CreateEvent.module.css'
 import { useEffect, useState } from "react";
 import { updateEventRequest } from "../api/events.api";
-import stylesCheckBox from '../components/styles/CheckBox.module.css';
 import Swal from 'sweetalert2'
 import { useLocation } from "react-router-dom";
 import { deleteMatches } from "../api/matches.api";
@@ -29,16 +28,20 @@ export function UpdateEvent() {
     const [wins, setWins] = useState(0)
     const [losses, setLosses] = useState(0)
     const [optionSelected, setOptionSelected] = useState()
-    const [previewSource, setPreviewSource] = useState();
     const location = useLocation();
     let { user_id, token, username } = {};
+    const [file, setSaveFile] = useState(null);
 
+    const handleChangeFile = (event) => {
+        setSaveFile(event.target.files[0])
+
+    }
 
     if (!(location.state)) {
         user_id = window.localStorage.getItem("user_id");
         token = window.localStorage.getItem("token");
         username = window.localStorage.getItem("username");
-        
+
 
     }
     else {
@@ -84,36 +87,6 @@ export function UpdateEvent() {
         getEvent();
     }, [id])
 
-    const handleChangeFile = (event) => {
-
-        {
-            let fileInput = false;
-            if (event.target.files[0]) {
-                fileInput = true;
-            }
-            if (fileInput) {
-                try {
-                    Resizer.imageFileResizer(
-                        event.target.files[0],
-                        316,
-                        219,
-                        "JPEG",
-                        100,
-                        0,
-                        (uri) => {
-                            setPreviewSource(uri)
-                        },
-                        "base64",
-                        316,
-                        219
-                    );
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        }
-    }
-
     const navigate = useNavigate();
     return (
         <div className={styles.center}>
@@ -126,14 +99,23 @@ export function UpdateEvent() {
                     wins: event.wins,
                     losses: event.losses,
                     image: event.image
-                    
+
 
                 }}
                 onSubmit={async (values, actions) => {
                     values.wins = wins;
                     values.losses = losses;
                     values.sport = optionSelected ? optionSelected : event.sport;
-                    values.image = previewSource;
+                    try {
+                        const resp = await uploadFile(file);
+                        
+                        values.image = resp.data.url ? resp.data.url : event.image;
+
+                        
+                    } catch (error) {
+                        console.log(error);
+                        
+                    }
 
                     try {
                         if (optionSelected != event.sport && optionSelected) {
@@ -207,17 +189,7 @@ export function UpdateEvent() {
                         <h1>Upload an image</h1>
                         <h3></h3>
                         <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
-                        <div>
-                            {previewSource && (
-                                <img
-                                    src={previewSource}
-                                    alt="chosen"
-                                    style={{ height: '219px', width: '316px', padding: '20px' }}
-                                />
-                            )}
-                        </div>
-
-
+                        <br />
                         <h1>Rules</h1>
                         <label>Wins</label><br />
 
@@ -242,7 +214,7 @@ export function UpdateEvent() {
 
 
                         <h3></h3>
-                    
+
 
                         <button type="Reset" >reset</button>
                         <button type="submit">Update</button>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom";
 import { Formik } from 'formik';
 import Select from 'react-select';
-import Resizer from "react-image-file-resizer";
+import { uploadFile } from "../api/upload.api";
 import stylesSelect from '../components/styles/SelectComponent.module.css';
 import stylesInput from '../components/styles/InputElement.module.css';
 import { getEventsIdRequest } from '../api/events.api';
@@ -26,11 +26,16 @@ export function UpdateEventCreation() {
     const navigate = useNavigate();
     const { event_id, user_id, token, username } = location.state;
     const [event, setEvents] = useState([])
-    const [previewSource, setPreviewSource] = useState();
     const [publicStatus, setPublicStatus] = useState('public');
     const [ wins, setWins ] = useState(0)
     const [ losses, setLosses ] = useState(0)
     const [ optionSelected, setOptionSelected ] = useState()
+    const [file, setSaveFile] = useState(null);
+
+    const handleChangeFile = (event) => {
+        setSaveFile(event.target.files[0])
+
+    }
 
     let incWins =()=>{
         if(wins<1000)
@@ -78,38 +83,6 @@ export function UpdateEventCreation() {
 
     }
 
-    const handleChangeFile = (event) => {
-
-        {
-            let fileInput = false;
-            if (event.target.files[0]) {
-                fileInput = true;
-            }
-            if (fileInput) {
-                try {
-                    Resizer.imageFileResizer(
-                        event.target.files[0],
-                        316,
-                        219,
-                        "JPEG",
-                        100,
-                        0,
-                        (uri) => {
-                            setPreviewSource(uri)
-                        },
-                        "base64",
-                        316,
-                        219
-                    );
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        }
-    }
-
-
-
     return (
         <div className={styles.center}>
             <h1>Create Event</h1>
@@ -131,7 +104,16 @@ export function UpdateEventCreation() {
                     values.losses = losses;
                     values.sport = optionSelected ? optionSelected : event.sport;
                     values.public_status = publicStatus
-                    values.image = previewSource ? previewSource : event.image;
+                    try {
+                        const resp = await uploadFile(file);
+                        
+                        values.image = resp.data.url ? resp.data.url : event.image;
+
+                        
+                    } catch (error) {
+                        console.log(error);
+                        
+                    }
                     try {
 
                         const resp = await updateEventRequest(values, event_id, token);
@@ -182,17 +164,7 @@ export function UpdateEventCreation() {
                         <h1>Upload an image</h1>
                         <h3></h3>
                         <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
-                        <div>
-                            {previewSource && (
-                                <img
-                                    src={previewSource}
-                                    alt="chosen"
-                                    style={{ height: '219px', width: '316px', padding: '20px' }}
-                                />
-                            )}
-                        </div>
-
-
+                        <br />
                         <h1>Rules</h1>
                         <label>Wins</label><br />
 

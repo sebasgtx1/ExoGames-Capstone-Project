@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Resizer from "react-image-file-resizer";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import { Formik } from 'formik';
@@ -9,6 +8,7 @@ import stylesSelect from '../components/styles/SelectComponent.module.css';
 import stylesInput from '../components/styles/InputElement.module.css';
 import stylesCheckBox from '../components/styles/CheckBox.module.css';
 import Swal from 'sweetalert2'
+import { uploadFile } from "../api/upload.api";
 
 const options = [
     { value: 'football', label: 'Football' },
@@ -24,11 +24,15 @@ export function CreateEvent() {
     const [wins, setWins] = useState(0)
     const [losses, setLosses] = useState(0)
     const [optionSelected, setOptionSelected] = useState('football')
-    const [previewSource, setPreviewSource] = useState();
     const [publicStatus, setPublicStatus] = useState('public');
     const [saveStatus, setSaveStatus] = useState(false);
     let { user_id, token, username } = {};
+    const [file, setSaveFile] = useState(null);
 
+    const handleChangeFile = (event) => {
+        setSaveFile(event.target.files[0])
+
+    }
 
     if (!(location.state)) {
         user_id = window.localStorage.getItem("user_id");
@@ -79,37 +83,6 @@ export function CreateEvent() {
 
     }
 
-
-    const handleChangeFile = (event) => {
-
-        {
-            let fileInput = false;
-            if (event.target.files[0]) {
-                fileInput = true;
-            }
-            if (fileInput) {
-                try {
-                    Resizer.imageFileResizer(
-                        event.target.files[0],
-                        316,
-                        219,
-                        "JPEG",
-                        100,
-                        0,
-                        (uri) => {
-                            setPreviewSource(uri)
-                        },
-                        "base64",
-                        316,
-                        219
-                    );
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        }
-    }
-
     const navigate = useNavigate();
     return (<>
         <div className={styles.center}>
@@ -133,7 +106,20 @@ export function CreateEvent() {
                     values.losses = losses;
                     values.sport = optionSelected;
                     values.public_status = publicStatus
-                    values.image = previewSource;
+
+                    try {
+                        const resp = await uploadFile(file);
+                        
+                        values.image = resp.data.url;
+
+                        
+                    } catch (error) {
+                        console.log(error);
+                        
+                    }
+
+                    
+                    
 
                     try {
 
@@ -193,17 +179,6 @@ export function CreateEvent() {
                         <h1>Upload an image</h1>
                         <h3></h3>
                         <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
-                        <div>
-                            {previewSource && (
-                                <img
-                                    src={previewSource}
-                                    alt="chosen"
-                                    style={{ height: '219px', width: '316px', padding: '20px' }}
-                                />
-                            )}
-                        </div>
-
-
                         <h1>Rules</h1>
                         <label>Wins</label><br />
                         <input type="int" name="wins"

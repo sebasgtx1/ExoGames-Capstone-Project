@@ -16,6 +16,7 @@ app.use(require('./routes/competitors.routes'));
 app.use(require('./routes/matches.routes'));
 app.use(require('./routes/venues.routes'));
 app.use(require('./routes/user.routes'));
+app.use(require('./routes/upload.routes'));
 
 app.listen('4000','0.0.0.0',()=>{
     console.log("server is listening on 4000 port");

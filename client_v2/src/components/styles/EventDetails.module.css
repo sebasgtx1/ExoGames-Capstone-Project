@@ -1,0 +1,36 @@
+.detailsContainer {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    width: 100%;
+    font-size: 1.5rem;
+  }
+  
+  .col {
+    max-width: 400px;
+    margin: 15px;
+    height: auto;
+    width: 80%;
+  }
+
+  .matches {
+    background-color: #7c7c7c;
+    border-radius: 15px;
+    list-style: none;
+  }
+  
+  .cardImage {
+    border-radius: 15px;
+    background-image: url('./img/event-logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+  
+  .cardDetails {
+    font-size: 1.5rem;
+  }
+  
+  .firstItem {
+    margin-top: 0;
+  }

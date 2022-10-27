@@ -1,0 +1,57 @@
+.dropdown_menu {
+    position: absolute;
+    top: 0%;
+    left: 84%;
+    right: inherit;
+    /* padding-top: 4px;
+    padding-bottom: 4px; 
+    margin-top: 2px;
+    list-style: none;
+    background-clip: padding-box;
+    border: 1px solid var(--color-border-default);
+    border-radius: 10px;
+    box-shadow: var(--color-shadow-large); */
+    /* pointer-events: none; */
+}
+
+.DropdownToggle:hover {
+    background-color: #bebebe !important;
+    border-color: 1px solid #bebebe !important;
+    width: 207px !important;
+    height: 48.5px !important;
+    /* pointer-events: auto !important; */
+}
+
+/* a tag */
+.dataInsideButton {
+    /* Button */
+
+    /* Button/2 small */
+    font-family: 'Lexend' !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 20px !important;
+
+    /* Auto layout */
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 12px 8px !important;
+    gap: 8px !important;
+
+    width: 170px !important;
+    height: 44px !important;
+
+    /* Light_and_Dark/02 */
+    background: #3a3a3a !important;
+    border-radius: 10px !important;
+
+    /* Inside auto layout */
+    color: white !important;
+    flex: none !important;
+    order: 0 !important;
+    flex-grow: 1 !important;
+    text-decoration: none !important;
+}

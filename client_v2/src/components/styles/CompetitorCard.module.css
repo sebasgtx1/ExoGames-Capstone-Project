@@ -1,0 +1,42 @@
+.CompetitorCard {
+    list-style: none;
+    font-size: 1.5em;
+
+    /* Competitor card */
+
+    /* Auto layout */
+    display: flex;
+    flex-direction: column;
+    padding: 0px 0px 16px;
+    gap: 8px;
+
+    width: 316px;
+    height: 364px;
+
+    /* Light_and_Dark/09 */
+    background: #282828;
+    box-shadow: -12px 5px 14px rgba(0, 0, 0, 0.5);
+    border-radius: 14px 40px;
+
+    /* Inside auto layout */
+    flex: none;
+    order: 0;
+    align-self: stretch;
+    flex-grow: 1;
+}
+
+.CompetitorCard:hover {
+    opacity: 0.8;
+}
+
+.CompetitorImage {
+    border-radius: 10px;
+    background-color: azure;
+    background-image: url('./img/competitor-logo.png');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    justify-content: center;
+}
+.details {
+    width: 100%;
+}

@@ -1,0 +1,39 @@
+{
+  "name": "client_v2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 8080"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.10",
+    "@mui/x-date-pickers": "^5.0.4",
+    "axios": "^1.0.0",
+    "bootstrap": "^5.2.2",
+    "cors": "^2.8.5",
+    "dayjs": "^1.11.5",
+    "formik": "^2.2.9",
+    "react": "^18.2.0",
+    "react-datepicker": "^4.8.0",
+    "react-dom": "^18.2.0",
+    "react-drag-drop-files": "^2.3.7",
+    "react-dropdown": "^1.11.0",
+    "react-dropzone": "^14.2.3",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.4.1",
+    "react-select": "^5.4.0",
+    "reactstrap": "^9.1.4",
+    "sweetalert2": "^11.4.38"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.17",
+    "@types/react-dom": "^18.0.6",
+    "@vitejs/plugin-react": "^2.1.0",
+    "vite": "^3.1.0"
+  }
+}

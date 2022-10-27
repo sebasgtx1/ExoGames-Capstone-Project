@@ -1,63 +1,72 @@
-const { pool } = require("./db_conexion");
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
-
+const { Users } = require("../models/Users.js");
 
 const createUser = async (req, res) => {
   try {
-
-    const body = req.body;
+    const { username, email, status } = req.body;
     const salt = genSaltSync(10);
-    body.password = hashSync(body.password, salt);
-    const [result] = await pool.query(
-      "INSERT INTO users(username, email, password, status) VALUES(?, ?, ?, ?)",
-      [
-        body.username, body.email, body.password, 'active'
-      ])
+    let { password } = req.body;
+    password = hashSync(password, salt);
+    const result = await Users.create({
+      username,
+      password,
+      email,
+      status,
+    });
     res.json({
       user_id: result.insertId,
-      username: body.username,
-      email: body.email
+      username: username,
+      email: email,
     });
-
   } catch (error) {
-
+    console.log(error);
     return res.status(500).json({
       success: 0,
       data: "This account alredy exists",
-    })
+    });
   }
-}
+};
 
 const getUserByUserId = async (req, res) => {
   try {
-    const id = req.params.id;
-    const [result] = await pool.query("SELECT user_id, username, email, status FROM users WHERE user_id = ?",
-      [id]);
-    if (result.length === 0)
-      return res.status(404).json({ message: "User not found" });
-    res.json(result[0]);
-
+    const { id } = req.params.id;
+    const user = await Users.findAll({
+      attributes: ["user_id", "username", "email", "status"],
+      where: {
+        id,
+      },
+    });
+    if (!user) {
+      return res.status(404).json({
+        message: "User not found",
+      });
+    }
   } catch (error) {
     return res.status(500).json({ message: error.message });
-
   }
-}
+};
 
 const getUsers = async (req, res) => {
   try {
-    const [result] = await pool.query("SELECT username, email, status FROM users WHERE status = (?)", ['active']);
-    res.json(result);
-
+    const users = await Users.findAll({
+      attributes: ["username", "email", "status"],
+      where: {
+        status: "active",
+      },
+    });
+    res.json(users);
+    if (!users) {
+      return res.status(404).json({
+        message: "Users not found",
+      });
+    }
   } catch (error) {
     return res.status(500).json({ message: error.message });
-
   }
-
-}
+};
 
 const updateUsers = async (req, res) => {
-
   try {
     const body = req.body;
 
@@ -65,41 +74,53 @@ const updateUsers = async (req, res) => {
       const salt = genSaltSync(10);
       body.password = hashSync(body.password, salt);
     }
+    const [result] = await Users.update(body, {
+      where: {
+        user_id: req.params.id,
+      },
+    });
 
-    const [result] = await pool.query(
-      'UPDATE users SET ? WHERE user_id = (?)', [
-      body,
-      req.params.id
-    ]);
-    res.json(result);
+    res.json(user);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-}
+};
 
 const deleteUser = async (req, res) => {
   try {
-    const [result] = await pool.query(
-      'UPDATE users SET status = (?) WHERE user_id = (?)', [
-      'inactive',
-      req.params.id
-    ]);
+    const { id } = req.params.id;
+    const [result] = await Users.update(
+      {
+        status: "inactive",
+      },
+      {
+        where: {
+          id,
+        },
+      }
+    );
     return res.sendStatus(204);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-}
+};
 
 const login = async (req, res) => {
   const body = req.body;
 
   try {
-    const [result] = await pool.query("SELECT * FROM users WHERE (email = ? AND status = ?)", [body.email, 'active']);
+    const body = req.body;
+    const result = await Users.findAll({
+      where: {
+        email: body.email,
+        status: "active",
+      },
+    });
     if (result.length === 0)
       return res.status(404).json({
         success: 0,
         data: "Invalid email",
-      })
+      });
     const comp = compareSync(body.password, result[0].password);
     if (comp) {
       const jsontoken = sign({ comp: result[0] }, "qwe1234", {
@@ -118,13 +139,11 @@ const login = async (req, res) => {
         data: "Invalid password",
       });
     }
-
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: error.message });
-
   }
-
-}
+};
 
 module.exports = {
   createUser,
@@ -132,6 +151,5 @@ module.exports = {
   getUsers,
   login,
   updateUsers,
-  deleteUser
+  deleteUser,
 };
-

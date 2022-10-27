@@ -41,7 +41,7 @@ export function EventGrid({ user_id, token, username }) {
         return (
             <ul className={styles.EventGrid}>
                 {events.map((event) => (
-                    <EventCard key={event.event_id} event={event} src={'/event/' + event.event_id} />
+                    <EventCard key={event.event_id} event={event} src={'/event/' + event.event_id} match={getNextMatch(event.event_id)}/>
                 ))}
             </ul>
         );

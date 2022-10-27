@@ -22,7 +22,7 @@ export function PublishEvent(props) {
       if (result.isConfirmed) {
         const resp = await PublishEventRequest(props.event_id, {public_status : status}, props.token);
         Swal.fire(
-          'Pubish!',
+          'Publish!',
           'Your Event is ' + status +  ' now',
           'success'
         )

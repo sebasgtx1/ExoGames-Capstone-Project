@@ -10,15 +10,32 @@ import { VenueList } from "../components/list/VenuesList";
 import { updateMatchRequest } from "../api/matches.api";
 import Swal from 'sweetalert2'
 import vs from "../components/styles/img/vs.svg"
+import dayjs from 'dayjs';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 
 
 export function UpdateMatch() {
-    const [startDate, setStartDate] = useState(new Date());
     const navigate = useNavigate();
     const location = useLocation();
-
     const { user_id, token, username, sport, match } = location.state;
+    const [startDate, setStartDate] = useState(dayjs(new Date()));
+    const [startTime, setStartTime] = useState(dayjs(new Date()));
+
+    const handleChangeDate = (newValue) => {
+        setStartDate(newValue);
+    };
+
+    const handleChangeTime = (newValue) => {
+        setStartTime(newValue);
+    };
 
     return (
         <div className={styles.center}>
@@ -36,7 +53,9 @@ export function UpdateMatch() {
 
                 }}
                 onSubmit={async (values, actions) => {
-                    values.date = startDate.toISOString().substring(0, 10);
+                    {startDate.$M += 1}
+                    {values.date = (startDate.$y + "-" + startDate.$M + "-" + startDate.$D)};
+                    {values.time = (startTime.$H + ":" + startTime.$m)};
                     if (values.competitor1_id == values.competitor2_id) {
                         Swal.fire({
                             position: 'top-end',
@@ -107,14 +126,25 @@ export function UpdateMatch() {
                             onChange={props.handleChange} />
                         <br /><br />
                         
-                        <label>Date</label>
-                        <DatePicker selected={new Date(match.date)} onChange={(startDate) => setStartDate(startDate)} />
-                        {/* <input type="text" name="date"
-                            onChange={props.handleChange} />
-                        <h3></h3> */}
-                        <label>Time</label><br />
-                        <input type="text" name="time"
-                            onChange={props.handleChange} />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <Stack spacing={1} className={styles.DateTime}>
+                                <label>Date</label>
+                                    <DesktopDatePicker
+                                    label="Date desktop"
+                                    inputFormat="MM/DD/YYYY"
+                                    value={startDate}
+                                    onChange={handleChangeDate}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    />
+                                    <label>Time</label><br />
+                                    <TimePicker
+                                    label="Time"
+                                    value={startTime}
+                                    onChange={handleChangeTime}
+                                    renderInput={(params) => <TextField {...params} />}
+                                    />
+                            </Stack>
+                        </LocalizationProvider>
                         <br /><br />
                         <button type="reset">Reset</button>
                         <button type="submit">Update</button>

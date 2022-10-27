@@ -4,14 +4,20 @@ import styles from '../components/styles/CreateEvent.module.css'
 import { createVenueRequest } from "../api/venues.api";
 import { useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2'
-import Resizer from "react-image-file-resizer";
+import { uploadFile } from "../api/upload.api";
 
 
 export function CreateVenue() {
     const navigate = useNavigate();
     const location = useLocation()
-    const [previewSource, setPreviewSource] = useState();
     let { user_id, token, username } = {};
+    const [file, setSaveFile] = useState(null);
+
+    const handleChangeFile = (event) => {
+        setSaveFile(event.target.files[0])
+
+    }
+
 
 
     if (!(location.state)) {
@@ -26,35 +32,7 @@ export function CreateVenue() {
         token = location.state.token;
         username = location.state.username;
     }
-    const handleChangeFile = (event) => {
-
-        {
-            let fileInput = false;
-            if (event.target.files[0]) {
-                fileInput = true;
-            }
-            if (fileInput) {
-                try {
-                    Resizer.imageFileResizer(
-                        event.target.files[0],
-                        316,
-                        219,
-                        "JPEG",
-                        100,
-                        0,
-                        (uri) => {
-                            setPreviewSource(uri)
-                        },
-                        "base64",
-                        316,
-                        219
-                    );
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-        }
-    }
+    
     return (
         <div className={styles.center}>
             <h1>Create Venue</h1>
@@ -67,7 +45,16 @@ export function CreateVenue() {
 
                 }}
                 onSubmit={async (values, actions) => {
-                    values.image = previewSource;
+                    try {
+                        const resp = await uploadFile(file);
+                        
+                        values.image = resp.data.url;
+
+                        
+                    } catch (error) {
+                        console.log(error);
+                        
+                    }
                     try {
                         await createVenueRequest(values, token);
                         actions.resetForm();
@@ -113,16 +100,6 @@ export function CreateVenue() {
                         <h1>Upload an image</h1>
                         <h3></h3>
                         <input type="file" name="image" accept="image/jpeg" onChange={handleChangeFile} />
-                        <div>
-                            {previewSource && (
-                            <img
-                                src={previewSource}
-                                alt="chosen"
-                                style={{ height: '219px', width: '316px', padding: '20px' }}
-                            />
-                        )}
-                        </div>
-
                         <br />
                         <button type="reset" >Reset</button>
                         <button type="submit">Submit</button>

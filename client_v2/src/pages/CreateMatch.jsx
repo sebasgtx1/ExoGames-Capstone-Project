@@ -7,26 +7,37 @@ import { useLocation } from "react-router-dom";
 import { VenueList } from "../components/list/VenuesList";
 import { createMatchRequest } from "../api/matches.api";
 import Swal from 'sweetalert2'
-import vs from "../components/styles/img/vs.svg"
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import dayjs from 'dayjs';
+import vs from "../components/styles/img/vs.svg"
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 
 
 export function CreateMatch() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { event_id, sport, user_id, token, username, addMatch } = location.state;
     const [startDate, setStartDate] = useState(dayjs(new Date()));
     const [startTime, setStartTime] = useState(dayjs(new Date()));
+    const { event_id, sport, addMatch } = location.state;
+    let { user_id, token, username } = {};
+
+
+    if (!(location.state.token)) {
+        user_id = window.localStorage.getItem("user_id");
+        token = window.localStorage.getItem("token");
+        username = window.localStorage.getItem("username");
+        
+
+    }
+    else {
+        user_id = location.state.user_id;
+        token = location.state.token;
+        username = location.state.username;
+    }
 
     const handleChangeDate = (newValue) => {
         setStartDate(newValue);
@@ -90,11 +101,10 @@ export function CreateMatch() {
 
                 }}
                 onSubmit={async (values, actions) => {
-                    {startDate.$M += 1}
-                    {values.date = (startDate.$y + "-" + startDate.$M + "-" + startDate.$D)};
-                    {values.time = (startTime.$H + ":" + startTime.$m)};
-                    console.log("New date :", values.date);
-                    console.log("New time :", values.time);
+
+                    startDate.$M += 1
+                    values.date = (startDate.$y + "-" + startDate.$M + "-" + startDate.$D);
+                    values.time = (startTime.$H + ":" + startTime.$m);
                     if (values.competitor1_id == values.competitor2_id) {
                         Swal.fire({
                             position: 'top-end',
@@ -182,7 +192,7 @@ export function CreateMatch() {
                                     renderInput={(params) => <TextField {...params} />}
                                     />
                             </Stack>
-                            </LocalizationProvider>
+                        </LocalizationProvider>
                         <br />
                         {button}
                         <button type="submit">Submit</button>

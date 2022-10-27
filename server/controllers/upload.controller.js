@@ -20,8 +20,13 @@ const upload = multer({
         acl: 'public-read',
         contentType: multerS3.AUTO_CONTENT_TYPE,
         key: function (request, file, cb) {
-            
-            cb(null, name + '_' + file.originalname)
+
+            if (!file) {
+                cb("upload a file", null);
+            } else {
+                cb(null, name + '_' + file.originalname);
+            }
+
         }
     })
 }).array('upload', 1);
@@ -29,11 +34,11 @@ const upload = multer({
 const uploadFile = async (req, res) => {
 
     upload(req, res, function (error) {
+
         if (error) {
             console.log("console log del callback", error);
             return res.status(500).json({ error: error.message });
         }
-        console.log(req.files);
         res.json({ url: "https://exogames-file-storage.fra1.digitaloceanspaces.com/" + name + '_' + req.files[0].originalname });
     });
 
